@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Application Confirmation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#345293",
+            "background-light": "#f6f7f8",
+            "background-dark": "#14171e",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "Noto Sans", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden">
+<!-- Background Content -->
+<div aria-hidden="true" class="absolute inset-0 bg-background-dark/30 dark:bg-background-dark/50"></div>
+<div class="w-full h-full absolute inset-0 blur-sm">
+<div class="flex w-full grow bg-white @container p-4">
+<div class="w-full gap-1 overflow-hidden bg-white @[480px]:gap-2 aspect-[2/3] rounded-lg flex">
+<div class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1" data-alt="Abstract background image with blurred shapes and colors" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuALPrPYWPoBDPpMejC-qjpVYuJDJlaSQTTEfLxkCBkTTBUFMi4obwuXtZvNz1ANZGr3mrLuR-LY1CZaXQopnKElktoMBMTKqzXVhw508ZF_Woh6ifZIQDqEK9fTDmi5igUfnxTB-E0eykEA4SW7sEttrzTqnNANt8eb9tvrSkPX6lKdliGJPHiW4vsc2YLfQHgY7YZu2j169DWGt78esVisabd_gVgoD1hHXDiAy7JiDh68QOLgk1dU8wbH5TBx5DopCfZkZKeq_hI");'></div>
+</div>
+</div>
+</div>
+<!-- Modal Container -->
+<div class="relative m-auto flex w-full max-w-sm flex-col items-center justify-center p-4">
+<div class="flex w-full flex-col items-center gap-4 rounded-xl bg-white dark:bg-background-dark p-6 pb-8 text-center shadow-lg">
+<!-- Success Icon -->
+<div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#208672]/20 text-[#208672]">
+<span class="material-symbols-outlined text-4xl">check_circle</span>
+</div>
+<!-- Headline -->
+<h1 class="text-[#121416] dark:text-white tracking-tight text-[32px] font-bold leading-tight pt-2">Application Sent!</h1>
+<!-- Body Text -->
+<p class="text-[#121416]/80 dark:text-white/80 text-base font-normal leading-normal">
+          Your application has been sent to the employer. You can track the status of your application at any time. Your current application status is:
+        </p>
+<!-- Chips for Status -->
+<div class="flex gap-3 flex-wrap">
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#208672]/20 px-4">
+<p class="text-[#208672] text-sm font-medium leading-normal">Pending</p>
+</div>
+</div>
+<!-- Button Group -->
+<div class="flex w-full flex-col items-stretch gap-3 pt-4">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#f95e07] text-white text-base font-bold leading-normal tracking-[0.015em] w-full">
+<span class="truncate">View Application Status</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#f1f2f4] dark:bg-white/10 text-[#121416] dark:text-white text-base font-bold leading-normal tracking-[0.015em] w-full">
+<span class="truncate">Back to Jobs</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

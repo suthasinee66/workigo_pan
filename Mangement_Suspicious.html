@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Suspicious Accounts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#4ccce6",
+              "background-light": "#f6f8f8",
+              "background-dark": "#111e21",
+              "pastel-blue": "#A0D2EB",
+              "soft-pink": "#F9D5E5",
+              "soft-red": "#ffb3b3",
+              "soft-yellow": "#ffe9a3",
+              "content-light": "#111e21",
+              "content-dark": "#e3e5e5",
+              "card-light": "#ffffff",
+              "card-dark": "#1a2a2e",
+              "subtle-light": "#e3e9ea",
+              "subtle-dark": "#2c3e42",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            boxShadow: {
+                'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-border-color/0 dark:border-border-color/0">
+<div class="flex size-12 shrink-0 items-center justify-start">
+</div>
+<h1 class="text-text-primary dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Management</h1>
+<div class="flex w-12 items-center justify-end">
+
+</div>
+</header>
+<!-- Search Bar -->
+<div class="px-4 py-3">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full shadow-sm bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark">
+<div class="text-text-secondary dark:text-text-secondary-dark flex items-center justify-center pl-3">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-primary dark:text-text-primary-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-text-secondary dark:placeholder:text-text-secondary-dark pl-2 text-base font-normal leading-normal" placeholder="Search by name or email..." value=""/>
+</div>
+</label>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 p-4 pt-1 overflow-x-auto">
+<button onclick="window.location.href='Management_Accout.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-sm font-medium leading-normal">Account</p>
+</button>
+<button onclick="window.location.href='Mangement_Suspicious.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-primary text-white px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Suspicious</p>
+</button>
+<button onclick="window.location.href='Management_Incident.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Incident</p>
+</button>
+<button onclick="window.location.href='Management_Post_detail.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Post</p>
+</button>
+</div>
+<!-- Account Card 1 -->
+<div class="flex flex-col gap-4 px-4 py-3">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft overflow-hidden">
+<div class="flex gap-4 p-4 justify-between items-start">
+<div class="flex items-start gap-4 flex-1">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-[56px] w-[56px] shrink-0" data-alt="User avatar for Eleanor Pena" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAS38Etp5Eyth18TBk6lE_14Aos0TSTLgy1eegF80duQ8Ch4glGlKLllFmNTlfjzZILkG9GxmRiLfQv4kR7NjhRzOaRf6Libr3pYcitXDcYwoMqmnp2KBSp2LqaI7f96em1iX0h1MxgYLUAf-Dom97XOdJK8fkBEQh6LpnqbDXgmHMyKWE-vSO5tz89aMDy5XCmxj94v7hjxkOAseOOwD9lIpxLCpKDLCbbuv3q0FaHOo-vBBloToaMGLnU3sOMwcA38edUzopvzVw");'></div>
+<div class="flex flex-1 flex-col justify-center gap-1.5">
+<p class="text-base font-bold leading-normal">Eleanor Pena</p>
+<p class="text-sm font-normal leading-normal text-content-light/70 dark:text-content-dark/70">Flagged: 2 hours ago</p>
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="text-xs font-medium px-2.5 py-1 rounded-full bg-soft-yellow/50 text-amber-900 dark:bg-soft-yellow/30 dark:text-amber-200">Login Attempts</span>
+<span class="text-xs font-medium px-2.5 py-1 rounded-full bg-soft-red/50 text-red-900 dark:bg-soft-red/30 dark:text-red-200">Multiple Reports</span>
+</div>
+</div>
+</div>
+<div class="shrink-0">
+<button class="flex size-8 items-center justify-center text-content-light/70 dark:text-content-dark/70">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="flex justify-stretch border-t border-subtle-light dark:border-subtle-dark">
+<div class="flex flex-1 gap-px">
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-pastel-blue text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">search</span>
+<span class="truncate">Investigate</span>
+</button>
+<div class="w-px bg-subtle-light dark:bg-subtle-dark"></div>
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-soft-yellow text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">pause_circle</span>
+<span class="truncate">Suspend</span>
+</button>
+<div class="w-px bg-subtle-light dark:bg-subtle-dark"></div>
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-soft-red text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">delete</span>
+<span class="truncate">Delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Account Card 2 -->
+<div class="flex flex-col gap-4 px-4 py-3 pt-0">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft overflow-hidden">
+<div class="flex gap-4 p-4 justify-between items-start">
+<div class="flex items-start gap-4 flex-1">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-[56px] w-[56px] shrink-0" data-alt="User avatar for Cameron Williamson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDxYqjH5bAEKxCI0ahAakVNrVeM8HdznLEZjUJOXKtj-6mumcIfh8a_NptlUQ2mYSCd6S_NbEQUQBslwCZdwGSIehvQWScAYxOL9bI1EhJbnmOS4_KgxFzR42FXZ_azLvhBDhF0TpxBQ2ThlZMc5Xe4ElUk7XEXTLVMVN4JNK_JtZoNrqbHvTyCeu61_ZEtNTAZ6tKathO4Ba7oj1TXLtIgToND8Xb28HGA9_mSOWTkDtzzNgeccSLaXppeUmz_1m5f6DxbANXOxJiw");'></div>
+<div class="flex flex-1 flex-col justify-center gap-1.5">
+<p class="text-base font-bold leading-normal">Cameron Williamson</p>
+<p class="text-sm font-normal leading-normal text-content-light/70 dark:text-content-dark/70">Flagged: 1 day ago</p>
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="text-xs font-medium px-2.5 py-1 rounded-full bg-soft-pink/50 text-pink-900 dark:bg-soft-pink/30 dark:text-pink-200">Policy Violation</span>
+</div>
+</div>
+</div>
+<div class="shrink-0">
+<button class="flex size-8 items-center justify-center text-content-light/70 dark:text-content-dark/70">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="flex justify-stretch border-t border-subtle-light dark:border-subtle-dark">
+<div class="flex flex-1 gap-px">
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-pastel-blue text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">search</span>
+<span class="truncate">Investigate</span>
+</button>
+<div class="w-px bg-subtle-light dark:bg-subtle-dark"></div>
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-soft-yellow text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">pause_circle</span>
+<span class="truncate">Suspend</span>
+</button>
+<div class="w-px bg-subtle-light dark:bg-subtle-dark"></div>
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-soft-red text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">delete</span>
+<span class="truncate">Delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Account Card 3 -->
+<div class="flex flex-col gap-4 px-4 py-3 pt-0">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft overflow-hidden">
+<div class="flex gap-4 p-4 justify-between items-start">
+<div class="flex items-start gap-4 flex-1">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-[56px] w-[56px] shrink-0" data-alt="User avatar for Robert Fox" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxO1qCkIXXuPTAfFZzzz8Igto_GB0A4snSgpwuK8Dj0KrGXKYJiDuY21Ud-9DU48P5kFhlGW7LQ5i1Njx8d2mcPgn8vJ5-R8_zZm4QrXni-87Ub0lp-FkWyfFDmzO9XAnwl8d2GGRC564FdILZAtbW9ld1xoNOo7zLJRdIRJbON15WnZdgCHEhdJVpjrvwtrzH2PEA5gIBDeOh2pIvdWBI0VLHIj2PUYpgpOyXXgFnM_n2pP_FRanHxMkyYyE8AJdxa40iVWAIpfI0");'></div>
+<div class="flex flex-1 flex-col justify-center gap-1.5">
+<p class="text-base font-bold leading-normal">Robert Fox</p>
+<p class="text-sm font-normal leading-normal text-content-light/70 dark:text-content-dark/70">Flagged: 3 days ago</p>
+<div class="flex flex-wrap gap-2 pt-1">
+<span class="text-xs font-medium px-2.5 py-1 rounded-full bg-soft-red/50 text-red-900 dark:bg-soft-red/30 dark:text-red-200">Spam Content</span>
+</div>
+</div>
+</div>
+<div class="shrink-0">
+<button class="flex size-8 items-center justify-center text-content-light/70 dark:text-content-dark/70">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="flex justify-stretch border-t border-subtle-light dark:border-subtle-dark">
+<div class="flex flex-1 gap-px">
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-pastel-blue text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">search</span>
+<span class="truncate">Investigate</span>
+</button>
+<div class="w-px bg-subtle-light dark:bg-subtle-dark"></div>
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-soft-yellow text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">pause_circle</span>
+<span class="truncate">Suspend</span>
+</button>
+<div class="w-px bg-subtle-light dark:bg-subtle-dark"></div>
+<button class="flex-1 flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden h-12 gap-2 bg-transparent text-soft-red text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="material-symbols-outlined text-base">delete</span>
+<span class="truncate">Delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button for Bulk Actions -->
+</div>
+<nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-xs font-medium">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent" href="Management_Accout.html">
+<span class="material-symbols-outlined fill-1">man</span>
+<span class="text-xs font-bold">Management</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Admin_analytics.html">
+<span class="material-symbols-outlined">
+    bar_chart
+</span>
+<span class="text-xs font-medium">Analytics</span>
+
+</nav>
+<div class="h-24"></div>
+
+</body></html>

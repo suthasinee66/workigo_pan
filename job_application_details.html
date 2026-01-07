@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Application Details (with Share Option)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#aec6cf", // Light Blue
+              "secondary": "#f4c2c2", // Soft Pink
+              "success": "#b2d8b2", // Soft Green
+              "background-light": "#ffffff",
+              "background-dark": "#1a1a1a",
+              "card-light": "#f8fafb",
+              "card-dark": "#2a2a2a",
+              "text-heading-light": "#333333",
+              "text-heading-dark": "#e0e0e0",
+              "text-body-light": "#555555",
+              "text-body-dark": "#b0b0b0",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            boxShadow: {
+              'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="sticky top-0 z-10 flex items-center justify-between bg-background-light/80 p-4 pb-3 backdrop-blur-sm dark:bg-background-dark/80">
+<div onclick="window.location.href='job_application_status_list.html'" class="flex size-10 shrink-0 items-center justify-center rounded-full bg-card-light dark:bg-card-dark cursor-pointer">
+<span class="material-symbols-outlined text-text-heading-light dark:text-text-heading-dark text-2xl">arrow_back</span>
+</div>
+<h2 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-text-heading-light dark:text-text-heading-dark">Application Details</h2>
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-card-light dark:bg-card-dark">
+<span class="material-symbols-outlined text-text-heading-light dark:text-text-heading-dark text-2xl">share</span>
+</div>
+</div>
+<div class="flex flex-col gap-6 p-4">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light p-5 shadow-soft dark:bg-card-dark">
+<div class="flex items-start gap-4">
+<div class="flex size-12 items-center justify-center rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-3xl">business_center</span>
+</div>
+<div class="flex grow flex-col items-stretch justify-center gap-1">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-heading-light dark:text-text-heading-dark">Senior UI/UX Designer</p>
+<p class="text-base font-normal leading-normal text-text-body-light dark:text-text-body-dark">Innovatech Solutions</p>
+<p class="text-sm font-normal leading-normal text-text-body-light dark:text-text-body-dark">San Francisco, CA</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl bg-card-light p-5 shadow-soft dark:bg-card-dark">
+<div class="flex justify-between gap-x-6 py-2">
+<p class="text-sm font-normal leading-normal text-text-body-light dark:text-text-body-dark">Date applied</p>
+<p class="text-sm font-semibold leading-normal text-text-heading-light dark:text-text-heading-dark">October 26, 2023</p>
+</div>
+<div class="flex justify-between gap-x-6 py-2">
+<p class="text-sm font-normal leading-normal text-text-body-light dark:text-text-body-dark">Current status</p>
+<div class="rounded-full bg-primary/20 px-3 py-1">
+<p class="text-sm font-semibold leading-normal text-primary">Pending</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="px-1 pb-4 pt-2 text-lg font-bold leading-tight tracking-[-0.015em] text-text-heading-light dark:text-text-heading-dark">Application Progress</h3>
+<div class="grid grid-cols-[40px_1fr] gap-x-2 rounded-xl bg-card-light p-5 py-4 shadow-soft dark:bg-card-dark">
+<div class="flex flex-col items-center gap-1 pt-2">
+<div class="flex size-8 items-center justify-center rounded-full bg-primary text-white">
+<span class="material-symbols-outlined !text-xl" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="h-full w-[2px] bg-primary/30"></div>
+</div>
+<div class="flex flex-1 flex-col pb-6 pt-2">
+<p class="text-base font-semibold leading-normal text-text-heading-light dark:text-text-heading-dark">Applied</p>
+<p class="text-sm font-normal leading-normal text-text-body-light dark:text-text-body-dark">Completed</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="h-full w-[2px] bg-primary/30"></div>
+<div class="flex size-8 items-center justify-center rounded-full border-2 border-primary/50 text-primary">
+<span class="material-symbols-outlined !text-xl">visibility</span>
+</div>
+<div class="h-full w-[2px] bg-primary/30"></div>
+</div>
+<div class="flex flex-1 flex-col pb-6">
+<p class="text-base font-semibold leading-normal text-text-heading-light dark:text-text-heading-dark">Reviewed</p>
+<p class="text-sm font-normal leading-normal text-text-body-light dark:text-text-body-dark">Pending</p>
+</div>
+<div class="flex flex-col items-center gap-1 pb-2">
+<div class="h-full w-[2px] bg-primary/30"></div>
+<div class="flex size-8 items-center justify-center rounded-full border-2 border-primary/50 text-primary/50">
+<span class="material-symbols-outlined !text-xl">thumb_up</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col">
+<p class="text-base font-medium leading-normal text-text-body-light dark:text-text-body-dark">Accepted / Rejected</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="px-1 pb-4 pt-2 text-lg font-bold leading-tight tracking-[-0.015em] text-text-heading-light dark:text-text-heading-dark">Message from Employer</h3>
+<div class="flex flex-col rounded-xl bg-card-light p-5 shadow-soft dark:bg-card-dark">
+<p class="text-sm italic leading-relaxed text-text-body-light dark:text-text-body-dark">No messages from the employer yet.</p>
+</div>
+</div>
+</div>
+<div class="sticky bottom-0 mt-auto bg-background-light/80 p-4 backdrop-blur-sm dark:bg-background-dark/80">
+<button onclick="window.location.href='job_seeker_home.html'" class="flex w-full items-center justify-center rounded-xl bg-red-500 px-6 py-4 text-base font-bold text-white shadow-soft transition-colors hover:bg-red-600">
+            Cancel Application
+        </button>
+</div>
+</div>
+
+</body></html>

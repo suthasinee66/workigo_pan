@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Message List (Inbox)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between border-b border-gray-200/80 bg-background-light/80 px-4 backdrop-blur-sm dark:border-gray-800/80 dark:bg-background-dark/80">
+<button onclick="window.location.href='employer_home.html'" class="flex size-10 items-center justify-center text-foreground-light dark:text-foreground-dark cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+<h1 class="text-lg font-bold text-foreground-light dark:text-foreground-dark">Message</h1>
+<div class="size-10">
+<div class="flex items-center justify-end gap-2">
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-gray-800 dark:text-gray-200">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-gray-800 dark:text-gray-200">
+<span class="material-symbols-outlined text-2xl">edit_square</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="px-4 py-3">
+<label class="flex h-12 w-full min-w-40 flex-col">
+<div class="flex h-full w-full flex-1 items-stretch rounded-xl">
+<div class="flex items-center justify-center rounded-l-xl border-none border-r-0 bg-white pl-4 text-gray-500 dark:bg-background-dark/50 dark:text-gray-400">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input h-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl border-none bg-white px-4 pl-2 text-base font-normal leading-normal text-gray-900 placeholder:text-gray-500 focus:outline-0 focus:ring-0 dark:bg-background-dark/50 dark:text-gray-100 dark:placeholder:text-gray-400" placeholder="Search messages" value=""/>
+</div>
+</label>
+</div>
+<!-- Message List -->
+<div class="flex flex-col">
+<!-- Employer Chat Item (Unread) -->
+<div class="flex min-h-[72px] cursor-pointer items-center gap-4 bg-background-light px-4 py-3 hover:bg-gray-200/50 dark:bg-background-dark dark:hover:bg-white/5">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center bg-no-repeat" data-alt="Company logo for Tech Solutions Inc." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARx9wudNzDS9EDXmEg3qPLdhqIgUUYonMZraQkuZLjIK18kSe8Xo9LPiFnCYCcZ2jyzyF6zsCQp7x8idJ5lXdoOZGYKciChXvX6Y2Dhxvw5sDKYhKLNQjulCqTWwfnNX5eNFcYhW0vCt5Hsy3LG7lFf14wXa3AE2CtGuGhX_zTnqOwFz2XfXwYesAnVndDZpnzuowW9qkmQLO27qvdp504r4SoG8kUAzhXQJvcmL2uL73JmOvm4SLqClxkLynm8DF6guRT8QHyGOvI");'></div>
+<div class="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background-light bg-teal-500 text-white dark:border-background-dark">
+<span class="material-symbols-outlined !text-sm">work</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-base font-semibold leading-normal text-gray-900 line-clamp-1 dark:text-gray-50">Tech Solutions Inc.</p>
+<p class="text-sm font-semibold leading-normal text-gray-800 line-clamp-1 dark:text-gray-200">Yes, the interview is confirmed for 2 PM.</p>
+</div>
+<div class="flex shrink-0 flex-col items-end gap-1.5">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">10:42 AM</p>
+<div class="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-primary px-2">
+<p class="text-xs font-bold text-white">2</p>
+</div>
+</div>
+</div>
+<!-- Job Seeker Chat Item (Read) -->
+<div class="flex min-h-[72px] cursor-pointer items-center gap-4 bg-background-light px-4 py-3 hover:bg-gray-200/50 dark:bg-background-dark dark:hover:bg-white/5">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center bg-no-repeat" data-alt="Profile picture of John Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIh9BkeUqXbpaIHvdDYLJC1ji7ZUpMM9oJgnp22DQ73PhHwJcdqGMDcjoFDmgV3ce_Hf4ZbjQnW1a4Re3OuBiGSuYVBR9IMf7PcZEV0Tp502pqNSHSzMr5CNLd7R14gqBPw-rw7PSIjCUuqzFiNfEkCXbE8v-v94HU1J1ZaI-4C9Zfr0f-qiNiQmgj7FcZWRp1SGna8HkOVI2_a1IGqKyMIuO7TjNsl01JhuRcvdKLrisf4F1ADFLtSjy9yi14JArSxlXYs_QbFyhy");'></div>
+<div class="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background-light bg-primary text-white dark:border-background-dark">
+<span class="material-symbols-outlined !text-sm">person</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-base font-medium leading-normal text-gray-900 line-clamp-1 dark:text-gray-50">John Doe</p>
+<p class="text-sm font-normal leading-normal text-gray-500 line-clamp-1 dark:text-gray-400">Thanks for reaching out! I'm available...</p>
+</div>
+<div class="flex shrink-0 flex-col items-end gap-1.5">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">9:15 AM</p>
+</div>
+</div>
+<!-- Admin Support Chat Item (Read) -->
+<div class="flex min-h-[72px] cursor-pointer items-center gap-4 bg-background-light px-4 py-3 hover:bg-gray-200/50 dark:bg-background-dark dark:hover:bg-white/5">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center bg-no-repeat" data-alt="Profile picture for Admin Support" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB95CUK0PU881_PIrQIxK9qeWvV8XNaUuF7jX777_mHZjlxHL9A2rclgnGF3v9g9dvPREZGxx4zZ8sp6Vta-uIVFwXHLflVEZuy94FKs2hSvG4awA_dDvaNsE11VHmmlnWNNLIBhrHok7pKJZYxICRkBM69OkG7GE4QUuVGN8nIKjRTaEskoMxl0kKgoiEvmphYywY-6EeNFqU2W_7f0jPCUl1CGc1X-YMJgpTazNnoJakm31vaN4RuiZy5KGvrCbDD_qbjIGC7NwmI");'></div>
+<div class="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background-light bg-indigo-500 text-white dark:border-background-dark">
+<span class="material-symbols-outlined !text-sm">support_agent</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-base font-medium leading-normal text-gray-900 line-clamp-1 dark:text-gray-50">Admin Support</p>
+<p class="text-sm font-normal leading-normal text-gray-500 line-clamp-1 dark:text-gray-400">Welcome! How can we help you get started?</p>
+</div>
+<div class="flex shrink-0 flex-col items-end gap-1.5">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">Yesterday</p>
+</div>
+</div>
+<!-- Another Job Seeker Chat (Unread) -->
+<div class="flex min-h-[72px] cursor-pointer items-center gap-4 bg-background-light px-4 py-3 hover:bg-gray-200/50 dark:bg-background-dark dark:hover:bg-white/5">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center bg-no-repeat" data-alt="Profile picture of Sarah Lane" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLPUROxi8EZTE-l1mH9dN9GkE4ey69tltVtO9IYG2ViS2tCmeZxSLUxGsD-u9gxYTkcwNku_cv-4aNBxPGVZAfvlDeKA55QpftxM7HwVulWMzpZfrDgF37QEqgb_aGr8O3oBMthXvTODObIhQufMSQgJ9XJuN1BMx2BU14rIPQsSC5jmjGpoEkXo1_zjPEw8BDESjfEg8cl4KZR2Gh9oWIweJ8Oc4RBNI8WZF-q-LAtlVk41lx7Gt_WQugHty7PhJjPpv_7nS_j1y-");'></div>
+<div class="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background-light bg-primary text-white dark:border-background-dark">
+<span class="material-symbols-outlined !text-sm">person</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-base font-semibold leading-normal text-gray-900 line-clamp-1 dark:text-gray-50">Sarah Lane</p>
+<p class="text-sm font-semibold leading-normal text-gray-800 line-clamp-1 dark:text-gray-200">Just sent over my portfolio. Let me know what...</p>
+</div>
+<div class="flex shrink-0 flex-col items-end gap-1.5">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">Yesterday</p>
+<div class="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-primary px-2">
+<p class="text-xs font-bold text-white">1</p>
+</div>
+</div>
+</div>
+<!-- Another Employer Chat (Read) -->
+<div class="flex min-h-[72px] cursor-pointer items-center gap-4 bg-background-light px-4 py-3 hover:bg-gray-200/50 dark:bg-background-dark dark:hover:bg-white/5">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-cover bg-center bg-no-repeat" data-alt="Company logo for Innovate Co." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBg3tUGpAv8pkXJsCUL_2D3aMAwyFdR_DQy55VMpx8nvGeaa6ICscxB66phoZl7ecaeGJJ0iPO2Jg2Sh5cV334_u17os9iKbfEos4I5eO8n6seKbnQj-C7IvVXCBRklKxEsZIy-9vLuUPZfStVoLMlRAw-fZsARb1WB-oyBZ53l69qKYN0tmXjkvvb0k2KOaJq6a_uK2syFbUbtfKbGFndYS-f4r1AcPST2-Vj9zM-igyBjDbZeQMm0Gib-RtcWCkl2_0aRgYbumaNQ");'></div>
+<div class="absolute bottom-0 right-0 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background-light bg-teal-500 text-white dark:border-background-dark">
+<span class="material-symbols-outlined !text-sm">work</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-base font-medium leading-normal text-gray-900 line-clamp-1 dark:text-gray-50">Innovate Co.</p>
+<p class="text-sm font-normal leading-normal text-gray-500 line-clamp-1 dark:text-gray-400">We've reviewed your application and would like...</p>
+</div>
+<div class="flex shrink-0 flex-col items-end gap-1.5">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">Mon</p>
+</div>
+
+</body></html>

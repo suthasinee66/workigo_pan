@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shop Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ff6a00",
+              "secondary": "#1F3A5F",
+              "background-light": "#ffffff",
+              "card-light": "#F5F7FA",
+              "background-dark": "#121212", 
+              "card-dark": "#1e1e1e",
+              "text-light-primary": "#1F3A5F",
+              "text-light-secondary": "#6b7280",
+              "text-dark-primary": "#ffffff",
+              "text-dark-secondary": "#9ca3af",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+            boxShadow: {
+              'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .material-symbols-outlined.filled {
+        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex items-center bg-secondary dark:bg-gray-900 p-4 pb-3 justify-between shadow-md sticky top-0 z-20">
+<div class="flex size-10 shrink-0 items-center justify-start text-white">
+<span class="material-symbols-outlined text-3xl">arrow_back_ios_new</span>
+</div>
+<h1 class="text-white text-xl font-bold leading-tight flex-1 text-center">Shop Profile</h1>
+<div class="flex w-auto items-center justify-end">
+
+</div>
+<button onclick="window.location.href='#'" class="flex w-auto items-center justify-end text-white">
+  <span class="material-symbols-outlined text-3xl">edit</span>
+  </button>
+</div>
+<div class="relative w-full">
+<div class="h-40 bg-gray-200 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAngde9IkrurXeKA0CXpSBwnIMe8vxoS9uw4JGeennehBjIhs9tymFRXe314piinU_zbQsTpJdQRLVpcLmORmiSN0Iv0jYL11ss2rK2ZjnxLxq-JxF5lVvO57EvrYz9mBbDC713G4zxFoHE3GTT7rSIs7ozHXG9U1xLthB7MqnIT4k3nvvd0KXFsVdovqiD4f7LB3b3x0H4II86GJTdLIx2VaexgrUqBe5VCRWajAWp6mXseUAL0H1Bf917m9QTQxMqhA45z0N8x3E9");'></div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 ring-4 ring-white dark:ring-background-dark shadow-soft" data-alt="Shop's logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZ0GrqBPzq2M9v6tqEQYZJ9CZJl3lc5R3v8aam_ZNUkSlLqtGYUcr1iiQFRGmpz3PfdwmQf131cqLyiXzx6Gcg-aDS4tn4mRiWOU02vslD4PchRke_ZkV5tfs_aepofW24XKJnb9zWsKrelqooD8In6b_s2U75K9G0HT9B5EtWEiFeQs3eoZ8XSYNSq8PAd3rHewpZVcqEdA6BH5_ENaFjJl_nRXGbx5PvVVK7MmLblm5C2WprdUNQIeVRRaL_7L5soGGlxIR4ZXLv");'></div>
+</div>
+<div class="pt-20 pb-6 px-6 text-center">
+<div class="flex justify-center items-center gap-2">
+<p class="text-text-light-primary dark:text-text-dark-primary text-[24px] font-bold leading-tight tracking-[-0.015em]">The Morning Brew</p>
+<span class="material-symbols-outlined filled text-blue-500 text-2xl">verified</span>
+</div>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-base font-medium mt-1">Café</p>
+</div>
+<div class="px-4 pb-12 flex flex-col gap-6">
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-soft">
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Shop Information</h3>
+<div class="grid grid-cols-[35%_1fr] gap-x-4">
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Company Name</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">The Morning Brew</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Owner Name</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">John Doe</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Phone Number</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">+1-202-555-0182</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Email</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">contact@morningbrew.com</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Store Address</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">789 Coffee Bean Ln, Seattle, WA 98101</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Category</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Food &amp; Beverage</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 pt-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Opening Hours</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Mon - Sat: 7am - 6pm</p>
+</div>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-soft">
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] mb-4">About the Shop</h3>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium border-t border-gray-200 dark:border-gray-700 pt-4">Your neighborhood's favorite spot for artisanal coffee and freshly baked pastries. We pride ourselves on sourcing the best beans and creating a welcoming atmosphere for everyone.</p>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-soft">
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Posted Jobs Summary</h3>
+<div class="grid grid-cols-3 gap-4 text-center border-t border-gray-200 dark:border-gray-700 pt-4">
+<div>
+<p class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold">12</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-xs font-medium">Total</p>
+</div>
+<div>
+<p class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold">3</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-xs font-medium">Active</p>
+</div>
+<div>
+<p class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold">9</p>
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-xs font-medium">Closed</p>
+</div>
+</div>
+<button class="mt-6 w-full text-center bg-primary text-white py-3 rounded-lg font-bold text-base">View All Jobs</button>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-soft">
+
+<button onclick="window.location.href='Start.html'"class="w-full text-center bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 py-3 rounded-lg font-bold text-base">Logout</button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Seeker Check-in QR</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1358ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div onclick="window.location.href='job_seeker_my_shifts.html'" class="text-[#111318] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer" data-icon="ArrowLeft">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Check-in</h2>
+<div class="w-12"></div> <!-- Spacer to balance the back button -->
+</div>
+<main class="flex-grow px-4 py-8 flex flex-col items-center justify-center">
+<!-- Card for QR Code -->
+<div class="flex w-full max-w-sm flex-col items-stretch justify-start rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-white dark:bg-[#1C2431]">
+<div class="flex flex-col items-center justify-center p-8">
+<div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl" data-alt="A scannable QR code for user check-in" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvi5QnS7g_jdXez0qXlN69PZzff2ODuKEp9EYhKT_fvrSZJQzao4spvMOwuOVk2ncxBWSeihykiTCp30GL6TZvcW3lJsbrp-BwaRn33uPQaIR9PTd-3-6DBq8geztz61ygIwKnYf5bFDJpcIhfWIYrN1tL9ECbUYWvKuOxbY2beebi_eZMc9BlRqa9i2znI-T2ls5r7muAlZk62QsLSiOl8aamNi4v5iYeKyVtqYRhSvlDUitOE_HiSNvGbFD_J7q8hXDNruMADzj3");'></div>
+</div>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-2 pb-8 px-6 text-center">
+<p class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Show this to the employer to check in</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal">Ready to scan</p>
+</div>
+</div>
+<!-- ListItem for User Info -->
+<div class="flex items-center gap-4 bg-transparent px-4 mt-8 w-full max-w-sm justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Profile picture of John Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBTNVecWuEPy8hD-6JsiGpYXsVBqmEsLW3rq3BdTs8JkqqzX3itTR1yfBfbgL8Q8t6jHsa0LfH8g-z4AnG8r8whlkAKgQFmvcjnzMgcUDk3mVMFuPoT2j8eunp-vwvloDx9-agg-QjhDeYtH5nhfS1LHyyOXiIuYY2A5tfktuCO9N1jO1v_Roqdf8dN8C_MHQgSXj4cfskWuKBBr-vdBbO5irk_hga2Szfq8MuPAsuTgSzVWUBXMJ-YNfdMteYZMfC4pBowvrEwE_O6");'></div>
+<p class="text-[#111318] dark:text-white text-base font-semibold leading-normal flex-1 truncate">John Doe</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center gap-2 text-primary text-base font-medium leading-normal rounded-full bg-primary/10 px-4 py-2">
+<span class="material-symbols-outlined text-xl">refresh</span>
+<span>Refresh</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Spacer to push BottomNavBar to the bottom -->
+<div class="flex-grow"></div>
+<!-- BottomNavBar -->
+<div class="flex gap-2 border-t border-[#f0f1f4] dark:border-gray-800 bg-white dark:bg-[#101622] px-4 pb-3 pt-2 sticky bottom-0">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-500 dark:text-gray-400" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">home</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-500 dark:text-gray-400" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">work</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Jobs</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">qr_code_scanner</span>
+</div>
+<p class="text-primary text-xs font-medium leading-normal tracking-[0.015em]">Scan</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-500 dark:text-gray-400" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Profile</p>
+</a>
+</div>
+</div>
+</body></html>

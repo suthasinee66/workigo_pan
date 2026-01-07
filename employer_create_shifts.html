@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Employer - Create Shifts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#345395",
+              "accent": "#f95e07",
+              "success": "#208672",
+              "background-light": "#f7f6f8",
+              "background-dark": "#17141e",
+              "foreground-light": "#141216",
+              "foreground-dark": "#f7f6f8"
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.5rem",
+              "lg": "0.75rem",
+              "xl": "1rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between border-b border-gray-200/80 bg-background-light/80 px-4 backdrop-blur-sm dark:border-gray-800/80 dark:bg-background-dark/80">
+<button class="flex size-10 items-center justify-center text-foreground-light dark:text-foreground-dark">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+<h1 class="text-lg font-bold text-foreground-light dark:text-foreground-dark">Create Shifts</h1>
+<div class="size-10"></div>
+</div>
+<main class="flex-1 pb-36">
+<!-- Header Section -->
+<div class="p-4">
+<div class="flex items-center gap-4 rounded-xl bg-white p-4 shadow-sm dark:bg-background-dark dark:border dark:border-gray-800">
+<div class="flex items-center gap-4 flex-1">
+<img class="h-12 w-12 rounded-full object-cover" data-alt="Profile picture of Jane Doe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz1DfJGYkTsK8Rm6HvfBhOMvohTmGkwfaaVaOUWGXTv2WIqiOmxJI-6T01hLvpgFJSSN1-AnSZETxpkg53TAX65y1_QWlabqa-nTXotbjKj3YEoxXgm0DJ-Ry-xRhHezyjMMlG9jYQAAZuuYMPmkuUXRFFm7d1ZCqzt6dvUQJ1eGMj1x90BfCqFiN4W58GbjZRdgYG2utL4tYnYfS0wL9fX6rhBKHWbTkre2DZrFUntHJaKYzHTjKqUvpViIp9gf7nDHIxN-BZFXA"/>
+<div>
+<p class="text-base font-semibold leading-tight text-foreground-light dark:text-foreground-dark">Jane Doe</p>
+<p class="text-sm font-normal text-gray-500 dark:text-gray-400">Barista</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Calendar Picker -->
+<div class="flex flex-wrap items-center justify-center gap-6 px-4">
+<div class="w-full max-w-md flex-1 flex-col gap-0.5 rounded-xl bg-white p-2 shadow-sm dark:bg-background-dark dark:border dark:border-gray-800">
+<div class="flex items-center justify-between p-1">
+<button class="flex size-10 items-center justify-center rounded-full text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<p class="flex-1 text-center text-base font-bold leading-tight text-foreground-light dark:text-foreground-dark">October 2024</p>
+<button class="flex size-10 items-center justify-center rounded-full text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7">
+<p class="flex h-10 w-full items-center justify-center pb-0.5 text-[13px] font-bold text-gray-500 dark:text-gray-400">S</p>
+<p class="flex h-10 w-full items-center justify-center pb-0.5 text-[13px] font-bold text-gray-500 dark:text-gray-400">M</p>
+<p class="flex h-10 w-full items-center justify-center pb-0.5 text-[13px] font-bold text-gray-500 dark:text-gray-400">T</p>
+<p class="flex h-10 w-full items-center justify-center pb-0.5 text-[13px] font-bold text-gray-500 dark:text-gray-400">W</p>
+<p class="flex h-10 w-full items-center justify-center pb-0.5 text-[13px] font-bold text-gray-500 dark:text-gray-400">T</p>
+<p class="flex h-10 w-full items-center justify-center pb-0.5 text-[13px] font-bold text-gray-500 dark:text-gray-400">F</p>
+<p class="flex h-10 w-full items-center justify-center pb-0.5 text-[13px] font-bold text-gray-500 dark:text-gray-400">S</p>
+<div class="col-start-3 h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">1</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">2</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">3</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">4</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">5</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">6</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">7</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">8</button></div>
+<div class="h-10 w-full p-1"><button class="relative flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">9<span class="absolute bottom-1.5 h-1 w-1 rounded-full bg-accent"></span></button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">10</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">11</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">12</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">13</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">14</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">15</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">16</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">17</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">18</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full bg-accent text-sm font-semibold text-white">19</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">20</button></div>
+<div class="h-10 w-full p-1"><button class="relative flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">21<span class="absolute bottom-1.5 h-1 w-1 rounded-full bg-accent"></span></button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">22</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">23</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">24</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">25</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">26</button></div>
+<div class="h-10 w-full p-1"><button class="relative flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">27<span class="absolute bottom-1.5 h-1 w-1 rounded-full bg-accent"></span></button></div>
+<div class="h-10 w-full p-1"><button class="relative flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-foreground-light hover:bg-gray-100 dark:text-foreground-dark dark:hover:bg-gray-800">28<span class="absolute bottom-1.5 h-1 w-1 rounded-full bg-accent"></span></button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-gray-400 dark:text-gray-600">29</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-gray-400 dark:text-gray-600">30</button></div>
+<div class="h-10 w-full p-1"><button class="flex h-full w-full items-center justify-center rounded-full text-sm font-medium text-gray-400 dark:text-gray-600">31</button></div>
+</div>
+</div>
+</div>
+<!-- Scheduled Shifts List -->
+<div class="mt-6 px-4">
+<h3 class="px-2 pb-2 text-lg font-bold leading-tight tracking-[-0.015em] text-foreground-light dark:text-foreground-dark">Scheduled Shifts</h3>
+<div class="space-y-2">
+<div class="flex min-h-14 items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-sm dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="flex-1 truncate text-base font-medium leading-normal text-foreground-light dark:text-foreground-dark">Wed, Oct 9: 9:00 AM - 5:00 PM</p>
+<button class="shrink-0 text-gray-500 hover:text-red-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">delete</span>
+</button>
+</div>
+<div class="flex min-h-14 items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-sm dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="flex-1 truncate text-base font-medium leading-normal text-foreground-light dark:text-foreground-dark">Fri, Oct 21: 10:00 AM - 3:00 PM</p>
+<button class="shrink-0 text-gray-500 hover:text-red-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">delete</span>
+</button>
+</div>
+<div class="flex min-h-14 items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-sm dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="flex-1 truncate text-base font-medium leading-normal text-foreground-light dark:text-foreground-dark">Sun, Oct 27: 12:00 PM - 8:00 PM</p>
+<button class="shrink-0 text-gray-500 hover:text-red-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">delete</span>
+</button>
+</div>
+<div class="flex min-h-14 items-center justify-between gap-4 rounded-xl bg-white p-4 shadow-sm dark:bg-background-dark dark:border dark:border-gray-800">
+<p class="flex-1 truncate text-base font-medium leading-normal text-foreground-light dark:text-foreground-dark">Mon, Oct 28: 9:00 AM - 5:00 PM</p>
+<button class="shrink-0 text-gray-500 hover:text-red-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State Example (hidden for now) -->
+<!--
+            <div class="mt-6 flex flex-col items-center justify-center p-8 text-center">
+              <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-700">calendar_month</span>
+              <p class="mt-4 text-base font-semibold text-foreground-light dark:text-foreground-dark">No Shifts Scheduled</p>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Select a date on the calendar to add a new shift.</p>
+            </div>
+            -->
+</main>
+<!-- Bottom Action Bar and Navigation -->
+<div class="fixed inset-x-0 bottom-0 z-10 bg-background-light/80 pb-safe backdrop-blur-sm dark:bg-background-dark/80">
+<div class="p-4">
+<button class="w-full rounded-xl bg-primary px-5 py-4 text-center text-base font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90">Save Schedule</button>
+</div>
+<div class="flex h-20 items-center justify-around border-t border-gray-200/80 bg-background-light/80 dark:border-gray-800/80 dark:bg-background-dark/80">
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-xs font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary dark:text-accent" href="#">
+<span class="material-symbols-outlined text-2xl">work</span>
+<span class="text-xs font-bold">Jobs</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">chat</span>
+<span class="text-xs font-medium">Messages</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-xs font-medium">Profile</span>
+</a>
+</div>
+</div>
+</div>
+</body></html>

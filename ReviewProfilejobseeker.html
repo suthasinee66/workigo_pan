@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile - Work-i-Go</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#345293",
+            "accent": "#f95e07",
+            "success": "#208672",
+            "background-light": "#f6f7f8",
+            "background-dark": "#14171e",
+            "text-light": "#3C3C43",
+            "text-dark": "#E5E5E5",
+            "neutral-light-subtle": "#F2F2F7",
+            "neutral-dark-subtle": "#2C2C2E"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 24px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<span onclick="window.location.href='AcceptDecline.html'"class="material-symbols-outlined">arrow_back_ios_new</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">My Profile</h2>
+<div class="flex w-12 items-center justify-end">
+
+</div>
+</div>
+<!-- Profile Header -->
+<div class="flex p-4 @container">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 ring-4 ring-white dark:ring-neutral-dark-subtle" data-alt="Profile picture of Alex Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD2ScYPS0EDGZTofktr2n7e9JlSnuzqSwY8-D5F2aJyMft0qBc8bkJjNO1lt7k84PgFE6wnrEzQacGwDUduzOdvBsRITs_I6PGIwbIIpmGEYVwkVVW7st9GCX5zgeWsNZnqU6YpKvvNPJ08T4gy9BSow2wc391gtFqD-TwB_Og_7sWdTKd8gCl4smuUDz98vqF-pocXTctRFH5SDjDwCLpOOJbTNnbSuqEgG0-UHyUkfmyCjd1y6tmxCOnzDQY60_t3I7i1ZtdDaVc");'></div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Alex Doe</p>
+<div class="flex items-center gap-2 mt-2">
+<p class="text-[#6a7181] dark:text-gray-400 text-base font-normal leading-normal text-center">alex.doe@email.com</p>
+</div>
+<p class="text-[#6a7181] dark:text-gray-400 text-base font-normal leading-normal text-center">New York, USA</p>
+</div>
+</div>
+<div class="flex items-center gap-3 flex-wrap justify-center">
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/20 text-primary px-4">
+<p class="text-sm font-medium leading-normal">Job Seeker</p>
+</div>
+<div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-accent/20 text-accent px-4">
+<p class="text-sm font-medium leading-normal">Employer</p>
+</div>
+</div>
+
+</div>
+</div>
+<!-- Rating Summary -->
+<div class="px-4 pb-4">
+<div class="flex flex-wrap gap-x-8 gap-y-6 p-4 rounded-xl bg-neutral-light-subtle dark:bg-neutral-dark-subtle">
+<div class="flex flex-col gap-2">
+<p class="text-text-light dark:text-text-dark text-4xl font-black leading-tight tracking-[-0.033em]">4.5</p>
+<div class="flex gap-0.5 text-accent">
+<span class="material-symbols-outlined !text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[18px]" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+<p class="text-[#6a7181] dark:text-gray-400 text-base font-normal leading-normal">(124 reviews)</p>
+</div>
+<div class="grid min-w-[200px] max-w-[400px] flex-1 grid-cols-[20px_1fr_40px] items-center gap-y-3">
+<p class="text-text-light dark:text-text-dark text-sm font-normal leading-normal">5</p>
+<div class="flex h-2 flex-1 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-600"><div class="rounded-full bg-primary" style="width: 60%;"></div></div>
+<p class="text-[#6a7181] dark:text-gray-400 text-sm font-normal leading-normal text-right">60%</p>
+<p class="text-text-light dark:text-text-dark text-sm font-normal leading-normal">4</p>
+<div class="flex h-2 flex-1 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-600"><div class="rounded-full bg-primary" style="width: 25%;"></div></div>
+<p class="text-[#6a7181] dark:text-gray-400 text-sm font-normal leading-normal text-right">25%</p>
+<p class="text-text-light dark:text-text-dark text-sm font-normal leading-normal">3</p>
+<div class="flex h-2 flex-1 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-600"><div class="rounded-full bg-primary" style="width: 10%;"></div></div>
+<p class="text-[#6a7181] dark:text-gray-400 text-sm font-normal leading-normal text-right">10%</p>
+<p class="text-text-light dark:text-text-dark text-sm font-normal leading-normal">2</p>
+<div class="flex h-2 flex-1 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-600"><div class="rounded-full bg-primary" style="width: 3%;"></div></div>
+<p class="text-[#6a7181] dark:text-gray-400 text-sm font-normal leading-normal text-right">3%</p>
+<p class="text-text-light dark:text-text-dark text-sm font-normal leading-normal">1</p>
+<div class="flex h-2 flex-1 overflow-hidden rounded-full bg-gray-300 dark:bg-gray-600"><div class="rounded-full bg-primary" style="width: 2%;"></div></div>
+<p class="text-[#6a7181] dark:text-gray-400 text-sm font-normal leading-normal text-right">2%</p>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="pb-3">
+<div class="flex border-b border-gray-200 dark:border-gray-700 px-4 justify-between">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary pb-[13px] pt-4 flex-1" href="#">
+<p class="text-primary text-sm font-bold leading-normal tracking-[0.015em]">Job History</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#6a7181] dark:text-gray-400 pb-[13px] pt-4 flex-1" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Business Info</p>
+</a>
+</div>
+</div>
+<!-- Tab Content: Job History -->
+<div class="flex flex-col gap-4 p-4">
+<div class="flex flex-col gap-4 rounded-xl bg-neutral-light-subtle dark:bg-neutral-dark-subtle p-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-center bg-cover" data-alt="Company logo for 'Innovate Inc.'" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrihe0SBq9d4StMJM20F-CtHIJMvbvGi86vOirrZz9kowQe9C0KRWXW3nwkQL07wk-LiMdZBeez_71lhX9AyZ-dX2Su-r8LTvm3fpDUFYd8KDa3TIyZE5aLgM2AWzMETYZLiDja7WHSn1jgdZwO-55bRplahFc6PTPav3VKZvNWdbGEB8yb8b3YMJaTqKrnyp0h4OpPX01ZawUeksT6BvFJP0p44RfUFr5-4T0Z32mQhcxvT1c_f8Kqf6IOmrkAR_6A9AE0I_LB3A')"></div>
+<div class="flex-1">
+<p class="font-bold text-text-light dark:text-text-dark">UI/UX Design Intern</p>
+<p class="text-sm text-[#6a7181] dark:text-gray-400">Innovate Inc. · Completed May 2023</p>
+</div>
+<div class="flex items-center gap-1 text-accent">
+<span class="text-sm font-bold">5.0</span>
+<span class="material-symbols-outlined !text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-sm text-[#6a7181] dark:text-gray-400">Assisted the design team with creating wireframes and prototypes for a new mobile application. Received positive feedback on my contributions to the user research phase.</p>
+</div>
+<div class="flex flex-col gap-4 rounded-xl bg-neutral-light-subtle dark:bg-neutral-dark-subtle p-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-center bg-cover" data-alt="Company logo for 'Coffee House'" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjSAA34Mq70tWlK9b_h2K7VJ626FcYEXaJvtZizYK9_kfrxSofKmYYZapSpt3HrY2NnSFfmadNe63lO6l9O0QnftJHPoi7rh11pNmHJWByvXF-qFHQuA02gC_JkDhzGK-ZStWDc1kB-6GUgQujvprwtbTAc05Os9-FNZpkYNq9Yq55Q3kilLoPabvsoJNOXwz1QPjYnnubcsxhIDhh11xZqsOkAzukRKG4XngA6u3mrdUnfQ0-W9SZBZ-QxaXsfkCStn1n0kQPgv0')"></div>
+<div class="flex-1">
+<p class="font-bold text-text-light dark:text-text-dark">Barista</p>
+<p class="text-sm text-[#6a7181] dark:text-gray-400">The Daily Grind · Completed Jan 2023</p>
+</div>
+<div class="flex items-center gap-1 text-accent">
+<span class="text-sm font-bold">4.8</span>
+<span class="material-symbols-outlined !text-base" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<p class="text-sm text-[#6a7181] dark:text-gray-400">Prepared and served a variety of coffee drinks, provided excellent customer service, and maintained a clean and welcoming environment. Consistently praised for speed and accuracy.</p>
+</div>
+<div class="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-gray-300 dark:border-gray-600 p-8 text-center mt-4">
+<span class="material-symbols-outlined text-4xl text-gray-400 dark:text-gray-500">work_history</span>
+<p class="font-bold text-text-light dark:text-text-dark">No More Job History</p>
+<p class="text-sm text-[#6a7181] dark:text-gray-400 max-w-xs">Looks like you've reached the end. Find new opportunities on the search page!</p>
+</div>
+</div>
+<div class="flex-grow"></div> <!-- Spacer to push nav to bottom -->
+<!-- Bottom Navigation Bar -->
+<div class="sticky bottom-0 z-10 flex w-full items-center justify-around border-t border-gray-200 dark:border-gray-700 bg-background-light dark:bg-background-dark py-2">
+<a class="flex flex-col items-center justify-center gap-1 text-[#6a7181] dark:text-gray-400 w-1/4" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-xs font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-[#6a7181] dark:text-gray-400 w-1/4" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-xs font-medium">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-[#6a7181] dark:text-gray-400 w-1/4" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-xs font-medium">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 text-primary w-1/4" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-xs font-bold">Profile</span>
+</a>
+</div>
+</div>
+</body></html>

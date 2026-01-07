@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - Work-i-Go</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#f95f06",
+            "background-light": "#f8f6f5",
+            "background-dark": "#23160f",
+            "brand-blue": "#345395",
+            "brand-success": "#208672",
+          },
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="bg-background-light font-display">
+  <main class="min-h-screen flex flex-col items-center justify-center px-4">
+    <h1 class="text-2xl font-bold text-brand-blue mb-2">Work-i-Go</h1>
+    <h2 class="text-xl font-bold text-brand-blue mb-6">Create your account</h2>
+
+    <form class="w-full max-w-md flex flex-col gap-4">
+      <input class="form-input h-14 rounded-xl border" placeholder="Full name" />
+      <input class="form-input h-14 rounded-xl border" type="email" placeholder="Email" />
+      <input class="form-input h-14 rounded-xl border" type="tel" placeholder="Phone number" />
+      <input class="form-input h-14 rounded-xl border" type="password" placeholder="Password" />
+
+      <a href="select_role.html" class="block w-full">
+        <button type="button" class="w-full h-14 rounded-xl bg-primary text-white font-bold">
+          Create Account
+        </button>
+      </a>
+
+
+      <div class="flex items-center gap-3">
+        <hr class="flex-1" /><span class="text-sm text-gray-400">or</span>
+        <hr class="flex-1" />
+      </div>
+      <a href="google_mock.html">
+        <button type="button" class="w-full h-14 rounded-xl border font-bold flex items-center justify-center gap-2">
+          Continue with Google
+        </button>
+      </a>
+      <p class="text-sm text-center text-gray-500">
+        Already have an account?
+        <a href="signin.html" class="text-brand-blue font-semibold">Sign in</a>
+      </p>
+    </form>
+  </main>
+</body>
+
+</html>

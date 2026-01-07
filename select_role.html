@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Role - Work-i-Go</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#f95f06",
+                        "brand-blue": "#345395",
+                        "background-light": "#f8f6f5",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light font-display">
+    <main class="min-h-screen flex flex-col items-center justify-center px-4">
+        <h1 class="text-2xl font-bold text-brand-blue mb-6">
+            Select your role
+        </h1>
+
+        <div class="w-full max-w-md flex flex-col gap-4">
+            <a href="employer_onboarding.html">
+                <button type="button"
+                    class="w-full h-16 rounded-xl border flex items-center justify-center gap-3 font-bold">
+                    <span class="material-symbols-outlined">corporate_fare</span>
+                    Employer
+                </button>
+            </a>
+            <a href="job_seeker_onboarding.html">
+            <button type="button"
+                class="w-full h-16 rounded-xl border flex items-center justify-center gap-3 font-bold">
+                <span class="material-symbols-outlined">person_search</span>
+                Job Seeker
+            </button>
+            </a>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Editable User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ff6a00",
+              "secondary": "#1F3A5F",
+              "background-light": "#FFFFFF",
+              "background-dark": "#121212", 
+              "card": "#F5F7FA",
+              "card-dark": "#1E1E1E",
+              "text-light": "#1F3A5F",
+              "text-dark": "#F5F7FA",
+              "subtext-light": "#6b7280",
+              "subtext-dark": "#9ca3af",
+              "border-light": "#e5e7eb",
+              "border-dark": "#374151"
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+            boxShadow: {
+                'soft': '0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="flex items-center bg-secondary p-4 justify-between sticky top-0 z-10">
+<div class="flex size-10 shrink-0 items-center justify-center text-white">
+<button onclick="window.location.href='Myprofile_seeker.html'" class="flex size-10 items-center justify-center text-foreground-light dark:text-foreground-dark cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+</div>
+<h1 class="text-white text-xl font-bold leading-tight">My Profile</h1>
+<div class="flex w-10 items-center justify-end">
+
+</div>
+</div>
+<div class="flex flex-col p-6 space-y-6">
+<!-- Profile Header -->
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 shadow-soft" data-alt="A portrait of Aliah Lane" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBI7fxXihAtnAO3wmHkWPEosceN0y3F2j5wizXugZmMd8Evv-YH0tlpcwDSDdrMhcEw074ky1Y7i56YrD5BFu_OaazZ10RCbY3q_uOJvxZb61_o5dImvs6iA29NzO-0WOUydqEtdqEJhsDzJuisg0rYBRDpqfw1lhGl8d-_A4eLCEa1X7un3zNhGHYW5RJVCslbRoqmDo3TdqqS_8q8hb522R0n88vnzfBNx9j4sHKvsw75bD-0OYcy02zGT8DHmGglwZlKyra78-3z");'></div>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-5 bg-transparent text-primary text-base font-bold">
+<span class="truncate">Change Photo</span>
+</button>
+<div class="flex flex-col items-center justify-center -mt-2">
+<p class="text-text-light dark:text-text-dark text-2xl font-bold leading-tight tracking-tight">Aliah Lane</p>
+<p class="text-subtext-light dark:text-subtext-dark text-base font-normal leading-normal">Job Seeker</p>
+</div>
+</div>
+<!-- Personal Information Card -->
+<div class="bg-card dark:bg-card-dark rounded-xl shadow-soft p-5 space-y-4">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight">Personal Information</h3>
+<div class="space-y-4">
+<label class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Full name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal" value="Aliah Lane"/>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Phone number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal" value="+1 234 567 890"/>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Email</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-subtext-light dark:text-subtext-dark bg-card dark:bg-card-dark border-0 h-12 px-4 text-base font-normal cursor-not-allowed" readonly="" value="aria.giovanni@email.com"/>
+</label>
+</div>
+</div>
+<!-- Role-Based Information Card (Job Seeker) -->
+<div class="bg-card dark:bg-card-dark rounded-xl shadow-soft p-5 space-y-4">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight">Job Preferences</h3>
+<div class="space-y-4">
+<label class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Skills</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal" placeholder="e.g., UI Design, Project Management"/>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Preferred job type</p>
+<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal">
+<option>Full-time</option>
+<option>Part-time</option>
+<option>Contract</option>
+<option>Internship</option>
+</select>
+</label>
+<div class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Upload CV/Resume</p>
+<div class="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
+<div class="text-center">
+<span class="material-symbols-outlined text-4xl text-subtext-light dark:text-subtext-dark">cloud_upload</span>
+<p class="mt-2 text-sm text-subtext-light dark:text-subtext-dark">Drag &amp; drop or <span class="font-semibold text-primary">browse files</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Section Card -->
+<div class="bg-card dark:bg-card-dark rounded-xl shadow-soft p-5 space-y-4">
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight">Security</h3>
+<div class="flex flex-col space-y-2">
+<button class="flex items-center justify-between w-full p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="text-text-light dark:text-text-dark font-medium">Change Password</span>
+<span class="material-symbols-outlined text-subtext-light dark:text-subtext-dark">arrow_forward_ios</span>
+</button>
+<div class="flex items-center justify-between w-full p-3">
+<span class="text-text-light dark:text-text-dark font-medium">Enable Two-Factor Authentication</span>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" id="toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="toggle"></label>
+</div>
+<style>
+                           .toggle-checkbox:checked { right: 0; border-color: #ff6a00; }
+                           .toggle-checkbox:checked + .toggle-label { background-color: #ff6a00; }
+                       </style>
+</div>
+<div class="pt-2">
+<button onclick="window.location.href='signin.html'"class="flex items-center justify-center w-full p-3 rounded-lg text-red-500 font-bold hover:bg-red-500/10 transition-colors">
+                        Logout
+                    </button>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="pt-4 space-y-3">
+<button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-4 bg-primary text-white text-lg font-bold shadow-soft">
+<span class="truncate">Save Changes</span>
+</button>
+<button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-4 bg-card dark:bg-card-dark text-text-light dark:text-text-dark text-lg font-bold shadow-soft">
+<span class="truncate">Cancel</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

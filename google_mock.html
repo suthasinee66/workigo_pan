@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign in with Google (Demo)</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    body { font-family: Roboto, sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <!-- Card -->
+  <div class="w-full max-w-md bg-white rounded-xl shadow-md overflow-hidden">
+    
+    <!-- Header -->
+    <div class="flex items-center gap-3 px-6 py-4 border-b">
+      <img
+        src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+        alt="Google"
+        class="w-6 h-6"
+      />
+      <span class="text-sm font-medium text-gray-700">
+        ลงชื่อเข้าใช้ด้วย Google
+      </span>
+    </div>
+
+    <!-- Content -->
+    <div class="px-6 py-6">
+      <h1 class="text-2xl font-medium text-gray-900 mb-1">
+        เลือกบัญชี
+      </h1>
+      <p class="text-sm text-gray-600 mb-6">
+        เพื่อดำเนินการต่อไปยัง <span class="text-blue-600 font-medium">Work-i-Go</span>
+      </p>
+
+      <!-- Account item -->
+      <a href="select_role.html" class="block">
+        <div class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-100 cursor-pointer">
+          <div class="w-10 h-10 rounded-full bg-blue-200 flex items-center justify-center">
+            <span class="text-blue-700 font-bold">T</span>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">
+              user.demo@gmail.com
+            </p>
+            <p class="text-xs text-gray-500">
+              Google Account
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Divider -->
+      <div class="my-4 border-t"></div>
+
+      <!-- Use another account -->
+      <div class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-100 cursor-pointer">
+        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+          <span class="text-gray-600 text-lg">+</span>
+        </div>
+        <p class="text-sm text-gray-700">
+          ใช้บัญชีอื่น
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="px-6 py-4 text-xs text-gray-500 bg-gray-50">
+      <p>
+        นี่เป็นหน้า <strong>Demo UI เท่านั้น</strong>  
+        ไม่ใช่ระบบ Google จริง และไม่มีการยืนยันตัวตน
+      </p>
+    </div>
+
+  </div>
+
+</body>
+</html>

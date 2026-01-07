@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Seeker Home / Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#345395",
+                        "accent": "#f95e07",
+                        "success": "#208672",
+                        "background-light": "#f8f6f5",
+                        "background-dark": "#23160f",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative mx-auto flex h-auto min-h-screen w-full max-w-md flex-col bg-background-light group/design-root dark:bg-background-dark" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light p-4 pb-2 dark:bg-background-dark">
+<div class="flex size-12 shrink-0 items-center">
+<div class="aspect-square size-10 rounded-full bg-cover bg-center bg-no-repeat" data-alt="User profile picture of Alex" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDDYxvULEH6VjQ2cvGJBUcHt_h8sgjxB9gFUvQFdH5WF_2EXe_WRwVXHlz9wDfKFuPoBm1PoX0hHCUvy2jzYS9XNKqJjSL37_oWliOBupdRFT9xgEg0HM9ajTAA97jvB-Ja5Ri4XROdLhlS11Kvb5v4UZNyiil1OMnC18wsAzGwxluwXHF1ROSwpBdkEAvprtHPv1lWansvSFygQwCByw08djVxR81itEk_6UFmaiOpMow_Ik-6DyjoI8kf2grFRm-QPjsC8kHy170");'></div>
+</div>
+<h2 class="flex-1 text-lg font-bold leading-tight tracking-[-0.015em] text-[#181311] dark:text-white">Good morning, Alex</h2>
+<div class="flex w-12 items-center justify-end">
+<button onclick="window.location.href='job_seeker_message.html'" class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="message.html">
+<span class="material-symbols-outlined text-2xl" >chat_bubble </span>
+</button>
+</div>
+</div>
+<main class="flex-1 pb-24">
+<!-- Stats -->
+<div class="flex flex-wrap gap-4 p-4">
+<div class="flex min-w-[100px] flex-1 flex-col gap-2 rounded-xl border border-[#e6dfdb] bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800">
+<p class="text-sm font-medium leading-normal text-[#181311] dark:text-gray-300">Applications</p>
+<p class="text-2xl font-bold leading-tight tracking-tight text-[#181311] dark:text-white">5</p>
+</div>
+<div class="flex min-w-[100px] flex-1 flex-col gap-2 rounded-xl border border-[#e6dfdb] bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800">
+<p class="text-sm font-medium leading-normal text-[#181311] dark:text-gray-300">Saved Jobs</p>
+<p class="text-2xl font-bold leading-tight tracking-tight text-[#181311] dark:text-white">3</p>
+</div>
+<button onclick="window.location.href='job_seeker_my_shifts.html'" class="flex min-w-[100px] flex-1 flex-col gap-2 rounded-xl border border-success/30 bg-success/10 p-4 dark:border-success/50 dark:bg-success/20 cursor-pointer">
+<p class="text-sm font-medium leading-normal text-success dark:text-success/90 text-left">Upcoming Shifts</p>
+<p class="text-2xl font-bold leading-tight tracking-tight text-success dark:text-success text-left">2</p>
+</button>
+
+<!-- Section Header -->
+<h3 class="px-4 pb-2 pt-6 text-lg font-bold leading-tight tracking-[-0.015em] text-[#181311] dark:text-white">Recommended For You</h3>
+<!-- Job Cards -->
+<div class="flex flex-col gap-4 p-4">
+<!-- Card 1 -->
+<div class="flex items-start justify-between gap-4 rounded-xl bg-white p-4 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-neutral-800 dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex shrink-0 items-center justify-center">
+<div class="aspect-square size-12 rounded-lg bg-cover bg-center bg-no-repeat" data-alt="The Coffee Bean company logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDmvPTn4VCWMxWbge5e3Yk_pFRY6XB5HsBf5pxLpRlBG18GXQGcNk8ykyrFvzZaSTuBaNXxvMHk8KTFM8VNvZUWbzxPm4F1JcjndozWPwvc5NkxuSCk-A3xoVtalOsmWigKdu1e_-NBpH-ZtmrLHxxwbPqBfpv7DS4XPYVrGAUFHfWn63sGPsNB1DPd6FF4UmNikcO4i8Q5VAXPG421Svk09zPBgivduRACl-BEQHIWDWFZsn_SffKvzg6GoCiCuC-ZClsz8dNHDUI");'></div>
+</div>
+<div class="flex flex-1 flex-col gap-1">
+<p class="text-base font-bold leading-tight text-[#181311] dark:text-white">Barista</p>
+<p class="text-sm font-normal leading-normal text-[#8c6f5f] dark:text-gray-400">The Coffee Bean</p>
+<p class="text-sm font-normal leading-normal text-[#8c6f5f] dark:text-gray-400">Downtown | 1.2 mi away</p>
+<p class="mt-1 text-base font-bold text-success dark:text-success/90">$18/hr</p>
+</div>
+<button class="text-[#8c6f5f] dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">bookmark</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="flex items-start justify-between gap-4 rounded-xl bg-white p-4 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-neutral-800 dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex shrink-0 items-center justify-center">
+<div class="aspect-square size-12 rounded-lg bg-cover bg-center bg-no-repeat" data-alt="Local Burger Joint company logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBj3QG5yAcqI-Dhu1H0YoqeWEMXcFN5b0dIxoGxKJIEKi6Fkmr-7qJ3yjUt5B5_IimfSS-h4Onew0sBMTtmRkpAdMnNPYA8MwTHvtnB-zaAyNAB2Cz9yFlV3OPUbuBhtygaj0g62XN_pPy0RvG0IMkeXLkRejaUrgExdGSMe6Q2mtUjo-UnbnJRH5yG5iVsUMza2RriHCIXnoHLUtW5Q6ClU1LsDyvhejozhOLmM4qO100SZ4R92-9u4rUGWnau-_fxII6jCRKhXIg");'></div>
+</div>
+<div class="flex flex-1 flex-col gap-1">
+<p class="text-base font-bold leading-tight text-[#181311] dark:text-white">Cashier</p>
+<p class="text-sm font-normal leading-normal text-[#8c6f5f] dark:text-gray-400">Local Burger Joint</p>
+<p class="text-sm font-normal leading-normal text-[#8c6f5f] dark:text-gray-400">Uptown | 3.5 mi away</p>
+<p class="mt-1 text-base font-bold text-success dark:text-success/90">$16/hr</p>
+</div>
+<button class="text-primary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+</button>
+</div>
+<!-- Card 3 -->
+<div class="flex items-start justify-between gap-4 rounded-xl bg-white p-4 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-neutral-800 dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex shrink-0 items-center justify-center">
+<div class="aspect-square size-12 rounded-lg bg-cover bg-center bg-no-repeat" data-alt="City Events Inc. company logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1WDxSq-RbOBFZZbcHdlRetZV4sw_Z9Ibu640L_ezmW314YA_-BtJ1it7y_cHWHd8qNha6JQoszr0ce1mhBHRkyllZxXEeyiQfJfvEuOvnQ34sP3VUzL9YvMZjyIhBuMCpSM-1mJQ4u3DbZUwqUx9RWeQBK2HldZ9cKpoAw8MOiKicEthiGbrcpQtnRBa9gtT00xY_PMBU9Ih0OsJCEdFCPlfbhWme61WpShpEvk2QDsrOWf0KDap3XvZCoZKr9fXCgKhDrJ9RpMM");'></div>
+</div>
+<div class="flex flex-1 flex-col gap-1">
+<p class="text-base font-bold leading-tight text-[#181311] dark:text-white">Event Staff</p>
+<p class="text-sm font-normal leading-normal text-[#8c6f5f] dark:text-gray-400">City Events Inc.</p>
+<p class="text-sm font-normal leading-normal text-[#8c6f5f] dark:text-gray-400">Convention Center | 5.1 mi away</p>
+<p class="mt-1 text-base font-bold text-success dark:text-success/90">$22/hr</p>
+</div>
+<button class="text-[#8c6f5f] dark:text-gray-400">
+<span class="material-symbols-outlined text-2xl">bookmark</span>
+</button>
+</div>
+</div>
+</main>
+
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
+<a class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent" href="job_seeker_home.html">
+<span class="material-symbols-outlined">home</span>
+<span class="text-xs font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_search.html">
+<span class="material-symbols-outlined fill-1">search</span>
+<span class="text-xs font-bold">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_seeker_my_shifts.html">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-xs font-medium">Shifts</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Myprofile_seeker.html">
+<span class="material-symbols-outlined">person</span>
+<span class="text-xs font-medium">Profile</span>
+</a>
+</nav>
+</body></html>

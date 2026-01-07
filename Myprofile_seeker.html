@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ff6a00",
+              "secondary": "#1F3A5F",
+              "background-light": "#ffffff",
+              "card-light": "#F5F7FA",
+              "background-dark": "#121212", 
+              "card-dark": "#1e1e1e",
+              "text-light-primary": "#1F3A5F",
+              "text-light-secondary": "#6b7280",
+              "text-dark-primary": "#ffffff",
+              "text-dark-secondary": "#9ca3af",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+            boxShadow: {
+              'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-secondary dark:bg-gray-900 p-4 pb-3 justify-between shadow-md sticky top-0 z-10">
+<div class="flex size-10 shrink-0 items-center justify-start text-white">
+  <button onclick="window.location.href='job_seeker_home.html'" class="flex size-10 items-center justify-center text-foreground-light dark:text-foreground-dark cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+</div>
+<h1 class="text-white text-xl font-bold leading-tight flex-1 text-center">My Profile</h1>
+
+  <button onclick="window.location.href='editprofile.html'" class="flex w-auto items-center justify-end text-white">
+  <span class="material-symbols-outlined text-3xl">edit</span>
+  </button>
+
+</div>
+<!-- ProfileHeader -->
+<div class="flex p-6 @container">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 ring-4 ring-white dark:ring-background-dark shadow-soft" data-alt="User's profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBI7fxXihAtnAO3wmHkWPEosceN0y3F2j5wizXugZmMd8Evv-YH0tlpcwDSDdrMhcEw074ky1Y7i56YrD5BFu_OaazZ10RCbY3q_uOJvxZb61_o5dImvs6iA29NzO-0WOUydqEtdqEJhsDzJuisg0rYBRDpqfw1lhGl8d-_A4eLCEa1X7un3zNhGHYW5RJVCslbRoqmDo3TdqqS_8q8hb522R0n88vnzfBNx9j4sHKvsw75bD-0OYcy02zGT8DHmGglwZlKyra78-3z");'></div>
+<div class="flex flex-col items-center justify-center mt-2">
+<p class="text-text-light-primary dark:text-text-dark-primary text-[24px] font-bold leading-tight tracking-[-0.015em] text-center"></p>
+<div class="mt-2 px-3 py-1 bg-primary/10 dark:bg-primary/20 rounded-full">
+<p class="text-primary text-sm font-semibold leading-normal text-center">Job Seeker</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-4 pb-12 flex flex-col gap-6">
+<!-- Personal Information Card -->
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-soft">
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Personal Information</h3>
+<div class="grid grid-cols-[35%_1fr] gap-x-4">
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Full Name</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Aliah Lane</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Phone</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">+123-456-7890</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Email</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">aliah.lane@email.com</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Gender</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Female</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Date of Birth</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">October 21, 1995</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 pt-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Address</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">123 Market St, San Francisco, CA 94103</p>
+</div>
+</div>
+</div>
+<!-- Job Seeker Information Card -->
+<div class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-soft">
+<h3 class="text-text-light-primary dark:text-text-dark-primary text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Professional Details</h3>
+<div class="grid grid-cols-[35%_1fr] gap-x-4">
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Skills</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">UI/UX Design, Prototyping, Project Management</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Work Experience</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">5 Years at Tech Solutions Inc.</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Job Types</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Full-time, Remote</p>
+</div>
+<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 pt-4">
+<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Documents</p>
+<div class="flex flex-col gap-2">
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium flex items-center"><span class="material-symbols-outlined text-base mr-2 text-text-light-secondary dark:text-text-dark-secondary">description</span> Resume_Aliah_Lane.pdf</p>
+<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium flex items-center"><span class="material-symbols-outlined text-base mr-2 text-text-light-secondary dark:text-text-dark-secondary">description</span> Portfolio_2024.pdf</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Section -->
+
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center border-t border-gray-200 dark:border-gray-700 pt-4">
+
+</div>
+
+<button onclick="window.location.href='Start.html'" class="w-full text-center bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 py-3 rounded-lg font-bold text-base">Logout</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

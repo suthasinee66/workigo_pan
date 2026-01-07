@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>System Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4ccce6",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#111e21",
+                        "chart-blue": "#A0C4FF",
+                        "chart-pink": "#FFC0CB",
+                        "text-light": "#1F2937",
+                        "text-dark": "#f6f8f8",
+                        "text-subtle-light": "#6B7280",
+                        "text-subtle-dark": "#94a3b8",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1e293b",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-12 shrink-0 items-center justify-center text-text-light dark:text-text-dark">
+
+</div>
+<h2 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">System Analytics</h2>
+<div class="flex size-12 shrink-0 items-center"></div>
+</div>
+<!-- Chips -->
+<div class="flex gap-3 p-4 overflow-x-auto">
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-5 pr-5">
+<p class="text-white text-sm font-medium leading-normal">7D</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark pl-5 pr-5">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">30D</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark pl-5 pr-5">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">90D</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark pl-5 pr-5">
+<p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">Custom</p>
+</div>
+</div>
+<!-- Charts -->
+<div class="flex flex-col gap-4 px-4 py-4">
+<div class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">User Growth</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">1,204</p>
+<div class="flex gap-1">
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">from last month</p>
+<p class="text-[#078834] text-base font-medium leading-normal">+15%</p>
+</div>
+<div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+<svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear_1)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#A0C4FF" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_1" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#A0C4FF" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#A0C4FF" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Active Jobs</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">890</p>
+<div class="flex gap-1">
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">from last month</p>
+<p class="text-[#078834] text-base font-medium leading-normal">+5%</p>
+</div>
+<div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+<svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 65C18.1538 65 18.1538 129 36.3077 129C54.4615 129 54.4615 89 72.6154 89C90.7692 89 90.7692 25 108.923 25C127.077 25 127.077 97 145.231 97C163.385 97 163.385 57 181.538 57C199.692 57 199.692 109 217.846 109C236 109 236 125 254.154 125C272.308 125 272.308 1 290.462 1C308.615 1 308.615 29 326.769 29C344.923 29 344.923 149 363.077 149C381.231 149 381.231 69 399.385 69C417.538 69 417.538 121 435.692 121C453.846 121 453.846 25 472 25V149H0V65Z" fill="url(#paint0_linear_2)"></path>
+<path d="M0 65C18.1538 65 18.1538 129 36.3077 129C54.4615 129 54.4615 89 72.6154 89C90.7692 89 90.7692 25 108.923 25C127.077 25 127.077 97 145.231 97C163.385 97 163.385 57 181.538 57C199.692 57 199.692 109 217.846 109C236 109 236 125 254.154 125C272.308 125 272.308 1 290.462 1C308.615 1 308.615 29 326.769 29C344.923 29 344.923 149 363.077 149C381.231 149 381.231 69 399.385 69C417.538 69 417.538 121 435.692 121C453.846 121 453.846 25 472 25" stroke="#FFC0CB" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_2" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#FFC0CB" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#FFC0CB" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Check-in/out Logs</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">3,450</p>
+<div class="flex gap-1">
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">from last month</p>
+<p class="text-[#e73508] text-base font-medium leading-normal">-2%</p>
+</div>
+<div class="grid min-h-[180px] grid-cols-2 gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
+<div class="bg-chart-blue/80 w-full rounded-t" style="height: 60%;"></div>
+<div class="bg-chart-pink/80 w-full rounded-t" style="height: 100%;"></div>
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">Check-in</p>
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">Check-out</p>
+</div>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+<p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Rule Violations</p>
+<p class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">112</p>
+<div class="flex gap-1">
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">from last month</p>
+<p class="text-[#078834] text-base font-medium leading-normal">+8%</p>
+</div>
+<div class="grid min-h-[180px] grid-cols-2 gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
+<div class="bg-chart-blue/80 w-full rounded-t" style="height: 50%;"></div>
+<div class="bg-chart-pink/80 w-full rounded-t" style="height: 25%;"></div>
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">Spam</p>
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">Content</p>
+</div>
+</div>
+</div>
+<!-- SectionHeader -->
+<h3 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Export Data</h3>
+<!-- BodyText -->
+<p class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal pb-3 pt-1 px-4">Download a report of the current data view.</p>
+<!-- Buttons -->
+<div class="flex flex-col gap-4 px-4 py-4">
+<button class="flex h-12 w-full items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark text-text-light dark:text-text-dark text-base font-semibold leading-normal">
+<span class="material-symbols-outlined">description</span>
+                Export as CSV
+            </button>
+<button class="flex h-12 w-full items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark text-text-light dark:text-text-dark text-base font-semibold leading-normal">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+                Export as PDF
+            </button>
+</div>
+<div class="h-5 bg-background-light dark:bg-background-dark"></div>
+</div>
+
+<div>
+
+</div>
+<nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-xs font-medium">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Management_Accout.html">
+<span class="material-symbols-outlined fill-1">man</span>
+<span class="text-xs font-bold">Management</span>
+</a>
+<a onclick="window.location.href='Admin_analytics.html'"class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent" href="Admin_analytics.html">
+<span class="material-symbols-outlined">
+    bar_chart
+</span>
+<span class="text-xs font-medium">Analytics</span>
+
+</nav>
+<div class="h-24"></div>
+
+</body></html>

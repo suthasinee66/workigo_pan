@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Suspicious Accounts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#4ccce6",
+              "background-light": "#f6f8f8",
+              "background-dark": "#111e21",
+              "pastel-blue": "#A0D2EB",
+              "soft-pink": "#F9D5E5",
+              "soft-red": "#ffb3b3",
+              "soft-yellow": "#ffe9a3",
+              "content-light": "#111e21",
+              "content-dark": "#e3e5e5",
+              "card-light": "#ffffff",
+              "card-dark": "#1a2a2e",
+              "subtle-light": "#e3e9ea",
+              "subtle-dark": "#2c3e42",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            boxShadow: {
+                'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+    
+<!-- Top App Bar -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-border-color/0 dark:border-border-color/0">
+<div class="flex size-12 shrink-0 items-center justify-start">
+</div>
+<h1 class="text-text-primary dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Management</h1>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 w-10 bg-primary-light/20 text-primary-light gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+</button>
+</div>
+</header>
+<main class="flex-1 pb-24">
+<!-- Comfortable View Section -->
+ <!-- Search Bar -->
+<div class="px-4 py-3">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full shadow-sm bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark">
+<div class="text-text-secondary dark:text-text-secondary-dark flex items-center justify-center pl-3">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-primary dark:text-text-primary-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-text-secondary dark:placeholder:text-text-secondary-dark pl-2 text-base font-normal leading-normal" placeholder="Search by name or email..." value=""/>
+</div>
+</label>
+</div>
+ 
+<section>
+    <!-- Filter Chips -->
+<div class="flex gap-2 p-4 pt-1 overflow-x-auto">
+<button onclick="window.location.href='Management_Accout.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-sm font-medium leading-normal">Account</p>
+</button>
+<button onclick="window.location.href='Management_Post.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Suspicious</p>
+</button>
+<button onclick="window.location.href='Management_Incident.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Incident</p>
+</button>
+<button onclick="window.location.href='Management_Post.html'"class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full gap-x-1.5 rounded-full bg-primary text-white px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Post</p>
+</button>
+</div>
+<h2 class="px-4 pb-3 pt-6 text-2xl font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">Comfortable View</h2>
+<!-- Comfortable Card 1 -->
+<div class="p-4 pt-2 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-card-dark dark:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-start gap-4 p-4">
+<img class="h-14 w-14 shrink-0 rounded-lg object-cover" data-alt="A modern office building with glass facade." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2kPkuwNNx2gdxw_ZAi7O-svkAJ82uFSaXL_QN__pRt-HOTgM1qqG4jDZR_kTsj8bh24WxQsmjBKB8JAGu85Tb66EUJ-bIfrTriov-sXziGurlswrYgcz9JpMjxrYqDgM9owZpJVZBTr9VtdeJZTTto4dHDT7piKdne8KvGXqJSNyjT2eUYdemTqYFhKev6P0tBvEoN7awPE24ybb-ioYb0tmGtkh56H4jePFJp9BW6r-nJW5-trtGgiwfds9oMIEX2gculXBPNiI"/>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">UX Designer</p>
+<p class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">TechCorp</p>
+<p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">Remote, San Francisco, CA</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
+<p class="text-sm font-semibold leading-normal text-accent">$55/hr - Part Time</p>
+<button onclick="window.location.href='Management_Post_detail.html'"class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-medium leading-normal">
+<span class="truncate">Management</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Comfortable Card 2 -->
+<div class="p-4 pt-0 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-card-dark dark:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-start gap-4 p-4">
+<img class="h-14 w-14 shrink-0 rounded-lg object-cover" data-alt="Interior of a modern, bright coffee shop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1DwF3PbtkwL130actIu0YoR0z6B-HnETCQRPcWw_m6QSLHD3ca-PvDzmgaFQQpbvmrHjXJ3ir5WxxU8crI0j8C0_2kxTZ9XPJ8SQPGSy2PSbX9LXXNHh9RXkOiIMbO7_gYteKlfnuaLdpUO0fuZowqG5bN36_9u9jF75_lu0oy_klv4EPetgNCpLrE5Sp8hBIR4Hgs6NpqjQWMtGo-hRwbbLk3mp36mm6dSsisazutFbVc88kYGv9YPJ1SbGigFKag2Y3Ro2wXqY"/>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">Barista</p>
+<p class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">The Coffee House</p>
+<p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">On-site, Brooklyn, NY</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
+<p class="text-sm font-semibold leading-normal text-accent">$22/hr - Part Time</p>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-medium leading-normal">
+<span class="truncate">Management</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Comfortable Card 3 -->
+<div class="p-4 pt-2 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-card-dark dark:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-start gap-4 p-4">
+<img class="h-14 w-14 shrink-0 rounded-lg object-cover" data-alt="A modern office building with glass facade." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj3QG5yAcqI-Dhu1H0YoqeWEMXcFN5b0dIxoGxKJIEKi6Fkmr-7qJ3yjUt5B5_IimfSS-h4Onew0sBMTtmRkpAdMnNPYA8MwTHvtnB-zaAyNAB2Cz9yFlV3OPUbuBhtygaj0g62XN_pPy0RvG0IMkeXLkRejaUrgExdGSMe6Q2mtUjo-UnbnJRH5yG5iVsUMza2RriHCIXnoHLUtW5Q6ClU1LsDyvhejozhOLmM4qO100SZ4R92-9u4rUGWnau-_fxII6jCRKhXIg"/>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">Cashier</p>
+<p class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">LocalBurger Joint</p>
+<p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">On-site,Houstov,TX</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
+<p class="text-sm font-semibold leading-normal text-accent">$25/hr - Part Time</p>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-medium leading-normal">
+<span class="truncate">Management</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Compact View Section -->
+<section>
+</div>
+</nav>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-xs font-medium">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent" href="Management_Accout.html">
+<span class="material-symbols-outlined fill-1">man</span>
+<span class="text-xs font-bold">Management</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Admin_analytics.html">
+<span class="material-symbols-outlined">
+    bar_chart
+</span>
+<span class="text-xs font-medium">Analytics</span>
+
+</nav>
+<div class="h-24"></div>
+
+</body></html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Post Review</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#A0D2EB",
+              "background-light": "#F6F8F8",
+              "background-dark": "#111e21",
+              "text-light": "#333333",
+              "text-dark": "#F6F8F8",
+              "secondary-accent": "#FBC4AB"
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+      const sheet = document.querySelector(".sheet");
+const overlay = document.querySelector(".sheet-overlay");
+const handle = document.querySelector(".sheet-handle");
+
+let startY = 0;
+let currentY = 0;
+let dragging = false;
+
+/* เริ่มลาก */
+function startDrag(e) {
+  dragging = true;
+  startY = e.touches ? e.touches[0].clientY : e.clientY;
+  sheet.style.transition = "none";
+}
+
+/* ระหว่างลาก */
+function onDrag(e) {
+  if (!dragging) return;
+
+  const y = e.touches ? e.touches[0].clientY : e.clientY;
+  currentY = y - startY;
+
+  /* ลากได้เฉพาะลง */
+  if (currentY > 0) {
+    sheet.style.transform = `translateY(${currentY}px)`;
+  }
+}
+
+/* ปล่อย */
+function endDrag() {
+  if (!dragging) return;
+  dragging = false;
+
+  sheet.style.transition = "transform 0.3s ease";
+
+  if (currentY > 120) {
+    closeSheet();
+  } else {
+    sheet.style.transform = "translateY(0)";
+  }
+
+  currentY = 0;
+}
+
+/* ปิด sheet */
+function closeSheet() {
+  sheet.style.transform = "translateY(100vh)";
+  overlay.style.opacity = "0";
+  setTimeout(() => overlay.remove(), 300);
+}
+
+/* event */
+handle.addEventListener("mousedown", startDrag);
+handle.addEventListener("touchstart", startDrag);
+
+window.addEventListener("mousemove", onDrag);
+window.addEventListener("touchmove", onDrag);
+
+window.addEventListener("mouseup", endDrag);
+window.addEventListener("touchend", endDrag);
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    .sheet {
+  transition: transform 0.3s ease;
+  touch-action: pan-y;
+}
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden">
+<!-- Main Screen Content -->
+<div class="flex h-full w-full flex-col">
+<!-- Top App Bar -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-border-color/0 dark:border-border-color/0">
+<div class="flex size-12 shrink-0 items-center justify-start">
+</div>
+<h1 class="text-text-primary dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Management</h1>
+<div class="flex w-12 items-center justify-end">
+
+</div>
+</header>
+<!-- Search Bar -->
+<div class="px-4 py-3">
+<label class="flex flex-col min-w-40 h-12 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full shadow-sm bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark">
+<div class="text-text-secondary dark:text-text-secondary-dark flex items-center justify-center pl-3">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-primary dark:text-text-primary-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-text-secondary dark:placeholder:text-text-secondary-dark pl-2 text-base font-normal leading-normal" placeholder="Search by name or email..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex gap-2 p-4 pt-1 overflow-x-auto">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-sm font-medium leading-normal">Account</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Suspicious</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Incident</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-primary text-white px-4">
+<p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">Post</p>
+</button>
+</div>
+<!-- Job Post List -->
+<h2 class="px-4 pb-3 pt-6 text-2xl font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">Comfortable View</h2>
+<!-- Comfortable Card 1 -->
+<div class="p-4 pt-2 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-card-dark dark:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-start gap-4 p-4">
+<img class="h-14 w-14 shrink-0 rounded-lg object-cover" data-alt="A modern office building with glass facade." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2kPkuwNNx2gdxw_ZAi7O-svkAJ82uFSaXL_QN__pRt-HOTgM1qqG4jDZR_kTsj8bh24WxQsmjBKB8JAGu85Tb66EUJ-bIfrTriov-sXziGurlswrYgcz9JpMjxrYqDgM9owZpJVZBTr9VtdeJZTTto4dHDT7piKdne8KvGXqJSNyjT2eUYdemTqYFhKev6P0tBvEoN7awPE24ybb-ioYb0tmGtkh56H4jePFJp9BW6r-nJW5-trtGgiwfds9oMIEX2gculXBPNiI"/>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">UX Designer</p>
+<p class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">TechCorp</p>
+<p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">Remote, San Francisco, CA</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
+<p class="text-sm font-semibold leading-normal text-accent">$55/hr - Part Time</p>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-medium leading-normal">
+<span class="truncate">Management</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Comfortable Card 2 -->
+<div class="p-4 pt-0 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-card-dark dark:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-start gap-4 p-4">
+<img class="h-14 w-14 shrink-0 rounded-lg object-cover" data-alt="Interior of a modern, bright coffee shop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1DwF3PbtkwL130actIu0YoR0z6B-HnETCQRPcWw_m6QSLHD3ca-PvDzmgaFQQpbvmrHjXJ3ir5WxxU8crI0j8C0_2kxTZ9XPJ8SQPGSy2PSbX9LXXNHh9RXkOiIMbO7_gYteKlfnuaLdpUO0fuZowqG5bN36_9u9jF75_lu0oy_klv4EPetgNCpLrE5Sp8hBIR4Hgs6NpqjQWMtGo-hRwbbLk3mp36mm6dSsisazutFbVc88kYGv9YPJ1SbGigFKag2Y3Ro2wXqY"/>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">Barista</p>
+<p class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">The Coffee House</p>
+<p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">On-site, Brooklyn, NY</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
+<p class="text-sm font-semibold leading-normal text-accent">$22/hr - Part Time</p>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-medium leading-normal">
+<span class="truncate">Management</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Comfortable Card 3 -->
+<div class="p-4 pt-2 @container">
+<div class="flex flex-col items-stretch justify-start rounded-xl bg-card-light shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:bg-card-dark dark:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<div class="flex items-start gap-4 p-4">
+<img class="h-14 w-14 shrink-0 rounded-lg object-cover" data-alt="A modern office building with glass facade." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBj3QG5yAcqI-Dhu1H0YoqeWEMXcFN5b0dIxoGxKJIEKi6Fkmr-7qJ3yjUt5B5_IimfSS-h4Onew0sBMTtmRkpAdMnNPYA8MwTHvtnB-zaAyNAB2Cz9yFlV3OPUbuBhtygaj0g62XN_pPy0RvG0IMkeXLkRejaUrgExdGSMe6Q2mtUjo-UnbnJRH5yG5iVsUMza2RriHCIXnoHLUtW5Q6ClU1LsDyvhejozhOLmM4qO100SZ4R92-9u4rUGWnau-_fxII6jCRKhXIg"/>
+<div class="flex w-full grow flex-col items-stretch justify-center gap-1">
+<p class="text-lg font-bold leading-tight tracking-[-0.015em] text-text-light-primary dark:text-text-dark-primary">Cashier</p>
+<p class="text-base font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">LocalBurger Joint</p>
+<p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">On-site,Houstov,TX</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-3 dark:border-gray-800">
+<p class="text-sm font-semibold leading-normal text-accent">$25/hr - Part Time</p>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-medium leading-normal">
+<span class="truncate">Management</span>
+</button>
+</div>
+</div>
+</div>
+<!-- List Item 1 -->
+<div class="flex gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl shadow-sm justify-between items-center cursor-pointer">
+<div class="flex items-start gap-4">
+<div class="flex items-center justify-center rounded-lg bg-primary/20 shrink-0 size-12">
+<span class="material-symbols-outlined text-primary">work</span>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-base font-semibold leading-normal text-text-light dark:text-text-dark">Senior Product Designer</p>
+<p class="text-sm font-normal leading-normal text-gray-500 dark:text-gray-400">Innovate Inc.</p>
+<p class="text-sm font-normal leading-normal text-gray-400 dark:text-gray-500">Submitted: 3 days ago</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="text-gray-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="flex gap-4 bg-white dark:bg-gray-800/50 p-4 rounded-xl shadow-sm justify-between items-center cursor-pointer">
+<div class="flex items-start gap-4">
+<div class="flex items-center justify-center rounded-lg bg-secondary-accent/20 shrink-0 size-12">
+<span class="material-symbols-outlined text-secondary-accent">code</span>
+</div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-base font-semibold leading-normal text-text-light dark:text-text-dark">Lead Software Engineer</p>
+<p class="text-sm font-normal leading-normal text-gray-500 dark:text-gray-400">Tech Solutions LLC</p>
+<p class="text-sm font-normal leading-normal text-gray-400 dark:text-gray-500">Submitted: 5 days ago</p>
+</div>
+</div>
+<div class="shrink-0">
+<div class="text-gray-400 flex size-7 items-center justify-center">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Bottom Sheet Modal -->
+ 
+<div class="sheet-overlay flex absolute inset-0 flex-col justify-end items-stretch bg-black/40 dark:bg-black/60">
+  <div class="sheet flex flex-col items-stretch bg-background-light dark:bg-background-dark rounded-t-xl max-h-[90vh]">
+
+    <div class="relative">
+      <!-- Handle -->
+      <div id="handle"
+        class="flex justify-center py-3 cursor-grab active:cursor-grabbing">
+        <div class="h-1 w-10 rounded-full bg-gray-300"></div>
+      </div>
+
+      <!-- Close -->
+      <button onclick="window.location.href='Management_Post.html'"
+        class="absolute right-4 top-3 p-1 rounded-full hover:bg-gray-200">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div class="sheet-content flex-1 overflow-y-auto px-6 pb-6 pt-2">
+
+<!-- Job Details -->
+<div class="mb-6">
+<h3 class="text-2xl font-bold text-text-light dark:text-text-dark">Senior Product Designer</h3>
+<p class="text-base text-primary font-medium">Innovate Inc.</p>
+<div class="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-base">location_on</span>
+<span>San Francisco, CA</span>
+</div>
+<div class="mt-1 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-base">payments</span>
+<span>$120,000 - $150,000</span>
+</div>
+</div>
+<!-- Job Description -->
+<div class="mb-6">
+<h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Description</h4>
+<p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                            We are seeking a talented Senior Product Designer to join our dynamic team. You will be responsible for the entire product design lifecycle, from user research and wireframing to creating high-fidelity mockups and interactive prototypes...
+                         </p>
+</div>
+<!-- Admin Notes -->
+<div class="mb-6">
+<h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Admin Notes</h4>
+<textarea class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-3 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" placeholder="Add a note for the team..." rows="4"></textarea>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3">
+<button onclick="window.location.href='Management_Post.html'"class="flex h-12 w-full items-center justify-center rounded-xl bg-primary text-white text-base font-bold transition-transform active:scale-95 hover:bg-blue-500 active:bg-blue-500/20">Approve</button>
+<button onclick="window.location.href='Management_Post.html'"class="flex h-12 w-full items-center justify-center rounded-xl bg-secondary-accent text-white text-base font-bold transition-transform active:scale-95 hover:bg-red-500 active:bg-red-500/20">Reject</button>
+<button class="flex h-12 w-full items-center justify-center rounded-xl bg-transparent text-red-500 text-base font-medium transition-colors hover:bg-red-500/10 active:bg-red-500/20">Delete Post</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
+<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-xs font-medium">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent" href="Management_Accout.html">
+<span class="material-symbols-outlined fill-1">man</span>
+<span class="text-xs font-bold">Management</span>
+</a>
+<a onclick="window.location.href='Admin_analytics.html'"class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Admin_analytics.html">
+<span class="material-symbols-outlined">
+    bar_chart
+</span>
+<span class="text-xs font-medium">Analytics</span>
+
+</nav>
+<div class="h-24"></div>
+
+</body></html>
