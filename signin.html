@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In - Work-i-Go</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#f95f06",
+            "background-light": "#f8f6f5",
+            "background-dark": "#23160f",
+            "brand-blue": "#345395",
+            "brand-success": "#208672",
+          },
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="bg-background-light font-display">
+  <main class="min-h-screen flex flex-col items-center justify-center px-4">
+    <h1 class="text-2xl font-bold text-brand-blue mb-2">Work-i-Go</h1>
+    <h2 class="text-xl font-bold text-brand-blue mb-6">Sign in to your account</h2>
+
+    <form id="loginForm" class="w-full max-w-md flex flex-col gap-4">
+      <input id="email" class="form-input h-14 rounded-xl border" type="email" placeholder="Email" required />
+      <input id="password" class="form-input h-14 rounded-xl border" type="password" placeholder="Password" required />
+
+      <button type="submit" class="w-full h-14 rounded-xl bg-primary text-white font-bold">
+        Sign In
+      </button>
+
+      <div class="flex items-center gap-3">
+        <hr class="flex-1" /><span class="text-sm text-gray-400">or</span>
+        <hr class="flex-1" />
+      </div>
+
+      <button type="button" onclick="googleLogin()"
+        class="w-full h-14 rounded-xl border font-bold flex items-center justify-center gap-2">
+        Continue with Google
+      </button>
+
+      <p class="text-sm text-center text-gray-500">
+        Don’t have an account?
+        <a href="signup.html" class="text-brand-blue font-semibold">Create account</a>
+      </p>
+    </form>
+  </main>
+
+  <!-- ✅ Supabase Logic -->
+  <script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+)
+
+/* ===== REDIRECT BY ROLE ===== */
+async function redirectByRole(user) {
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single()
+
+  if (!profile || !profile.role) {
+    location.href = "select_role.html"
+  } else if (profile.role === "jobseeker") {
+    location.href = "job_seeker_home.html"
+  } else if (profile.role === "employer") {
+    location.href = "employer_home.html"
+  }
+}
+
+/* ===== EMAIL LOGIN ===== */
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault()
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value
+  })
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  await redirectByRole(data.user)
+})
+
+/* ===== GOOGLE LOGIN ===== */
+window.googleLogin = async () => {
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.href,
+      queryParams: { prompt: "select_account" }
+    }
+  })
+}
+
+/* ===== ⭐ ตัวแก้ปัญหาหลัก ===== */
+supabase.auth.onAuthStateChange(async (event, session) => {
+  if (
+    (event === "SIGNED_IN" || event === "INITIAL_SESSION") &&
+    session?.user
+  ) {
+    await redirectByRole(session.user)
+  }
+})
+</script>
+
+</body>
+
+</html>

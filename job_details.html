@@ -1,156 +1,206 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Job Details</title>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
 <style>
-        .material-symbols-outlined {
-            font-variation-settings:
-                'FILL' 0,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 24
-        }
-    </style>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#fb4604",
-              "background-light": "#f8f6f5",
-              "background-dark": "#23140f",
-              "brand-primary": "#345395",
-              "brand-accent": "#f95e07",
-              "brand-success": "#208672",
-              "brand-text-primary": "#181311",
-              "brand-text-secondary": "#8c6b5f",
-              "brand-surface": "#f5f1f0"
-            },
-            fontFamily: {
-              "display": ["Plus Jakarta Sans", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-10 flex items-center justify-between bg-background-light dark:bg-background-dark p-4 pb-2">
-<button onclick="window.location.href='job_search.html'" class="text-brand-text-primary flex size-10 shrink-0 items-center justify-center">
-<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
-</button>
-<h2 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-brand-text-primary dark:text-white">Job Details</h2>
-<div class="flex size-10 shrink-0 items-center justify-center"></div>
+body { font-family: "Plus Jakarta Sans", sans-serif; }
+.material-symbols-outlined {
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+}
+</style>
+</head>
+
+<body class="bg-background-light">
+<div class="relative flex min-h-screen w-full flex-col">
+
+<!-- ===== TOP BAR ===== -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light p-4">
+  <button onclick="history.back()" class="size-10">
+    <span class="material-symbols-outlined">arrow_back_ios_new</span>
+  </button>
+  <h2 class="flex-1 text-center text-lg font-bold">Job Details</h2>
+  <div class="size-10"></div>
 </div>
+
 <main class="flex-1 pb-40">
-<!-- Job Header Card -->
+
+<!-- ===== HEADER ===== -->
 <div class="p-4">
-<div class="flex flex-col items-stretch justify-start rounded-lg bg-white dark:bg-background-dark dark:border dark:border-white/10 p-4 shadow-sm">
-<div class="flex items-start gap-4">
-<img class="h-16 w-16 shrink-0 rounded-xl object-cover" data-alt="The Coffee Bean Cafe company logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiDT58j3c9hJew2abPqnkjI7r3XyFe_q8k3ctKZ8Hzu1hu8OZhU736u9YCWLaHQR3vaxPIzTDKH4n9nnuCP9S2if7LyoZazMILjuESSsyohKM2toa09Z5Z8ABFh5lhFT5xXSzBFqaUcS-lGvMsTK-qfLjxoiHprrKzsf0k8Nj43aOUIBiT2GQ3UGtm3_S1cNvErs1pwmxyCU6xQbwrtehn3wCX9TftMfv9xLz5z_jgYk4nCu1X63WXGX8-U289Cox_croxFGTX3UU"/>
-<div class="flex flex-col gap-1">
-<p class="text-xl font-bold leading-tight tracking-[-0.015em] text-brand-text-primary dark:text-white">Barista &amp; Cashier</p>
-<a class="text-base font-medium text-brand-primary" href="#">The Coffee Bean Cafe</a>
+  <div class="rounded-xl bg-white p-4 shadow">
+    <div class="flex gap-4">
+      <div class="h-16 w-16 flex items-center justify-center rounded-xl bg-gray-200">
+        <span class="material-symbols-outlined text-3xl text-gray-400">store</span>
+      </div>
+
+      <div class="flex-1">
+        <p id="job-title" class="text-xl font-bold"></p>
+        <p id="workplace-name" class="text-sm text-gray-500"></p>
+      </div>
+    </div>
+
+    <!-- ค่าแรง -->
+    <div class="mt-4 flex justify-end rounded-lg bg-gray-100 p-3">
+      <p id="wage-display" class="text-lg font-bold text-emerald-600"></p>
+    </div>
+  </div>
 </div>
+
+<!-- ===== DETAIL BLOCKS ===== -->
+<div class="px-4 flex flex-col gap-3">
+
+  <!-- applicants -->
+  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+    <span class="material-symbols-outlined text-blue-500">group</span>
+    <p class="text-sm">
+      <span id="applicants-count" class="font-bold"></span> applicants
+    </p>
+  </div>
+
+  <!-- deadline -->
+  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+    <span class="material-symbols-outlined text-red-500">timer</span>
+    <p class="text-sm">
+      Deadline: <span id="deadline" class="font-bold"></span>
+    </p>
+  </div>
+
+  <!-- start date + shift time -->
+  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+    <span class="material-symbols-outlined text-purple-500">calendar_month</span>
+    <p class="text-sm">
+      Start: <span id="start-display" class="font-bold"></span>
+    </p>
+  </div>
+
+  <!-- location -->
+  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+    <span class="material-symbols-outlined text-emerald-600">location_on</span>
+    <p id="address" class="text-sm font-medium"></p>
+  </div>
+
+  <!-- workers needed -->
+  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+    <span class="material-symbols-outlined text-orange-500">groups</span>
+    <p class="text-sm">
+      <span id="workers-needed" class="font-bold"></span> people needed
+    </p>
+  </div>
+
 </div>
-<div class="mt-4 flex items-center justify-between rounded-lg bg-brand-surface dark:bg-white/5 p-3">
-<p class="text-lg font-bold text-brand-text-primary dark:text-white">$22/hr</p>
-<p class="text-sm font-medium text-brand-text-secondary dark:text-gray-400">Full-time</p>
+
+<hr class="mx-4 my-6"/>
+
+
+<!-- ===== AGE REQUIREMENT ===== -->
+<div class="px-4 mt-4">
+  <h3 class="text-lg font-bold">Age</h3>
+  <p id="age-requirement" class="mt-2 text-gray-600 leading-relaxed"></p>
 </div>
+
+<!-- ===== GENDER REQUIREMENT ===== -->
+<div class="px-4 mt-4">
+  <h3 class="text-lg font-bold">Gender</h3>
+  <p id="gender-requirement" class="mt-2 text-gray-600 leading-relaxed"></p>
 </div>
-</div>
-<!-- Application Info -->
+
+<!-- ===== DESCRIPTION ===== -->
 <div class="px-4">
-<div class="flex items-center justify-between rounded-lg bg-brand-primary/10 dark:bg-brand-primary/20 p-3">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-brand-primary text-xl">group</span>
-<p class="text-sm font-medium text-brand-primary">12 applicants</p>
+  <h3 class="text-lg font-bold">Job Description</h3>
+  <p id="job-description" class="mt-2 text-gray-600 leading-relaxed"></p>
 </div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-brand-primary text-xl">timer</span>
-<p class="text-sm font-medium text-brand-primary">Deadline: May 15</p>
+
+<!-- ===== QUALIFICATIONS ===== -->
+<div class="px-4 mt-4">
+  <h3 class="text-lg font-bold">Qualifications</h3>
+  <p id="qualifications" class="mt-2 text-gray-600 leading-relaxed"></p>
 </div>
-</div>
-</div>
-<!-- Job Details List -->
-<div class="mt-4 flex flex-col gap-2 px-4">
-<div class="flex min-h-14 items-center gap-4">
-<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-surface dark:bg-white/10 text-brand-text-primary dark:text-white">
-<span class="material-symbols-outlined">calendar_month</span>
-</div>
-<p class="flex-1 truncate text-base font-normal leading-normal text-brand-text-primary dark:text-gray-300">Start: May 20 | 9:00 AM - 5:00 PM</p>
-</div>
-<div class="flex min-h-14 items-center gap-4">
-<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-surface dark:bg-white/10 text-brand-text-primary dark:text-white">
-<span class="material-symbols-outlined">location_on</span>
-</div>
-<p class="flex-1 truncate text-base font-normal leading-normal text-brand-text-primary dark:text-gray-300">123 Main Street, Anytown, USA</p>
-</div>
-<div class="flex min-h-14 items-center gap-4">
-<div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-surface dark:bg-white/10 text-brand-text-primary dark:text-white">
-<span class="material-symbols-outlined">groups</span>
-</div>
-<p class="flex-1 truncate text-base font-normal leading-normal text-brand-text-primary dark:text-gray-300">3 people needed</p>
-</div>
-</div>
-<!-- Divider -->
-<div class="mx-4 my-4 h-px bg-gray-200 dark:bg-white/10"></div>
-<!-- Job Description -->
-<div class="px-4">
-<h3 class="text-lg font-bold text-brand-text-primary dark:text-white">Job Description</h3>
-<p class="mt-2 text-base leading-relaxed text-brand-text-secondary dark:text-gray-400">
-                    We are looking for an enthusiastic and friendly Barista &amp; Cashier to join our team. The ideal candidate will have a passion for coffee, excellent customer service skills, and the ability to work in a fast-paced environment.
-                </p>
-</div>
-<!-- Duties -->
-<div class="mt-6 px-4">
-<h3 class="text-lg font-bold text-brand-text-primary dark:text-white">Duties</h3>
-<ul class="mt-2 list-disc space-y-2 pl-5 text-base text-brand-text-secondary dark:text-gray-400">
-<li>Prepare and serve coffee and other beverages.</li>
-<li>Handle cash and credit card transactions accurately.</li>
-<li>Maintain a clean and sanitized work area.</li>
-<li>Provide excellent customer service and build rapport with customers.</li>
-</ul>
-</div>
+
 </main>
-<!-- Sticky Bottom Bar with Apply Button -->
-<div class="fixed bottom-20 left-0 z-10 w-full bg-background-light dark:bg-background-dark px-4 pt-3 pb-4">
-<button onclick="window.location.href='application_confirmation.html'" class="flex h-12 w-full items-center justify-center rounded-xl bg-brand-accent text-lg font-bold text-white shadow-lg shadow-brand-accent/30">Apply Now</button>
+
+<!-- ===== APPLY BUTTON ===== -->
+<div class="fixed bottom-20 left-0 w-full px-4">
+  <button id="apply-button" class="h-12 w-full rounded-xl bg-orange-500 text-white font-bold">
+    Apply Now
+  </button>
 </div>
-<!-- Bottom Navigation Bar -->
-<div class="fixed bottom-0 left-0 z-10 w-full border-t border-gray-200 dark:border-white/10 bg-white dark:bg-background-dark">
-<div class="flex h-20 items-center justify-around px-4">
-<div class="flex flex-col items-center justify-center gap-1 text-brand-primary">
-<span class="material-symbols-outlined">home</span>
-<p class="text-xs font-medium">Home</p>
-</div>
-<div class="flex flex-col items-center justify-center gap-1 text-brand-text-secondary dark:text-gray-400">
-<span class="material-symbols-outlined">search</span>
-<p class="text-xs font-medium">Search</p>
-</div>
-<div class="flex flex-col items-center justify-center gap-1 text-brand-text-secondary dark:text-gray-400">
-<span class="material-symbols-outlined">work</span>
-<p class="text-xs font-medium">My Jobs</p>
-</div>
-<div class="flex flex-col items-center justify-center gap-1 text-brand-text-secondary dark:text-gray-400">
-<span class="material-symbols-outlined">person</span>
-<p class="text-xs font-medium">Profile</p>
-</div>
-</div>
-</div>
-</div>
-</body></html>
+
+<script>
+// กดปุ่ม Apply Now แล้วไปหน้า confirmation พร้อมส่ง jobpost_id
+document.getElementById("apply-button").addEventListener("click", () => {
+  if (!jobpostId) {
+    alert("ไม่พบข้อมูลงานสำหรับสมัคร");
+    return;
+  }
+  // ส่ง jobpost_id ผ่าน URL
+  window.location.href = `application_confirmation.html?id=${jobpostId}`;
+});
+</script>
+
+<!-- ===== SUPABASE ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+const params = new URLSearchParams(window.location.search);
+const jobpostId = params.get("id");
+
+async function loadJobDetail() {
+  const { data, error } = await supabaseClient
+    .from("jobposts")
+    .select("*")
+    .eq("jobpost_id", jobpostId)
+    .single();
+
+  if (error || !data) {
+    alert("โหลดข้อมูลงานไม่สำเร็จ");
+    return;
+  }
+
+  // ข้อมูลหลัก
+  document.getElementById("job-title").textContent = data.job_title ?? "-";
+  document.getElementById("workplace-name").textContent = data.workplace_name ?? "-";
+  document.getElementById("job-description").textContent = data.job_description ?? "-";
+  document.getElementById("qualifications").textContent = data.qualifications ?? "-";
+  document.getElementById("age-requirement").textContent = data.age_requirement ?? "-";
+
+  // Gender Requirement
+  let genderText = data.gender_requirement ?? "Any";
+  document.getElementById("gender-requirement").textContent = genderText;
+
+  document.getElementById("address").textContent = data.address ?? "-";
+  document.getElementById("workers-needed").textContent = data.workers_needed ?? "-";
+
+  // Optional fields
+  document.getElementById("applicants-count").textContent = data.applicants_count ?? 0;
+  document.getElementById("deadline").textContent = data.application_deadline ?? "-";
+
+  // Start date + shift time
+  const startDate = data.start_date ?? "-";
+  const startTime = data.start_time ?? "-";
+  const endTime = data.end_time ?? "-";
+  document.getElementById("start-display").textContent = `${startDate} | ${startTime} - ${endTime}`;
+
+  // Wage
+  let wageText = "";
+  if (data.wage_type === "hour") wageText = `${data.wage_amount}฿/hr`;
+  else if (data.wage_type === "day") wageText = `${data.wage_amount}฿/day`;
+  else wageText = `${data.wage_amount}฿/hr`;
+
+  document.getElementById("wage-display").textContent = wageText;
+}
+
+loadJobDetail();
+</script>
+
+</body>
+</html>

@@ -41,14 +41,27 @@
                 </button>
             </a>
             <a href="job_seeker_onboarding.html">
-            <button type="button"
-                class="w-full h-16 rounded-xl border flex items-center justify-center gap-3 font-bold">
-                <span class="material-symbols-outlined">person_search</span>
-                Job Seeker
-            </button>
+                <button type="button"
+                    class="w-full h-16 rounded-xl border flex items-center justify-center gap-3 font-bold">
+                    <span class="material-symbols-outlined">person_search</span>
+                    Job Seeker
+                </button>
             </a>
         </div>
     </main>
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+        const supabase = createClient(
+            "https://ispbevvwwggbktfczmui.supabase.co",
+            "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+        )
+
+        const { data: { user }, error: userError } = await supabase.auth.getUser()
+        if (userError || !user) location.href = "login.html"
+    </script>
+
 </body>
+
 
 </html>

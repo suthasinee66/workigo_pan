@@ -1,178 +1,361 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Job Seeker Onboarding (Add Personal Details)</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Job Seeker Onboarding</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+
 <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": {
-                DEFAULT: "#f95e07", // Accent color
-                brand: "#345395",
-              },
-              "success": "#208672",
-              "background-light": "#f8f6f5",
-              "background-dark": "#23160f",
-            },
-            fontFamily: {
-              "display": ["Plus Jakarta Sans", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-          },
-        },
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#f95e07",
+        brand: "#345395",
+        bg: "#f8f6f5"
       }
-    </script>
-<style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }input[type="date"]::-webkit-calendar-picker-indicator {
-            opacity: 0;
-        }
-        input[type="date"] {
-            position: relative;
-        }
-        .date-icon {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
     }
-  </style>
+  }
+}
+</script>
+
 <style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-<header class="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
-<div class="flex items-center p-4 pb-2 justify-between">
-<button onclick="window.location.href='select_role.html'" class="text-gray-800 dark:text-gray-200 flex size-10 shrink-0 items-center justify-center rounded-full">
-<span class="material-symbols-outlined text-2xl">arrow_back</span>
-</button>
-<h2 class="text-primary-brand dark:text-gray-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Create Your Profile</h2>
-<div class="size-10"></div> 
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+.selectable.active {
+  background:#f95e07;
+  color:white;
+  border-color:#f95e07;
+}
+.availability.active {
+  background:#f95e07;
+  color:white;
+}
+</style>
+</head>
+
+<body class="bg-bg">
+
+<main class="max-w-2xl mx-auto p-6 space-y-10">
+
+<h1 class="text-3xl font-bold text-brand">Create Your Profile</h1>
+
+<!-- PROFILE IMAGE -->
+<section class="space-y-3">
+  <label class="font-semibold">Profile Image</label>
+
+  <div class="flex items-center gap-6">
+    <!-- Preview -->
+    <div class="relative">
+      <div class="relative w-28 h-28">
+  <img
+    id="avatarPreview"
+    src="https://via.placeholder.com/150"
+    class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md"
+  />
+
+  <!-- Loading overlay -->
+  <div
+    id="avatarLoading"
+    class="hidden absolute inset-0 bg-black/40 rounded-full
+           flex items-center justify-center text-white text-sm font-semibold">
+    Uploading...
+  </div>
 </div>
-<div class="flex flex-col gap-1 px-4 pt-2 pb-4">
-<div class="flex gap-6 justify-between"><p class="text-gray-600 dark:text-gray-400 text-sm font-medium leading-normal">Step 1 of 4</p></div>
-<div class="rounded-full bg-gray-200 dark:bg-gray-700 h-2"><div class="h-2 rounded-full bg-primary" style="width: 25%;"></div></div>
-</div>
-</header>
-<main class="flex-grow px-4 pb-24">
-<section class="py-6">
-<h1 class="text-gray-900 dark:text-white tracking-light text-[32px] font-bold leading-tight text-left pb-4">Tell us about yourself</h1>
-<div class="flex max-w-full flex-wrap items-end gap-4">
-<label class="flex flex-col min-w-40 flex-1">
-<p class="text-gray-800 dark:text-gray-300 text-base font-medium leading-normal pb-2">Your Bio</p>
-<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:border-primary min-h-36 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-4 text-base font-normal leading-normal" placeholder="Write a short and friendly bio to introduce yourself to employers..."></textarea>
-<p class="text-right text-sm text-gray-500 dark:text-gray-400 pt-1">0/200</p>
-</label>
-</div>
-<div class="grid grid-cols-2 gap-4 pt-6">
+
+
+      <!-- small edit badge -->
+      <span
+        class="absolute bottom-1 right-1 bg-primary text-white rounded-full p-1 shadow">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15.232 5.232l3.536 3.536M9 11l6-6m2 2l-6 6m-3 3h6" />
+        </svg>
+      </span>
+    </div>
+
+    <!-- Upload Button -->
+    <div>
+      <label
+        for="avatarInput"
+        class="cursor-pointer inline-flex items-center gap-2
+               bg-primary text-white font-semibold
+               px-5 py-3 rounded-xl
+               shadow hover:bg-orange-600
+               active:scale-95 transition-all">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M8 12l4-4m0 0l4 4m-4-4v12" />
+        </svg>
+
+        Upload Photo
+      </label>
+
+      <p class="text-sm text-gray-500 mt-2">
+        JPG, PNG (max 2MB)
+      </p>
+
+      <input
+        id="avatarInput"
+        type="file"
+        accept="image/*"
+        class="hidden"
+      />
+    </div>
+  </div>
+</section>
+
+
+<!-- BIO -->
+<section>
+<label class="font-semibold">Bio</label>
+<textarea id="bio" class="w-full mt-2 rounded-xl border p-4" rows="4"
+placeholder="Tell employers about yourself"></textarea>
+</section>
+
+<!-- GENDER + DOB -->
+<section class="grid grid-cols-2 gap-4">
 <div>
-<label class="text-gray-800 dark:text-gray-300 text-base font-medium leading-normal pb-2 block" for="gender">Gender</label>
-<select class="form-select w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-4 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none" id="gender">
+<label class="font-semibold">Gender</label>
+<select id="gender" class="w-full rounded-xl border p-3 mt-2">
 <option>Female</option>
 <option>Male</option>
 <option>Non-binary</option>
 <option>Prefer not to say</option>
 </select>
 </div>
-<div class="relative">
-<label class="text-gray-800 dark:text-gray-300 text-base font-medium leading-normal pb-2 block" for="dob">Date of Birth</label>
-<input class="form-input w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-4 pr-12 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-primary/50 focus:border-primary" id="dob" onblur="(this.type='text')" onfocus="(this.type='date')" placeholder="DD/MM/YYYY" type="text"/>
-<span class="material-symbols-outlined date-icon text-gray-400 dark:text-gray-500">calendar_today</span>
-</div>
+<div>
+<label class="font-semibold">Date of Birth</label>
+<input id="dob" type="date" class="w-full rounded-xl border p-3 mt-2"/>
 </div>
 </section>
-<section class="py-6">
-<h1 class="text-gray-900 dark:text-white tracking-light text-[32px] font-bold leading-tight text-left pb-4">What are your top skills?</h1>
-<div class="relative flex items-center w-full">
-<input class="form-input w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-4 pl-12 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="e.g. Customer Service" type="text"/>
-<span class="material-symbols-outlined absolute left-4 text-gray-400 dark:text-gray-500">search</span>
-</div>
-<div class="flex flex-wrap gap-2 pt-4">
-<span class="flex items-center gap-2 rounded-full bg-primary/20 dark:bg-primary/30 px-3 py-1.5 text-sm font-medium text-primary-brand dark:text-primary">
-                        Cashier
-                        <button><span class="material-symbols-outlined text-base">close</span></button>
-</span>
-<span class="flex items-center gap-2 rounded-full bg-primary/20 dark:bg-primary/30 px-3 py-1.5 text-sm font-medium text-primary-brand dark:text-primary">
-                        Barista
-                        <button><span class="material-symbols-outlined text-base">close</span></button>
-</span>
-<span class="flex items-center gap-2 rounded-full bg-primary/20 dark:bg-primary/30 px-3 py-1.5 text-sm font-medium text-primary-brand dark:text-primary">
-                        Food Prep
-                        <button><span class="material-symbols-outlined text-base">close</span></button>
-</span>
+
+<!-- SKILLS -->
+<section>
+<h2 class="text-xl font-bold">Top Skills</h2>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Cashier">Cashier</span>
+<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Barista">Barista</span>
+<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Food Prep">Food Prep</span>
+<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Customer Service">Customer Service</span>
 </div>
 </section>
-<section class="py-6">
-<h1 class="text-gray-900 dark:text-white tracking-light text-[28px] font-bold leading-tight text-left pb-4">What kind of work are you looking for?</h1>
-<div class="grid grid-cols-2 gap-3">
-<button class="flex items-center justify-between text-left p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-full text-gray-900 dark:text-white font-medium">Retail <span class="material-symbols-outlined text-success">check_circle</span></button>
-<button class="flex items-center justify-between text-left p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-full text-gray-900 dark:text-white font-medium">Hospitality</button>
-<button class="flex items-center justify-between text-left p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-full text-gray-900 dark:text-white font-medium">Events</button>
-<button class="flex items-center justify-between text-left p-4 rounded-xl border-2 border-primary bg-primary/10 dark:bg-primary/20 w-full text-primary-brand dark:text-primary font-medium">Delivery <span class="material-symbols-outlined text-success">check_circle</span></button>
-<button class="flex items-center justify-between text-left p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-full text-gray-900 dark:text-white font-medium">Cleaning</button>
-<button class="flex items-center justify-between text-left p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 w-full text-gray-900 dark:text-white font-medium">Admin</button>
+
+<!-- JOB TYPES -->
+<section>
+<h2 class="text-xl font-bold">Job Types</h2>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<button class="job selectable border rounded-xl p-4" data-job="Retail">Retail</button>
+<button class="job selectable border rounded-xl p-4" data-job="Hospitality">Hospitality</button>
+<button class="job selectable border rounded-xl p-4" data-job="Delivery">Delivery</button>
+<button class="job selectable border rounded-xl p-4" data-job="Events">Events</button>
 </div>
 </section>
-<section class="py-6">
-<h1 class="text-gray-900 dark:text-white tracking-light text-[28px] font-bold leading-tight text-left pb-4">When are you available to work?</h1>
-<div class="grid grid-cols-4 gap-1 text-center text-sm font-medium text-gray-600 dark:text-gray-400">
-<div></div> 
-<div class="py-2">Morn</div>
-<div class="py-2">Aft</div>
-<div class="py-2">Eve</div>
-<div class="py-2 font-semibold text-gray-800 dark:text-gray-200">Mon</div>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<div class="py-2 font-semibold text-gray-800 dark:text-gray-200">Tue</div>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<div class="py-2 font-semibold text-gray-800 dark:text-gray-200">Wed</div>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<div class="py-2 font-semibold text-gray-800 dark:text-gray-200">Thu</div>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<div class="py-2 font-semibold text-gray-800 dark:text-gray-200">Fri</div>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700"></button>
-<div class="py-2 font-semibold text-gray-800 dark:text-gray-200">Sat</div>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<div class="py-2 font-semibold text-gray-800 dark:text-gray-200">Sun</div>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
-<button class="aspect-square flex items-center justify-center rounded-lg bg-primary text-white"><span class="material-symbols-outlined text-2xl">check</span></button>
+
+<!-- AVAILABILITY -->
+<section>
+<h2 class="text-xl font-bold">Availability</h2>
+
+<div class="grid grid-cols-4 gap-2 text-center mt-4">
+<div></div>
+<div>Morning</div>
+<div>Afternoon</div>
+<div>Evening</div>
+
+<!-- MON -->
+<div class="font-semibold">Mon</div>
+<button class="availability border rounded-lg h-12" data-day="mon" data-time="morning"></button>
+<button class="availability border rounded-lg h-12" data-day="mon" data-time="afternoon"></button>
+<button class="availability border rounded-lg h-12" data-day="mon" data-time="evening"></button>
+
+<!-- TUE -->
+<div class="font-semibold">Tue</div>
+<button class="availability border rounded-lg h-12" data-day="tue" data-time="morning"></button>
+<button class="availability border rounded-lg h-12" data-day="tue" data-time="afternoon"></button>
+<button class="availability border rounded-lg h-12" data-day="tue" data-time="evening"></button>
+
+<!-- WED -->
+<div class="font-semibold">Wed</div>
+<button class="availability border rounded-lg h-12" data-day="wed" data-time="morning"></button>
+<button class="availability border rounded-lg h-12" data-day="wed" data-time="afternoon"></button>
+<button class="availability border rounded-lg h-12" data-day="wed" data-time="evening"></button>
+
+
+<!-- SAT -->
+ <div class="font-semibold">THU</div>
+<button class="availability border rounded-lg h-12" data-day="thu" data-time="morning"></button>
+<button class="availability border rounded-lg h-12" data-day="thu" data-time="afternoon"></button>
+<button class="availability border rounded-lg h-12" data-day="thu" data-time="evening"></button>
+
+
+<!-- FRI -->
+<div class="font-semibold">Fri</div>
+<button class="availability border rounded-lg h-12" data-day="fri" data-time="morning"></button>
+<button class="availability border rounded-lg h-12" data-day="fri" data-time="afternoon"></button>
+<button class="availability border rounded-lg h-12" data-day="fri" data-time="evening"></button>
+
+<!-- SAT -->
+<div class="font-semibold">Sat</div>
+<button class="availability border rounded-lg h-12" data-day="sat" data-time="morning"></button>
+<button class="availability border rounded-lg h-12" data-day="sat" data-time="afternoon"></button>
+<button class="availability border rounded-lg h-12" data-day="sat" data-time="evening"></button>
+
+<!-- SUN -->
+<div class="font-semibold">Sun</div>
+<button class="availability border rounded-lg h-12" data-day="sun" data-time="morning"></button>
+<button class="availability border rounded-lg h-12" data-day="sun" data-time="afternoon"></button>
+<button class="availability border rounded-lg h-12" data-day="sun" data-time="evening"></button>
+
 </div>
+
+
+
 </section>
+
+<button id="submitBtn"
+class="w-full bg-brand text-white text-lg py-4 rounded-xl font-bold">
+Complete Profile
+</button>
+
 </main>
-<footer class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm p-4 border-t border-gray-200 dark:border-gray-700">
-<button onclick="window.location.href='job_seeker_home.html'" class="w-full bg-primary-brand text-white font-bold py-4 px-6 rounded-xl text-lg hover:bg-primary-brand/90 transition-colors duration-300">
-                Complete Profile
-            </button>
-            
-</footer>
-</div>
-</body></html>
+
+<!-- ================= SUPABASE ================= -->
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+)
+
+// 🔐 check login
+const { data: { user }, error: userError } = await supabase.auth.getUser()
+if (userError || !user) location.href = "login.html"
+
+// ===== AVATAR =====
+const avatarInput = document.getElementById("avatarInput")
+const avatarPreview = document.getElementById("avatarPreview")
+const avatarLoading = document.getElementById("avatarLoading")
+
+let avatarFile = null
+
+avatarInput.addEventListener("change", () => {
+  avatarFile = avatarInput.files[0]
+  if (!avatarFile) return
+
+  // preview ทันที
+  avatarPreview.src = URL.createObjectURL(avatarFile)
+})
+
+// ===== TOGGLE UI =====
+document.querySelectorAll(".selectable").forEach(el =>
+  el.addEventListener("click", () => el.classList.toggle("active"))
+)
+
+document.querySelectorAll(".availability").forEach(el =>
+  el.addEventListener("click", () => el.classList.toggle("active"))
+)
+
+// ===== SUBMIT =====
+const submitBtn = document.getElementById("submitBtn")
+
+submitBtn.addEventListener("click", async () => {
+  submitBtn.disabled = true
+  submitBtn.innerText = "Saving..."
+
+  const job_seeker_id = "JS_" + user.id
+  const bio = document.getElementById("bio").value.trim()
+  const gender = document.getElementById("gender").value
+  const birth_date = document.getElementById("dob").value || null
+
+  const skills = [...document.querySelectorAll(".skill.active")]
+    .map(el => el.dataset.skill)
+
+  const job_types = [...document.querySelectorAll(".job.active")]
+    .map(el => el.dataset.job)
+
+  const availability = {}
+  document.querySelectorAll(".availability.active").forEach(el => {
+    const d = el.dataset.day
+    const t = el.dataset.time
+    if (!availability[d]) availability[d] = []
+    availability[d].push(t)
+  })
+
+  // ===== UPLOAD AVATAR =====
+  let avatar_url = null
+
+  if (avatarFile) {
+    avatarLoading.classList.remove("hidden")
+
+    const ext = avatarFile.name.split(".").pop()
+    const filePath = `avatars/${user.id}.${ext}`
+
+    const { error: uploadError } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, avatarFile, { upsert: true })
+
+    avatarLoading.classList.add("hidden")
+
+    if (uploadError) {
+      alert(uploadError.message)
+      submitBtn.disabled = false
+      submitBtn.innerText = "Complete Profile"
+      return
+    }
+
+    avatar_url = supabase.storage
+      .from("avatars")
+      .getPublicUrl(filePath).data.publicUrl
+  }
+
+  // ===== SAVE JOB SEEKER =====
+  const { error } = await supabase
+    .from("job_seekers")
+    .upsert({
+      job_seeker_id,
+      user_id: user.id,
+      avatar_url,
+      bio,
+      gender,
+      birth_date,
+      skills,
+      job_types,
+      availability,
+      onboarding_completed: true
+    })
+
+  // ===== SAVE PROFILE =====
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .upsert({
+      id: user.id,
+      role_id: 2,
+      role: "jobseeker",
+      birth_date,
+    })
+
+  if (error || profileError) {
+    alert(error?.message || profileError?.message)
+    submitBtn.disabled = false
+    submitBtn.innerText = "Complete Profile"
+    return
+  }
+
+  location.href = "job_seeker_home.html"
+})
+</script>
+
+
+
+
+
+</body>
+</html>

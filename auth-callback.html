@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Signing you in...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;">
+    <p>Signing you in...</p>
+  </div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+)
+
+async function redirectByRole() {
+  const { data: { session } } = await supabase.auth.getSession()
+
+  if (!session?.user) {
+    window.location.href = "signin.html"
+    return
+  }
+
+  const user = session.user
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single()
+
+  if (error || !profile || !profile.role) {
+    window.location.href = "select_role.html"
+    return
+  }
+
+  if (profile.role === "jobseeker") {
+    window.location.href = "job_seeker_home.html"
+  } else if (profile.role === "employer") {
+    window.location.href = "employer_home.html"
+  } else {
+    window.location.href = "select_role.html"
+  }
+}
+
+redirectByRole()
+</script>
+
+</body>
+</html>
