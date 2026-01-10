@@ -2,157 +2,159 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Seeker Home / Feed</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Seeker Home / Feed</title>
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-  <style>
-    body {
-      font-family: "Plus Jakarta Sans", sans-serif;
-    }
+    <style>
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
 
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-  </style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 </head>
 
-<body class="bg-background-light">
-  <div class="relative mx-auto min-h-screen w-full max-w-md bg-background-light">
+<body class="bg-background-light ">
+    <div class="relative mx-auto min-h-screen w-full max-w-md bg-background-light">
 
-<!-- ===== TOP BAR ===== -->
-<div class="sticky top-0 z-10 flex items-center gap-3 bg-white px-4 py-3 shadow-sm">
+        <!-- ===== TOP BAR ===== -->
+        <div class="sticky top-0 z-10 flex items-center gap-3 bg-white px-4 py-3 shadow-sm">
 
-  <!-- Avatar -->
-  <div
-    id="avatar"
-    class="h-11 w-11 rounded-full bg-gray-200 bg-cover bg-center flex items-center justify-center">
-  </div>
+            <!-- Avatar -->
+            <div id="avatar"
+                class="h-11 w-11 rounded-full bg-gray-200 bg-cover bg-center flex items-center justify-center">
+            </div>
 
-  <!-- Greeting -->
-  <div class="flex flex-col leading-tight">
-    <span class="text-xs text-gray-400">Welcome 👋</span>
-    <h2
-      id="greeting"
-      class="text-lg font-bold text-gray-900 tracking-tight">
-      Loading...
-    </h2>
-  </div>
+            <!-- Greeting -->
+            <div class="flex flex-col leading-tight">
+                <span class="text-xs text-gray-400">Welcome 👋</span>
+                <h2 id="greeting" class="text-lg font-bold text-gray-900 tracking-tight">
+                    Loading...
+                </h2>
+            </div>
 
-  <!-- Spacer -->
-  <div class="flex-1"></div>
+            <!-- Spacer -->
+            <div class="flex-1"></div>
 
-  <!-- Chat Icon -->
-  <span class="material-symbols-outlined text-gray-600">
-    chat_bubble
+            <!-- Chat Icon -->
+            <span class="material-symbols-outlined text-gray-600">
+                chat_bubble
 
-  </span>
+            </span>
 
-</div>
-
-
-
-      <!-- ===== STATS ===== -->
-      <div class="flex flex-wrap gap-4 p-4">
-        <div class="flex-1 rounded-xl bg-white p-4 shadow">
-          <p class="text-sm text-gray-500">Applications</p>
-          <p class="text-2xl font-bold">5</p>
         </div>
 
-        <div class="flex-1 rounded-xl bg-white p-4 shadow">
-          <p class="text-sm text-gray-500">Saved Jobs</p>
-          <p class="text-2xl font-bold">3</p>
+
+
+        <!-- ===== STATS ===== -->
+        <div class="flex flex-wrap gap-4 p-4">
+            <div class="flex-1 rounded-xl bg-white p-4 shadow">
+                <p class="text-sm text-gray-500">Applications</p>
+                <p class="text-2xl font-bold">5</p>
+            </div>
+
+            <div class="flex-1 rounded-xl bg-white p-4 shadow">
+                <p class="text-sm text-gray-500">Saved Jobs</p>
+                <p class="text-2xl font-bold">3</p>
+            </div>
+
+            <div class="flex-1 rounded-xl border border-emerald-300 bg-emerald-50 p-4">
+                <p class="text-sm text-emerald-700">Upcoming Shifts</p>
+                <p class="text-2xl font-bold text-emerald-700">2</p>
+            </div>
         </div>
 
-        <div class="flex-1 rounded-xl border border-emerald-300 bg-emerald-50 p-4">
-          <p class="text-sm text-emerald-700">Upcoming Shifts</p>
-          <p class="text-2xl font-bold text-emerald-700">2</p>
-        </div>
-      </div>
+        <!-- ===== SECTION HEADER ===== -->
+        <h3 class="px-4 pt-2 text-lg font-bold">Recommended For You</h3>
 
-      <!-- ===== SECTION HEADER ===== -->
-      <h3 class="px-4 pt-2 text-lg font-bold">Recommended For You</h3>
+        <!-- ===== JOB LIST ===== -->
+        <div id="recommended-list" class="flex flex-col gap-4 p-4"></div>
 
-      <!-- ===== JOB LIST ===== -->
-      <div id="recommended-list" class="flex flex-col gap-4 p-4"></div>
+        </main>
 
-    </main>
+        <!-- ===== BOTTOM NAV ===== -->
+        <nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 bg-white">
 
-    <!-- ===== BOTTOM NAV ===== -->
-    <nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 bg-white">
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-primary" href="job_seeker_home.html">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-xs font-medium">Home</span>
+            </a>
 
-      <a class="flex flex-col items-center justify-center gap-1 w-full text-primary" href="job_seeker_home.html">
-        <span class="material-symbols-outlined">home</span>
-        <span class="text-xs font-medium">Home</span>
-      </a>
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400" href="job_search.html">
+                <span class="material-symbols-outlined">search</span>
+                <span class="text-xs font-medium">Search</span>
+            </a>
 
-      <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400" href="job_search.html">
-        <span class="material-symbols-outlined">search</span>
-        <span class="text-xs font-medium">Search</span>
-      </a>
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400"
+                href="job_seeker_my_shifts.html">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-xs font-medium">Shifts</span>
+            </a>
 
-      <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400" href="job_seeker_my_shifts.html">
-        <span class="material-symbols-outlined">calendar_month</span>
-        <span class="text-xs font-medium">Shifts</span>
-      </a>
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400"
+                href="Myprofile_seeker.html">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-xs font-medium">Profile</span>
+            </a>
 
-      <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400" href="Myprofile_seeker.html">
-        <span class="material-symbols-outlined">person</span>
-        <span class="text-xs font-medium">Profile</span>
-      </a>
+        </nav>
 
-    </nav>
+    </div>
 
-  </div>
+    <!-- ===== SUPABASE ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseClient = window.supabase.createClient(
+            "https://ispbevvwwggbktfczmui.supabase.co",
+            "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+        );
 
-  <!-- ===== SUPABASE ===== -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const supabaseClient = window.supabase.createClient(
-      "https://ispbevvwwggbktfczmui.supabase.co",
-      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-    );
+        async function loadRecommendedJobs() {
+            const container = document.getElementById("recommended-list");
 
-    async function loadRecommendedJobs() {
-      const container = document.getElementById("recommended-list");
-        
-      const { data, error } = await supabaseClient
-        .from("jobposts")
-        .select(`
+            const { data, error } = await supabaseClient
+                .from("jobposts")
+                .select(`
   jobpost_id,
   job_title,
   workplace_name,
   address,
   wage_amount,
   wage_type,
-  workers_needed
+  workers_needed,
+  approval_status
 `)
+                .eq("approval_status", "Approved")
 
-        .order("created_at", { ascending: false });
+                .order("created_at", { ascending: false });
 
-      if (error) {
-        console.error(error);
-        container.innerHTML = "<p class='text-red-500'>โหลดข้อมูลไม่สำเร็จ</p>";
-        return;
-      }
+            if (error) {
+                console.error(error);
+                container.innerHTML = "<p class='text-red-500'>โหลดข้อมูลไม่สำเร็จ</p>";
+                return;
+            }
 
-      container.innerHTML = "";
+            container.innerHTML = "";
 
-      data.forEach(job => {
-        const card = document.createElement("div");
-        card.className = "rounded-xl bg-white shadow";
-        card.style.cursor = "pointer";
+            data.forEach(job => {
+                const card = document.createElement("div");
+                card.className = "rounded-xl bg-white shadow";
+                card.style.cursor = "pointer";
 
-        /* ✅ เพิ่มการเชื่อมหน้า (ไม่กระทบส่วนอื่น) */
-        card.addEventListener("click", () => {
-          window.location.href = `job_details.html?id=${job.jobpost_id}`;
-        });
+                /* ✅ เพิ่มการเชื่อมหน้า (ไม่กระทบส่วนอื่น) */
+                card.addEventListener("click", () => {
+                    window.location.href = `job_details.html?id=${job.jobpost_id}`;
+                });
 
-        card.innerHTML = `
+                card.innerHTML = `
       <div class="p-4 flex gap-3">
         <div class="h-16 w-16 flex items-center justify-center bg-gray-200 rounded-lg">
           <span class="material-symbols-outlined text-gray-400 text-3xl">store</span>
@@ -177,59 +179,59 @@
       </div>
     `;
 
-        container.appendChild(card);
-      });
-    }
+                container.appendChild(card);
+            });
+        }
 
-    loadRecommendedJobs();
+        loadRecommendedJobs();
 
-    async function loadProfile() {
-    // 🔐 check login
-    const { data: { user }, error: authError } =
-      await supabaseClient.auth.getUser();
+        async function loadProfile() {
+            // 🔐 check login
+            const { data: { user }, error: authError } =
+                await supabaseClient.auth.getUser();
 
-    if (!user || authError) {
-      window.location.href = "signin.html";
-      return;
-    }
+            if (!user || authError) {
+                window.location.href = "signin.html";
+                return;
+            }
 
-    // 📦 load profile
-    const { data: profile, error } = await supabaseClient
-      .from("profiles")
-      .select("first_name, last_name")
-      .eq("id", user.id)
-      .single();
-    const { data: job_seekers, error: jobSeekersError } = await supabaseClient
-      .from("job_seekers")
-      .select("avatar_url")
-      .eq("user_id", user.id)
-      .single();
+            // 📦 load profile
+            const { data: profile, error } = await supabaseClient
+                .from("profiles")
+                .select("first_name, last_name")
+                .eq("id", user.id)
+                .single();
+            const { data: job_seekers, error: jobSeekersError } = await supabaseClient
+                .from("job_seekers")
+                .select("avatar_url")
+                .eq("user_id", user.id)
+                .single();
 
-    if (error) {
-      console.error("Profile error:", error);
-      return;
-    }
+            if (error) {
+                console.error("Profile error:", error);
+                return;
+            }
 
-    // 👤 set name
-   const fullName =
-  `${profile.first_name || ""}`.trim() || "User";
+            // 👤 set name
+            const fullName =
+                `${profile.first_name || ""}`.trim() || "User";
 
 
-    document.getElementById("greeting").textContent = fullName;
+            document.getElementById("greeting").textContent = fullName;
 
-    // 🖼 set avatar
-    const avatarDiv = document.getElementById("avatar");
-    if (job_seekers.avatar_url) {
-      avatarDiv.style.backgroundImage = `url('${job_seekers.avatar_url}')`;
-    } else {
-      avatarDiv.innerHTML =
-        `<span class="material-symbols-outlined text-gray-400">person</span>`;
-    }
-  }
+            // 🖼 set avatar
+            const avatarDiv = document.getElementById("avatar");
+            if (job_seekers.avatar_url) {
+                avatarDiv.style.backgroundImage = `url('${job_seekers.avatar_url}')`;
+            } else {
+                avatarDiv.innerHTML =
+                    `<span class="material-symbols-outlined text-gray-400">person</span>`;
+            }
+        }
 
-  loadProfile();
-  
-  </script>
+        loadProfile();
+
+    </script>
 
 </body>
 

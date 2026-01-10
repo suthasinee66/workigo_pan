@@ -1,206 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Job Details</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Details</title>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-<style>
-body { font-family: "Plus Jakarta Sans", sans-serif; }
-.material-symbols-outlined {
-  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
-}
-</style>
+  <style>
+    body {
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
 </head>
 
 <body class="bg-background-light">
-<div class="relative flex min-h-screen w-full flex-col">
+  <div class="relative flex min-h-screen w-full flex-col">
 
-<!-- ===== TOP BAR ===== -->
-<div class="sticky top-0 z-10 flex items-center bg-background-light p-4">
-  <button onclick="history.back()" class="size-10">
-    <span class="material-symbols-outlined">arrow_back_ios_new</span>
-  </button>
-  <h2 class="flex-1 text-center text-lg font-bold">Job Details</h2>
-  <div class="size-10"></div>
-</div>
-
-<main class="flex-1 pb-40">
-
-<!-- ===== HEADER ===== -->
-<div class="p-4">
-  <div class="rounded-xl bg-white p-4 shadow">
-    <div class="flex gap-4">
-      <div class="h-16 w-16 flex items-center justify-center rounded-xl bg-gray-200">
-        <span class="material-symbols-outlined text-3xl text-gray-400">store</span>
-      </div>
-
-      <div class="flex-1">
-        <p id="job-title" class="text-xl font-bold"></p>
-        <p id="workplace-name" class="text-sm text-gray-500"></p>
-      </div>
+    <!-- ===== TOP BAR ===== -->
+    <div class="sticky top-0 z-10 flex items-center gap-3 bg-white px-4 py-3 shadow-sm">
+      <button onclick="history.back()" class="size-10">
+        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+      </button>
+      <h2 class="flex-1 text-center text-lg font-bold ">Job Details</h2>
+      <div class="size-10"></div>
     </div>
 
-    <!-- ค่าแรง -->
-    <div class="mt-4 flex justify-end rounded-lg bg-gray-100 p-3">
-      <p id="wage-display" class="text-lg font-bold text-emerald-600"></p>
-    </div>
+    <main class="flex-1 pb-40">
+
+      <!-- ===== HEADER ===== -->
+      <div class="p-4">
+        <div class="rounded-xl bg-white p-4 shadow">
+          <div class="flex gap-4">
+            <div class="h-16 w-16 flex items-center justify-center rounded-xl bg-gray-200">
+              <span class="material-symbols-outlined text-3xl text-gray-400">store</span>
+            </div>
+
+            <div class="flex-1">
+              <p id="job-title" class="text-xl font-bold"></p>
+              <p id="workplace-name" class="text-sm text-gray-500"></p>
+            </div>
+          </div>
+
+          <!-- ค่าแรง -->
+          <div class="mt-4 flex justify-end rounded-lg bg-gray-100 p-3">
+            <p id="wage-display" class="text-lg font-bold text-emerald-600"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== DETAIL BLOCKS ===== -->
+      <div class="px-4 flex flex-col gap-3">
+
+        <!-- applicants -->
+        <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+          <span class="material-symbols-outlined text-blue-500">group</span>
+          <p class="text-sm">
+            <span id="applicants-count" class="font-bold"></span> applicants
+          </p>
+        </div>
+
+        <!-- deadline -->
+        <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+          <span class="material-symbols-outlined text-red-500">timer</span>
+          <p class="text-sm">
+            Deadline: <span id="deadline" class="font-bold"></span>
+          </p>
+        </div>
+
+        <!-- start date + shift time -->
+        <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+          <span class="material-symbols-outlined text-purple-500">calendar_month</span>
+          <p class="text-sm">
+            Start: <span id="start-display" class="font-bold"></span>
+          </p>
+        </div>
+
+        <!-- location -->
+        <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+          <span class="material-symbols-outlined text-emerald-600">location_on</span>
+          <p id="address" class="text-sm font-medium"></p>
+        </div>
+
+        <!-- workers needed -->
+        <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
+          <span class="material-symbols-outlined text-orange-500">groups</span>
+          <p class="text-sm">
+            <span id="workers-needed" class="font-bold"></span> people needed
+          </p>
+        </div>
+
+      </div>
+
+      <hr class="mx-4 my-6" />
+
+      <!-- ===== AGE REQUIREMENT ===== -->
+      <div class="px-4 mt-4">
+        <h3 class="text-lg font-bold">Age</h3>
+        <p id="age-requirement" class="mt-2 text-gray-600 leading-relaxed"></p>
+      </div>
+
+      <!-- ===== GENDER REQUIREMENT ===== -->
+      <div class="px-4 mt-4">
+        <h3 class="text-lg font-bold">Gender</h3>
+        <p id="gender-requirement" class="mt-2 text-gray-600 leading-relaxed"></p>
+      </div>
+
+      <!-- ===== DESCRIPTION ===== -->
+      <div class="px-4">
+        <h3 class="text-lg font-bold">Job Description</h3>
+        <p id="job-description" class="mt-2 text-gray-600 leading-relaxed"></p>
+      </div>
+
+      <!-- ===== QUALIFICATIONS ===== -->
+      <div class="px-4 mt-4">
+        <h3 class="text-lg font-bold">Qualifications</h3>
+        <p id="qualifications" class="mt-2 text-gray-600 leading-relaxed"></p>
+      </div>
+
+    </main>
+
+    <!-- ===== APPLY BUTTON ===== -->
+    <div class="fixed bottom-20 left-0 w-full px-4"> <button id="apply-button"
+        class="h-12 w-full rounded-xl bg-orange-500 text-white font-bold"> Apply Now </button> </div>
   </div>
-</div>
 
-<!-- ===== DETAIL BLOCKS ===== -->
-<div class="px-4 flex flex-col gap-3">
+  <!-- ===== SUPABASE ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseClient = window.supabase.createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    );
 
-  <!-- applicants -->
-  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
-    <span class="material-symbols-outlined text-blue-500">group</span>
-    <p class="text-sm">
-      <span id="applicants-count" class="font-bold"></span> applicants
-    </p>
-  </div>
+    const params = new URLSearchParams(window.location.search);
+    const jobpostId = params.get("id");
 
-  <!-- deadline -->
-  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
-    <span class="material-symbols-outlined text-red-500">timer</span>
-    <p class="text-sm">
-      Deadline: <span id="deadline" class="font-bold"></span>
-    </p>
-  </div>
+    async function loadJobDetail() {
+      const { data, error } = await supabaseClient
+        .from("jobposts")
+        .select("*")
+        .eq("jobpost_id", jobpostId)
+        .single();
 
-  <!-- start date + shift time -->
-  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
-    <span class="material-symbols-outlined text-purple-500">calendar_month</span>
-    <p class="text-sm">
-      Start: <span id="start-display" class="font-bold"></span>
-    </p>
-  </div>
+      if (error || !data) {
+        alert("โหลดข้อมูลงานไม่สำเร็จ");
+        return;
+      }
 
-  <!-- location -->
-  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
-    <span class="material-symbols-outlined text-emerald-600">location_on</span>
-    <p id="address" class="text-sm font-medium"></p>
-  </div>
+      document.getElementById("job-title").textContent = data.job_title ?? "-";
+      document.getElementById("workplace-name").textContent = data.workplace_name ?? "-";
+      document.getElementById("job-description").textContent = data.job_description ?? "-";
+      document.getElementById("qualifications").textContent = data.qualifications ?? "-";
+      document.getElementById("age-requirement").textContent = data.age_requirement ?? "-";
+      document.getElementById("gender-requirement").textContent = data.gender_requirement ?? "Any";
+      document.getElementById("address").textContent = data.address ?? "-";
+      document.getElementById("workers-needed").textContent = data.workers_needed ?? "-";
+      document.getElementById("applicants-count").textContent = data.applicants_count ?? 0;
+      document.getElementById("deadline").textContent = data.application_deadline ?? "-";
 
-  <!-- workers needed -->
-  <div class="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
-    <span class="material-symbols-outlined text-orange-500">groups</span>
-    <p class="text-sm">
-      <span id="workers-needed" class="font-bold"></span> people needed
-    </p>
-  </div>
+      const startDate = data.start_date ?? "-";
+      const startTime = data.start_time ?? "-";
+      const endTime = data.end_time ?? "-";
+      document.getElementById("start-display").textContent = `${startDate} | ${startTime} - ${endTime}`;
 
-</div>
+      let wageText = "";
+      if (data.wage_type === "hour") wageText = `${data.wage_amount}฿/hr`;
+      else if (data.wage_type === "day") wageText = `${data.wage_amount}฿/day`;
+      else wageText = `${data.wage_amount}฿/hr`;
+      document.getElementById("wage-display").textContent = wageText;
+    }
 
-<hr class="mx-4 my-6"/>
+    loadJobDetail();
 
+    // ===== APPLY JOB / VIEW STATUS =====
+    const applyButton = document.getElementById("apply-button");
 
-<!-- ===== AGE REQUIREMENT ===== -->
-<div class="px-4 mt-4">
-  <h3 class="text-lg font-bold">Age</h3>
-  <p id="age-requirement" class="mt-2 text-gray-600 leading-relaxed"></p>
-</div>
+    async function checkApplication() {
+      if (!jobpostId) return;
 
-<!-- ===== GENDER REQUIREMENT ===== -->
-<div class="px-4 mt-4">
-  <h3 class="text-lg font-bold">Gender</h3>
-  <p id="gender-requirement" class="mt-2 text-gray-600 leading-relaxed"></p>
-</div>
+      // ดึง user ปัจจุบัน
+      const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+      if (!user || authError) return;
 
-<!-- ===== DESCRIPTION ===== -->
-<div class="px-4">
-  <h3 class="text-lg font-bold">Job Description</h3>
-  <p id="job-description" class="mt-2 text-gray-600 leading-relaxed"></p>
-</div>
+      // ดึง job_seeker_id ของ user
+      const { data: jobSeeker } = await supabaseClient
+        .from("job_seekers")
+        .select("job_seeker_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
 
-<!-- ===== QUALIFICATIONS ===== -->
-<div class="px-4 mt-4">
-  <h3 class="text-lg font-bold">Qualifications</h3>
-  <p id="qualifications" class="mt-2 text-gray-600 leading-relaxed"></p>
-</div>
+      if (!jobSeeker) return;
 
-</main>
+      // ตรวจสอบว่าผู้ใช้สมัครงานนี้แล้วหรือยัง
+      const { data: existingApplication } = await supabaseClient
+        .from("job_applications")
+        .select("job_application_id")
+        .eq("worker_id", jobSeeker.job_seeker_id)
+        .eq("jobpost_id", jobpostId)
+        .maybeSingle();
 
-<!-- ===== APPLY BUTTON ===== -->
-<div class="fixed bottom-20 left-0 w-full px-4">
-  <button id="apply-button" class="h-12 w-full rounded-xl bg-orange-500 text-white font-bold">
-    Apply Now
-  </button>
-</div>
+      if (existingApplication) {
+        // ถ้าเคยสมัครแล้ว เปลี่ยนปุ่ม
+        applyButton.textContent = "View Application Status";
+        applyButton.classList.add("bg-primary"); // หรือสีอื่นตามต้องการ
+        applyButton.onclick = () => {
+          window.location.href = "job_application_status_list.html";
+        };
+      } else {
+        // ถ้ายังไม่สมัคร กดสมัครงานได้
+        applyButton.textContent = "Apply Now";
+        applyButton.classList.remove("bg-primary");
+        applyButton.classList.add("bg-orange-500");
+        applyButton.onclick = async () => {
+          const { error } = await supabaseClient
+            .from("job_applications")
+            .insert({
+              worker_id: jobSeeker.job_seeker_id,
+              jobpost_id: jobpostId,
+              application_status: "Pending",
+              applied_at: new Date().toISOString()
+            });
+          if (error) {
+            alert("ไม่สามารถสมัครงานได้: " + error.message);
+            return;
+          }
+          window.location.href = "application_confirmation.html";
+        };
+      }
+    }
 
-<script>
-// กดปุ่ม Apply Now แล้วไปหน้า confirmation พร้อมส่ง jobpost_id
-document.getElementById("apply-button").addEventListener("click", () => {
-  if (!jobpostId) {
-    alert("ไม่พบข้อมูลงานสำหรับสมัคร");
-    return;
-  }
-  // ส่ง jobpost_id ผ่าน URL
-  window.location.href = `application_confirmation.html?id=${jobpostId}`;
-});
-</script>
-
-<!-- ===== SUPABASE ===== -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const supabaseClient = window.supabase.createClient(
-  "https://ispbevvwwggbktfczmui.supabase.co",
-  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-);
-
-const params = new URLSearchParams(window.location.search);
-const jobpostId = params.get("id");
-
-async function loadJobDetail() {
-  const { data, error } = await supabaseClient
-    .from("jobposts")
-    .select("*")
-    .eq("jobpost_id", jobpostId)
-    .single();
-
-  if (error || !data) {
-    alert("โหลดข้อมูลงานไม่สำเร็จ");
-    return;
-  }
-
-  // ข้อมูลหลัก
-  document.getElementById("job-title").textContent = data.job_title ?? "-";
-  document.getElementById("workplace-name").textContent = data.workplace_name ?? "-";
-  document.getElementById("job-description").textContent = data.job_description ?? "-";
-  document.getElementById("qualifications").textContent = data.qualifications ?? "-";
-  document.getElementById("age-requirement").textContent = data.age_requirement ?? "-";
-
-  // Gender Requirement
-  let genderText = data.gender_requirement ?? "Any";
-  document.getElementById("gender-requirement").textContent = genderText;
-
-  document.getElementById("address").textContent = data.address ?? "-";
-  document.getElementById("workers-needed").textContent = data.workers_needed ?? "-";
-
-  // Optional fields
-  document.getElementById("applicants-count").textContent = data.applicants_count ?? 0;
-  document.getElementById("deadline").textContent = data.application_deadline ?? "-";
-
-  // Start date + shift time
-  const startDate = data.start_date ?? "-";
-  const startTime = data.start_time ?? "-";
-  const endTime = data.end_time ?? "-";
-  document.getElementById("start-display").textContent = `${startDate} | ${startTime} - ${endTime}`;
-
-  // Wage
-  let wageText = "";
-  if (data.wage_type === "hour") wageText = `${data.wage_amount}฿/hr`;
-  else if (data.wage_type === "day") wageText = `${data.wage_amount}฿/day`;
-  else wageText = `${data.wage_amount}฿/hr`;
-
-  document.getElementById("wage-display").textContent = wageText;
-}
-
-loadJobDetail();
-</script>
+    checkApplication();
+  </script>
 
 </body>
+
 </html>
