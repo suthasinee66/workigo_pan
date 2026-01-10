@@ -73,24 +73,24 @@
 
     /* ===== REDIRECT BY ROLE ===== */
     async function redirectByRole(user) {
-      const { data: profile, error } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .maybeSingle()
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle()
 
-      if (error) {
-        console.error("PROFILE ERROR:", error)
-      }
+  console.log("PROFILE:", profile)
+  console.log("ERROR:", error)
 
-      if (!profile || !profile.role) {
-        location.href = "select_role.html"
-      } else if (profile.role === "jobseeker") {
-        location.href = "job_seeker_home.html"
-      } else if (profile.role === "employer") {
-        location.href = "employer_home.html"
-      }
-    }
+  if (!profile || !profile.role) {
+    location.href = "select_role.html"
+  } else if (profile.role === "jobseeker") {
+    location.href = "job_seeker_home.html"
+  } else if (profile.role === "employer") {
+    location.href = "employer_home.html"
+  }
+}
+
 
 
     /* ===== EMAIL LOGIN ===== */
@@ -107,6 +107,7 @@
         return
       }
 
+      await redirectByRole(data.user)
     })
 
     /* ===== GOOGLE LOGIN ===== */
@@ -120,18 +121,16 @@
         }
       })
     }
-    let redirected = false
 
+    /* ===== ⭐ ตัวแก้ปัญหาหลัก ===== */
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (
-        !redirected &&
         (event === "SIGNED_IN" || event === "INITIAL_SESSION") &&
         session?.user
       ) {
         await redirectByRole(session.user)
       }
     })
-
   </script>
 
 </body>
