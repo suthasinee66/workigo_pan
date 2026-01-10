@@ -107,31 +107,30 @@
         return
       }
 
-      await redirectByRole(data.user)
     })
 
     /* ===== GOOGLE LOGIN ===== */
     window.googleLogin = async () => {
-  await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${window.location.origin}/signin.html`,
-      queryParams: { prompt: "select_account" }
+      await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/signin.html`
+          ,
+          queryParams: { prompt: "select_account" }
+        }
+      })
     }
-  })
-}
-let redirected = false
+    let redirected = false
 
-supabase.auth.onAuthStateChange(async (event, session) => {
-  if (
-    !redirected &&
-    (event === "SIGNED_IN" || event === "INITIAL_SESSION") &&
-    session?.user
-  ) {
-    redirected = true
-    await redirectByRole(session.user)
-  }
-})
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (
+        !redirected &&
+        (event === "SIGNED_IN" || event === "INITIAL_SESSION") &&
+        session?.user
+      ) {
+        await redirectByRole(session.user)
+      }
+    })
 
   </script>
 

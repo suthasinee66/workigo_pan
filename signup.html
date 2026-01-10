@@ -117,9 +117,11 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
 
   // ถ้าเปิด email confirm → ยังไม่ redirect
   if (!data.session) {
-    alert("Please confirm your email before signing in.")
-    return
-  }
+  alert("Please confirm your email before signing in.")
+  location.href = "/signin.html"
+  return
+}
+
 
   await redirectByRole(data.user)
 })
@@ -129,7 +131,7 @@ window.googleSignup = async () => {
   await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://localhost:5500/signup.html",
+      redirectTo: `${window.location.origin}/signin.html`,
       queryParams: { prompt: "select_account" }
     }
   })
