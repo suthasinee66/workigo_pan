@@ -79,17 +79,19 @@
     .eq("id", user.id)
     .maybeSingle()
 
+  console.log("USER ID:", user.id)
   console.log("PROFILE:", profile)
   console.log("ERROR:", error)
 
   if (!profile || !profile.role) {
     location.href = "select_role.html"
   } else if (profile.role === "jobseeker") {
-    location.href = "job_seeker_home.html"
+    location.href = "/job_seeker_home.html"
   } else if (profile.role === "employer") {
-    location.href = "employer_home.html"
+    location.href = "/employer_home.html"
   }
 }
+
 
 
 
