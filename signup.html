@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up - Work-i-Go</title>
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 
   <script>
     tailwind.config = {
@@ -29,119 +27,147 @@
 </head>
 
 <body class="bg-background font-display">
-  <main class="min-h-screen flex flex-col items-center justify-center px-4">
-    <h1 class="text-2xl font-bold text-brandBlue mb-2">Work-i-Go</h1>
-    <h2 class="text-xl font-bold text-brandBlue mb-6">Create your account</h2>
+<main class="min-h-screen flex flex-col items-center justify-center px-4">
+  <h1 class="text-2xl font-bold text-brandBlue mb-2">Work-i-Go</h1>
+  <h2 class="text-xl font-bold text-brandBlue mb-6">Create your account</h2>
 
-    <form id="signupForm" class="w-full max-w-md flex flex-col gap-4">
-      <input id="firstName" class="h-14 rounded-xl border px-4" placeholder="First name" required />
-      <input id="lastName" class="h-14 rounded-xl border px-4" placeholder="Last name" required />
-      <input id="email" class="h-14 rounded-xl border px-4" type="email" placeholder="Email" required />
-      <input id="password" class="h-14 rounded-xl border px-4" type="password" placeholder="Password" required />
-      <input id="confirmPassword" class="h-14 rounded-xl border px-4" type="password" placeholder="Confirm Password"
-        required />
+  <form id="signupForm" class="w-full max-w-md flex flex-col gap-4">
+    <input id="firstName" class="h-14 rounded-xl border px-4" placeholder="First name" required />
+    <input id="lastName" class="h-14 rounded-xl border px-4" placeholder="Last name" required />
+    <input id="email" class="h-14 rounded-xl border px-4" type="email" placeholder="Email" required />
+    <input id="password" class="h-14 rounded-xl border px-4" type="password" placeholder="Password" required />
+    <input id="confirmPassword" class="h-14 rounded-xl border px-4" type="password" placeholder="Confirm Password" required />
+    
 
-      <button type="submit" class="h-14 rounded-xl bg-primary text-white font-bold">
-        Create Account
-      </button>
-    </form>
-
-    <div class="flex items-center gap-3 my-4 w-full max-w-md">
-      <hr class="flex-1" />
-      <span class="text-sm text-gray-400">or</span>
-      <hr class="flex-1" />
-    </div>
-
-    <button onclick="googleSignup()" class="w-full max-w-md h-14 rounded-xl border font-bold">
-      Continue with Google
+    <button type="submit" class="h-14 rounded-xl bg-primary text-white font-bold">
+      Create Account
     </button>
+  </form>
 
-    <p class="text-sm text-center text-gray-500 mt-4">
-      Already have an account?
-      <a href="signin.html" class="text-brandBlue font-semibold">Sign in</a>
-    </p>
-  </main>
+  <div class="flex items-center gap-3 my-4 w-full max-w-md">
+    <hr class="flex-1" />
+    <span class="text-sm text-gray-400">or</span>
+    <hr class="flex-1" />
+  </div>
 
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+  <button onclick="googleSignup()" class="w-full max-w-md h-14 rounded-xl border font-bold">
+    Continue with Google
+  </button>
 
-    const supabase = createClient(
-      "https://ispbevvwwggbktfczmui.supabase.co",
-      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-    )
+  <p class="text-sm text-center text-gray-500 mt-4">
+    Already have an account?
+    <a href="signin.html" class="text-brandBlue font-semibold">Sign in</a>
+  </p>
+</main>
 
-    /* ===== REDIRECT BY ROLE ===== */
-    async function redirectByRole(user) {
-      const { data: profile, error } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .maybeSingle()
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
 
-      if (error) {
-        console.error(error)
-      }
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+)
 
-      if (!profile || !profile.role) {
-        location.href = "/select_role.html"
-      } else if (profile.role === "jobseeker") {
-        location.href = "/job_seeker_home.html"
-      } else if (profile.role === "employer") {
-        location.href = "/employer_home.html"
+const signupForm = document.getElementById("signupForm")
+const firstNameInput = document.getElementById("firstName")
+const lastNameInput = document.getElementById("lastName")
+const emailInput = document.getElementById("email")
+const passwordInput = document.getElementById("password")
+const confirmPasswordInput = document.getElementById("confirmPassword")
+const submitButton = signupForm.querySelector("button[type='submit']")
+
+// ===== REDIRECT BY ROLE =====
+async function redirectByRole(user) {
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle()
+
+  if (!profile || !profile.role) {
+    location.href = "select_role.html"
+  } else if (profile.role === "jobseeker") {
+    location.href = "job_seeker_home.html"
+  } else if (profile.role === "employer") {
+    location.href = "employer_home.html"
+  }
+}
+
+// ===== EMAIL/PASSWORD SIGNUP =====
+signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault()
+
+  if (passwordInput.value !== confirmPasswordInput.value) {
+    alert("Passwords do not match")
+    return
+  }
+
+  submitButton.disabled = true
+  submitButton.innerText = "Creating account..."
+
+  const fullName = `${firstNameInput.value.trim()} ${lastNameInput.value.trim()}`
+
+  const { data, error } = await supabase.auth.signUp({
+    email: emailInput.value.trim(),
+    password: passwordInput.value,
+    options: {
+      data: {
+        full_name: fullName,
+        first_name: firstNameInput.value.trim(),
+        last_name: lastNameInput.value.trim(),
+        phone: phoneInput.value.trim() || null
       }
     }
+  })
 
+  if (error) {
+    alert(error.message)
+    submitButton.disabled = false
+    submitButton.innerText = "Create Account"
+    return
+  }
 
-    /* ===== EMAIL SIGNUP ===== */
-    document.getElementById("signupForm").addEventListener("submit", async (e) => {
-      e.preventDefault()
-
-      if (password.value !== confirmPassword.value) {
-        alert("Passwords do not match")
-        return
-      }
-
-      const { data, error } = await supabase.auth.signUp({
-        email: email.value,
-        password: password.value,
-        options: {
-          data: {
-            full_name: `${firstName.value} ${lastName.value}`,
-            first_name: firstName.value,
-            last_name: lastName.value
-          }
-        }
-      })
-
-      if (error) {
-        alert(error.message)
-        return
-      }
-
-      // ถ้าเปิด email confirm → ยังไม่ redirect
-      if (!data.session) {
-        alert("Please confirm your email before signing in.")
-        location.href = "/signin.html"
-        return
-      }
-      location.href = "/select_role.html"
+  // บันทึกลง profiles table
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .upsert({
+      id: data.user.id,
+      email: data.user.email,
+      first_name: firstNameInput.value.trim(),
+      last_name: lastNameInput.value.trim(),
+      phone_number: phoneInput.value.trim() || null,
+      status: "Active"
     })
 
-    /* ===== GOOGLE SIGNUP ===== */
-    window.googleSignup = async () => {
-      await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/signin.html`,
-          queryParams: { prompt: "select_account" }
-        }
-      })
+  if (profileError) {
+    alert("Failed to create profile: " + profileError.message)
+    submitButton.disabled = false
+    submitButton.innerText = "Create Account"
+    return
+  }
+
+  alert("Account created successfully!")
+  await redirectByRole(data.user)
+})
+
+// ===== GOOGLE SIGNUP =====
+window.googleSignup = async () => {
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: window.location.origin + "/signup.html",
+      queryParams: { prompt: "select_account" }
     }
+  })
+}
 
-    
-  </script>
-
+// ===== AUTH STATE CHANGE (รองรับ Google redirect) =====
+supabase.auth.onAuthStateChange(async (event, session) => {
+  if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session?.user) {
+    await redirectByRole(session.user)
+  }
+})
+</script>
 
 </body>
-
 </html>

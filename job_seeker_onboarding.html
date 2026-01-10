@@ -1,277 +1,282 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Job Seeker Onboarding</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Seeker Onboarding</title>
 
-<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet" />
 
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary: "#f95e07",
-        brand: "#345395",
-        bg: "#f8f6f5"
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#f95e07",
+            brand: "#345395",
+            bg: "#f8f6f5"
+          }
+        }
       }
     }
-  }
-}
-</script>
+  </script>
 
-<style>
-body { font-family: 'Plus Jakarta Sans', sans-serif; }
-.selectable.active {
-  background:#f95e07;
-  color:white;
-  border-color:#f95e07;
-}
-.availability.active {
-  background:#f95e07;
-  color:white;
-}
-</style>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .selectable.active {
+      background: #f95e07;
+      color: white;
+      border-color: #f95e07;
+    }
+
+    .availability.active {
+      background: #f95e07;
+      color: white;
+    }
+  </style>
 </head>
 
 <body class="bg-bg">
 
-<main class="max-w-2xl mx-auto p-6 space-y-10">
+  <main class="max-w-2xl mx-auto p-6 space-y-10">
 
-<h1 class="text-3xl font-bold text-brand">Create Your Profile</h1>
+    <h1 class="text-3xl font-bold text-brand">Create Your Profile</h1>
 
-<!-- PROFILE IMAGE -->
-<section class="space-y-3">
-  <label class="font-semibold">Profile Image</label>
+    <!-- PROFILE IMAGE -->
+    <section class="space-y-3">
+      <label class="font-semibold">Profile Image</label>
 
-  <div class="flex items-center gap-6">
-    <!-- Preview -->
-    <div class="relative">
-      <div class="relative w-28 h-28">
-  <img
-    id="avatarPreview"
-    src="https://via.placeholder.com/150"
-    class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md"
-  />
+      <div class="flex items-center gap-6">
+        <!-- Preview -->
+        <div class="relative">
+          <div class="relative w-28 h-28">
+            <img id="avatarPreview" src="https://via.placeholder.com/150"
+              class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md" />
 
-  <!-- Loading overlay -->
-  <div
-    id="avatarLoading"
-    class="hidden absolute inset-0 bg-black/40 rounded-full
+            <!-- Loading overlay -->
+            <div id="avatarLoading" class="hidden absolute inset-0 bg-black/40 rounded-full
            flex items-center justify-center text-white text-sm font-semibold">
-    Uploading...
-  </div>
-</div>
+              Uploading...
+            </div>
+          </div>
 
 
-      <!-- small edit badge -->
-      <span
-        class="absolute bottom-1 right-1 bg-primary text-white rounded-full p-1 shadow">
-        <svg xmlns="http://www.w3.org/2000/svg"
-          class="w-4 h-4"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M15.232 5.232l3.536 3.536M9 11l6-6m2 2l-6 6m-3 3h6" />
-        </svg>
-      </span>
-    </div>
+          <!-- small edit badge -->
+          <span class="absolute bottom-1 right-1 bg-primary text-white rounded-full p-1 shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15.232 5.232l3.536 3.536M9 11l6-6m2 2l-6 6m-3 3h6" />
+            </svg>
+          </span>
+        </div>
 
-    <!-- Upload Button -->
-    <div>
-      <label
-        for="avatarInput"
-        class="cursor-pointer inline-flex items-center gap-2
+        <!-- Upload Button -->
+        <div>
+          <label for="avatarInput" class="cursor-pointer inline-flex items-center gap-2
                bg-primary text-white font-semibold
                px-5 py-3 rounded-xl
                shadow hover:bg-orange-600
                active:scale-95 transition-all">
 
-        <svg xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M8 12l4-4m0 0l4 4m-4-4v12" />
-        </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M8 12l4-4m0 0l4 4m-4-4v12" />
+            </svg>
 
-        Upload Photo
-      </label>
+            Upload Photo
+          </label>
 
-      <p class="text-sm text-gray-500 mt-2">
-        JPG, PNG (max 2MB)
-      </p>
+          <p class="text-sm text-gray-500 mt-2">
+            JPG, PNG (max 2MB)
+          </p>
 
-      <input
-        id="avatarInput"
-        type="file"
-        accept="image/*"
-        class="hidden"
-      />
-    </div>
-  </div>
-</section>
+          <input id="avatarInput" type="file" accept="image/*" class="hidden" />
+        </div>
+      </div>
+    </section>
 
 
-<!-- BIO -->
-<section>
-<label class="font-semibold">Bio</label>
-<textarea id="bio" class="w-full mt-2 rounded-xl border p-4" rows="4"
-placeholder="Tell employers about yourself"></textarea>
-</section>
+    <!-- BIO -->
+    <section>
+      <label class="font-semibold">Bio</label>
+      <textarea id="bio" class="w-full mt-2 rounded-xl border p-4" rows="4"
+        placeholder="Tell employers about yourself"></textarea>
+    </section>
+    <section>
+      <label class="font-semibold">Phone</label>
+      <input id="phone" type="tel" class="w-full mt-2 rounded-xl border p-3" placeholder="Your phone number" />
+    </section>
 
-<!-- GENDER + DOB -->
-<section class="grid grid-cols-2 gap-4">
-<div>
-<label class="font-semibold">Gender</label>
-<select id="gender" class="w-full rounded-xl border p-3 mt-2">
-<option>Female</option>
-<option>Male</option>
-<option>Non-binary</option>
-<option>Prefer not to say</option>
-</select>
-</div>
-<div>
-<label class="font-semibold">Date of Birth</label>
-<input id="dob" type="date" class="w-full rounded-xl border p-3 mt-2"/>
-</div>
-</section>
+    <!-- GENDER + DOB -->
+    <section class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="font-semibold">Gender</label>
+        <select id="gender" class="w-full rounded-xl border p-3 mt-2">
+          <option>Female</option>
+          <option>Male</option>
+          <option>Non-binary</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+      <div>
+        <label class="font-semibold">Date of Birth</label>
+        <input id="dob" type="date" class="w-full rounded-xl border p-3 mt-2" />
+      </div>
+    </section>
 
-<!-- SKILLS -->
-<section>
-<h2 class="text-xl font-bold">Top Skills</h2>
-<div class="flex flex-wrap gap-2 mt-3">
-<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Cashier">Cashier</span>
-<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Barista">Barista</span>
-<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Food Prep">Food Prep</span>
-<span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Customer Service">Customer Service</span>
-</div>
-</section>
+    <!-- SKILLS -->
+    <section>
+      <h2 class="text-xl font-bold">Top Skills</h2>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Cashier">Cashier</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Barista">Barista</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Food Prep">Food
+          Prep</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer"
+          data-skill="Customer Service">Customer Service</span>
+      </div>
+    </section>
 
-<!-- JOB TYPES -->
-<section>
-<h2 class="text-xl font-bold">Job Types</h2>
-<div class="grid grid-cols-2 gap-3 mt-3">
-<button class="job selectable border rounded-xl p-4" data-job="Retail">Retail</button>
-<button class="job selectable border rounded-xl p-4" data-job="Hospitality">Hospitality</button>
-<button class="job selectable border rounded-xl p-4" data-job="Delivery">Delivery</button>
-<button class="job selectable border rounded-xl p-4" data-job="Events">Events</button>
-</div>
-</section>
+    <!-- JOB TYPES -->
+    <section>
+      <h2 class="text-xl font-bold">Job Types</h2>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <button class="job selectable border rounded-xl p-4" data-job="Retail">Retail</button>
+        <button class="job selectable border rounded-xl p-4" data-job="Hospitality">Hospitality</button>
+        <button class="job selectable border rounded-xl p-4" data-job="Delivery">Delivery</button>
+        <button class="job selectable border rounded-xl p-4" data-job="Events">Events</button>
+      </div>
+    </section>
 
-<!-- AVAILABILITY -->
-<section>
-<h2 class="text-xl font-bold">Availability</h2>
+    <!-- AVAILABILITY -->
+    <section>
+      <h2 class="text-xl font-bold">Availability</h2>
 
-<div class="grid grid-cols-4 gap-2 text-center mt-4">
-<div></div>
-<div>Morning</div>
-<div>Afternoon</div>
-<div>Evening</div>
+      <div class="grid grid-cols-4 gap-2 text-center mt-4">
+        <div></div>
+        <div>Morning</div>
+        <div>Afternoon</div>
+        <div>Evening</div>
 
-<!-- MON -->
-<div class="font-semibold">Mon</div>
-<button class="availability border rounded-lg h-12" data-day="mon" data-time="morning"></button>
-<button class="availability border rounded-lg h-12" data-day="mon" data-time="afternoon"></button>
-<button class="availability border rounded-lg h-12" data-day="mon" data-time="evening"></button>
+        <!-- MON -->
+        <div class="font-semibold">Mon</div>
+        <button class="availability border rounded-lg h-12" data-day="mon" data-time="morning"></button>
+        <button class="availability border rounded-lg h-12" data-day="mon" data-time="afternoon"></button>
+        <button class="availability border rounded-lg h-12" data-day="mon" data-time="evening"></button>
 
-<!-- TUE -->
-<div class="font-semibold">Tue</div>
-<button class="availability border rounded-lg h-12" data-day="tue" data-time="morning"></button>
-<button class="availability border rounded-lg h-12" data-day="tue" data-time="afternoon"></button>
-<button class="availability border rounded-lg h-12" data-day="tue" data-time="evening"></button>
+        <!-- TUE -->
+        <div class="font-semibold">Tue</div>
+        <button class="availability border rounded-lg h-12" data-day="tue" data-time="morning"></button>
+        <button class="availability border rounded-lg h-12" data-day="tue" data-time="afternoon"></button>
+        <button class="availability border rounded-lg h-12" data-day="tue" data-time="evening"></button>
 
-<!-- WED -->
-<div class="font-semibold">Wed</div>
-<button class="availability border rounded-lg h-12" data-day="wed" data-time="morning"></button>
-<button class="availability border rounded-lg h-12" data-day="wed" data-time="afternoon"></button>
-<button class="availability border rounded-lg h-12" data-day="wed" data-time="evening"></button>
-
-
-<!-- SAT -->
- <div class="font-semibold">THU</div>
-<button class="availability border rounded-lg h-12" data-day="thu" data-time="morning"></button>
-<button class="availability border rounded-lg h-12" data-day="thu" data-time="afternoon"></button>
-<button class="availability border rounded-lg h-12" data-day="thu" data-time="evening"></button>
-
-
-<!-- FRI -->
-<div class="font-semibold">Fri</div>
-<button class="availability border rounded-lg h-12" data-day="fri" data-time="morning"></button>
-<button class="availability border rounded-lg h-12" data-day="fri" data-time="afternoon"></button>
-<button class="availability border rounded-lg h-12" data-day="fri" data-time="evening"></button>
-
-<!-- SAT -->
-<div class="font-semibold">Sat</div>
-<button class="availability border rounded-lg h-12" data-day="sat" data-time="morning"></button>
-<button class="availability border rounded-lg h-12" data-day="sat" data-time="afternoon"></button>
-<button class="availability border rounded-lg h-12" data-day="sat" data-time="evening"></button>
-
-<!-- SUN -->
-<div class="font-semibold">Sun</div>
-<button class="availability border rounded-lg h-12" data-day="sun" data-time="morning"></button>
-<button class="availability border rounded-lg h-12" data-day="sun" data-time="afternoon"></button>
-<button class="availability border rounded-lg h-12" data-day="sun" data-time="evening"></button>
-
-</div>
+        <!-- WED -->
+        <div class="font-semibold">Wed</div>
+        <button class="availability border rounded-lg h-12" data-day="wed" data-time="morning"></button>
+        <button class="availability border rounded-lg h-12" data-day="wed" data-time="afternoon"></button>
+        <button class="availability border rounded-lg h-12" data-day="wed" data-time="evening"></button>
 
 
+        <!-- SAT -->
+        <div class="font-semibold">THU</div>
+        <button class="availability border rounded-lg h-12" data-day="thu" data-time="morning"></button>
+        <button class="availability border rounded-lg h-12" data-day="thu" data-time="afternoon"></button>
+        <button class="availability border rounded-lg h-12" data-day="thu" data-time="evening"></button>
 
-</section>
 
-<button id="submitBtn"
-class="w-full bg-brand text-white text-lg py-4 rounded-xl font-bold">
-Complete Profile
-</button>
+        <!-- FRI -->
+        <div class="font-semibold">Fri</div>
+        <button class="availability border rounded-lg h-12" data-day="fri" data-time="morning"></button>
+        <button class="availability border rounded-lg h-12" data-day="fri" data-time="afternoon"></button>
+        <button class="availability border rounded-lg h-12" data-day="fri" data-time="evening"></button>
 
-</main>
+        <!-- SAT -->
+        <div class="font-semibold">Sat</div>
+        <button class="availability border rounded-lg h-12" data-day="sat" data-time="morning"></button>
+        <button class="availability border rounded-lg h-12" data-day="sat" data-time="afternoon"></button>
+        <button class="availability border rounded-lg h-12" data-day="sat" data-time="evening"></button>
 
-<!-- ================= SUPABASE ================= -->
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+        <!-- SUN -->
+        <div class="font-semibold">Sun</div>
+        <button class="availability border rounded-lg h-12" data-day="sun" data-time="morning"></button>
+        <button class="availability border rounded-lg h-12" data-day="sun" data-time="afternoon"></button>
+        <button class="availability border rounded-lg h-12" data-day="sun" data-time="evening"></button>
 
-const supabase = createClient(
-  "https://ispbevvwwggbktfczmui.supabase.co",
-  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-)
+      </div>
 
-// 🔐 check login
-const { data: { user }, error: userError } = await supabase.auth.getUser()
-if (userError || !user) location.href = "signin.html"
 
-// ===== AVATAR =====
-const avatarInput = document.getElementById("avatarInput")
-const avatarPreview = document.getElementById("avatarPreview")
-const avatarLoading = document.getElementById("avatarLoading")
 
-let avatarFile = null
+    </section>
 
-avatarInput.addEventListener("change", () => {
-  avatarFile = avatarInput.files[0]
-  if (!avatarFile) return
+    <button id="submitBtn" class="w-full bg-brand text-white text-lg py-4 rounded-xl font-bold">
+      Complete Profile
+    </button>
 
-  // preview ทันที
-  avatarPreview.src = URL.createObjectURL(avatarFile)
-})
+  </main>
 
-// ===== TOGGLE UI =====
-document.querySelectorAll(".selectable").forEach(el =>
-  el.addEventListener("click", () => el.classList.toggle("active"))
-)
+  <!-- ================= SUPABASE ================= -->
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
 
-document.querySelectorAll(".availability").forEach(el =>
-  el.addEventListener("click", () => el.classList.toggle("active"))
-)
+    const supabase = createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    )
 
-// ===== SUBMIT =====
-const submitBtn = document.getElementById("submitBtn")
+    // 🔐 check login
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError || !user) location.href = "signin.html"
 
-submitBtn.addEventListener("click", async () => {
+    // ===== AVATAR =====
+    const avatarInput = document.getElementById("avatarInput")
+    const avatarPreview = document.getElementById("avatarPreview")
+    const avatarLoading = document.getElementById("avatarLoading")
+
+    let avatarFile = null
+
+    avatarInput.addEventListener("change", () => {
+      avatarFile = avatarInput.files[0]
+      if (!avatarFile) return
+
+      // preview ทันที
+      avatarPreview.src = URL.createObjectURL(avatarFile)
+    })
+
+    // ===== TOGGLE UI =====
+    document.querySelectorAll(".selectable").forEach(el =>
+      el.addEventListener("click", () => el.classList.toggle("active"))
+    )
+
+    document.querySelectorAll(".availability").forEach(el =>
+      el.addEventListener("click", () => el.classList.toggle("active"))
+    )
+
+    // ===== SUBMIT =====
+    const submitBtn = document.getElementById("submitBtn")
+
+    submitBtn.addEventListener("click", async () => {
   submitBtn.disabled = true
   submitBtn.innerText = "Saving..."
 
+  // ✅ ดึง user ที่ล็อกอิน
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError || !user) {
+    alert("Please log in again")
+    location.href = "signin.html"
+    return
+  }
+
   const job_seeker_id = "JS_" + user.id
   const bio = document.getElementById("bio").value.trim()
+  const phone = document.getElementById("phone").value.trim()
   const gender = document.getElementById("gender").value
   const birth_date = document.getElementById("dob").value || null
 
@@ -291,7 +296,6 @@ submitBtn.addEventListener("click", async () => {
 
   // ===== UPLOAD AVATAR =====
   let avatar_url = null
-
   if (avatarFile) {
     avatarLoading.classList.remove("hidden")
 
@@ -316,8 +320,26 @@ submitBtn.addEventListener("click", async () => {
       .getPublicUrl(filePath).data.publicUrl
   }
 
-  // ===== SAVE JOB SEEKER =====
-  const { error } = await supabase
+  // ===== SAVE PROFILES (RLS friendly) =====
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .upsert({
+      id: user.id, // ต้องตรงกับ auth.uid()
+      phone_number: phone,
+      role: "jobseeker",
+      role_id: 2,
+      birth_date
+    })
+
+  if (profileError) {
+    alert("Profile save error: " + profileError.message)
+    submitBtn.disabled = false
+    submitBtn.innerText = "Complete Profile"
+    return
+  }
+
+  // ===== SAVE JOB SEEKERS (RLS friendly) =====
+  const { error: jobSeekerError } = await supabase
     .from("job_seekers")
     .upsert({
       job_seeker_id,
@@ -332,18 +354,8 @@ submitBtn.addEventListener("click", async () => {
       onboarding_completed: true
     })
 
-  // ===== SAVE PROFILE =====
-  const { error: profileError } = await supabase
-    .from("profiles")
-    .upsert({
-      id: user.id,
-      role_id: 2,
-      role: "jobseeker",
-      birth_date,
-    })
-
-  if (error || profileError) {
-    alert(error?.message || profileError?.message)
+  if (jobSeekerError) {
+    alert("Job seeker save error: " + jobSeekerError.message)
     submitBtn.disabled = false
     submitBtn.innerText = "Complete Profile"
     return
@@ -351,11 +363,13 @@ submitBtn.addEventListener("click", async () => {
 
   location.href = "job_seeker_home.html"
 })
-</script>
+
+  </script>
 
 
 
 
 
 </body>
+
 </html>
