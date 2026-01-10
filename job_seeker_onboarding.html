@@ -237,7 +237,7 @@ const supabase = createClient(
 
 // 🔐 check login
 const { data: { user }, error: userError } = await supabase.auth.getUser()
-if (userError || !user) location.href = "login.html"
+if (userError || !user) location.href = "signin.html"
 
 // ===== AVATAR =====
 const avatarInput = document.getElementById("avatarInput")

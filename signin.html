@@ -64,68 +64,76 @@
 
   <!-- ✅ Supabase Logic -->
   <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
 
-const supabase = createClient(
-  "https://ispbevvwwggbktfczmui.supabase.co",
-  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-)
+    const supabase = createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    )
 
-/* ===== REDIRECT BY ROLE ===== */
-async function redirectByRole(user) {
-  const { data: profile, error } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single()
+    /* ===== REDIRECT BY ROLE ===== */
+    async function redirectByRole(user) {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle()
 
-  if (!profile || !profile.role) {
-    location.href = "select_role.html"
-  } else if (profile.role === "jobseeker") {
-    location.href = "job_seeker_home.html"
-  } else if (profile.role === "employer") {
-    location.href = "employer_home.html"
-  }
-}
+      if (error) {
+        console.error("PROFILE ERROR:", error)
+      }
 
-/* ===== EMAIL LOGIN ===== */
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault()
+      if (!profile || !profile.role) {
+        location.href = "select_role.html"
+      } else if (profile.role === "jobseeker") {
+        location.href = "job_seeker_home.html"
+      } else if (profile.role === "employer") {
+        location.href = "employer_home.html"
+      }
+    }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email.value,
-    password: password.value
-  })
 
-  if (error) {
-    alert(error.message)
-    return
-  }
+    /* ===== EMAIL LOGIN ===== */
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault()
 
-  await redirectByRole(data.user)
-})
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.value,
+        password: password.value
+      })
 
-/* ===== GOOGLE LOGIN ===== */
-window.googleLogin = async () => {
+      if (error) {
+        alert(error.message)
+        return
+      }
+
+      await redirectByRole(data.user)
+    })
+
+    /* ===== GOOGLE LOGIN ===== */
+    window.googleLogin = async () => {
   await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: window.location.href,
+      redirectTo: `${window.location.origin}/signin.html`,
       queryParams: { prompt: "select_account" }
     }
   })
 }
+let redirected = false
 
-/* ===== ⭐ ตัวแก้ปัญหาหลัก ===== */
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (
+    !redirected &&
     (event === "SIGNED_IN" || event === "INITIAL_SESSION") &&
     session?.user
   ) {
+    redirected = true
     await redirectByRole(session.user)
   }
 })
-</script>
+
+  </script>
 
 </body>
 
