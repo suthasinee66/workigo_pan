@@ -54,26 +54,30 @@
 
 
 
-        <!-- ===== STATS ===== -->
-        <div class="flex flex-wrap gap-4 p-4">
-            <div class="flex-1 rounded-xl bg-white p-4 shadow">
-                <p class="text-sm text-gray-500">Applications</p>
-                <p class="text-2xl font-bold">5</p>
-            </div>
+        <div class="px-4 pt-4">
+  <div
+    id="applicationsCard"
+    class="rounded-2xl bg-white p-5 shadow flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
 
-            <div class="flex-1 rounded-xl bg-white p-4 shadow">
-                <p class="text-sm text-gray-500">Saved Jobs</p>
-                <p class="text-2xl font-bold">3</p>
-            </div>
+    <div>
+      <p class="text-sm text-gray-400">My Applications</p>
+      <p id="applicationsCount" class="text-3xl font-bold text-gray-900">lode</p>
+    </div>
 
-            <div class="flex-1 rounded-xl border border-emerald-300 bg-emerald-50 p-4">
-                <p class="text-sm text-emerald-700">Upcoming Shifts</p>
-                <p class="text-2xl font-bold text-emerald-700">2</p>
-            </div>
-        </div>
+    <div class="h-12 w-12 rounded-xl bg-blue-100 flex items-center justify-center">
+      <span class="material-symbols-outlined text-blue-500 text-3xl">
+        work
+      </span>
+    </div>
 
-        <!-- ===== SECTION HEADER ===== -->
-        <h3 class="px-4 pt-2 text-lg font-bold">Recommended For You</h3>
+  </div>
+</div>
+
+
+    <!-- ===== SECTION HEADER ===== -->
+    <h3 class="px-4 pt-6 text-lg font-bold text-gray-900">
+      Recommended For You
+    </h3>
 
         <!-- ===== JOB LIST ===== -->
         <div id="recommended-list" class="flex flex-col gap-4 p-4"></div>
@@ -108,130 +112,129 @@
         </nav>
 
     </div>
+<!-- ===== SUPABASE ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseClient = window.supabase.createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    );
 
-    <!-- ===== SUPABASE ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        const supabaseClient = window.supabase.createClient(
-            "https://ispbevvwwggbktfczmui.supabase.co",
-            "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-        );
+    /* ===============================
+       LOAD PROFILE
+    =============================== */
+    async function loadProfile() {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) {
+        window.location.href = "signin.html";
+        return;
+      }
 
-        async function loadRecommendedJobs() {
-            const container = document.getElementById("recommended-list");
+      const { data: profile } = await supabaseClient
+        .from("profiles")
+        .select("first_name")
+        .eq("id", user.id)
+        .single();
 
-            const { data, error } = await supabaseClient
-                .from("jobposts")
-                .select(`
-  jobpost_id,
-  job_title,
-  workplace_name,
-  address,
-  wage_amount,
-  wage_type,
-  workers_needed,
-  approval_status
-`)
-                .eq("approval_status", "Approved")
+      const { data: seeker } = await supabaseClient
+        .from("job_seekers")
+        .select("avatar_url")
+        .eq("user_id", user.id)
+        .single();
 
-                .order("created_at", { ascending: false });
+      document.getElementById("greeting").textContent =
+        profile?.first_name || "User";
 
-            if (error) {
-                console.error(error);
-                container.innerHTML = "<p class='text-red-500'>โหลดข้อมูลไม่สำเร็จ</p>";
-                return;
-            }
+      const avatar = document.getElementById("avatar");
+      if (seeker?.avatar_url) {
+        avatar.style.backgroundImage = `url('${seeker.avatar_url}')`;
+      } else {
+        avatar.innerHTML = `<span class="material-symbols-outlined text-gray-400">person</span>`;
+      }
+    }
 
-            container.innerHTML = "";
+    /* ===============================
+       LOAD APPLICATION COUNT ✅
+    =============================== */
+    async function loadApplicationCount() {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) return;
 
-            data.forEach(job => {
-                const card = document.createElement("div");
-                card.className = "rounded-xl bg-white shadow";
-                card.style.cursor = "pointer";
+      // 🔑 หา job_seeker_id
+      const { data: seeker } = await supabaseClient
+        .from("job_seekers")
+        .select("job_seeker_id")
+        .eq("user_id", user.id)
+        .single();
 
-                /* ✅ เพิ่มการเชื่อมหน้า (ไม่กระทบส่วนอื่น) */
-                card.addEventListener("click", () => {
-                    window.location.href = `job_details.html?id=${job.jobpost_id}`;
-                });
+      if (!seeker) return;
 
-                card.innerHTML = `
-      <div class="p-4 flex gap-3">
-        <div class="h-16 w-16 flex items-center justify-center bg-gray-200 rounded-lg">
-          <span class="material-symbols-outlined text-gray-400 text-3xl">store</span>
-        </div>
+      // 🔢 นับจำนวนใบสมัคร
+      const { count } = await supabaseClient
+        .from("job_applications")
+        .select("*", { count: "exact", head: true })
+        .eq("worker_id", seeker.job_seeker_id);
 
-        <div class="flex-1">
-          <p class="text-sm font-bold">${job.job_title}</p>
-          <p class="text-xs text-gray-500">${job.workplace_name}</p>
+      document.getElementById("applicationsCount").textContent = count ?? 0;
+    }
 
-          <p class="text-xs text-gray-400 mt-1">
-            📍 ${job.address ?? "ไม่ระบุที่อยู่"}
-          </p>
+    document.getElementById("applicationsCard")
+      .addEventListener("click", () => {
+        window.location.href = "job_application_status_list.html";
+      });
 
-          <p class="mt-1 text-sm font-bold text-emerald-600">
-            ${job.wage_amount} / ${job.wage_type}
-          </p>
+    /* ===============================
+       LOAD JOB LIST
+    =============================== */
+    async function loadRecommendedJobs() {
+      const container = document.getElementById("recommended-list");
 
-          <p class="text-xs text-gray-400">
-            ต้องการ ${job.workers_needed} คน
-          </p>
-        </div>
-      </div>
-    `;
+      const { data } = await supabaseClient
+        .from("jobposts")
+        .select("jobpost_id, job_title, workplace_name, address, wage_amount, wage_type, workers_needed")
+        .eq("approval_status", "Approved")
+        .order("created_at", { ascending: false });
 
-                container.appendChild(card);
-            });
-        }
+      container.innerHTML = "";
 
-        loadRecommendedJobs();
+      data?.forEach(job => {
+        const card = document.createElement("div");
+        card.className = "rounded-xl bg-white shadow cursor-pointer";
+        card.onclick = () =>
+          window.location.href = `job_details.html?id=${job.jobpost_id}`;
 
-        async function loadProfile() {
-            // 🔐 check login
-            const { data: { user }, error: authError } =
-                await supabaseClient.auth.getUser();
+        card.innerHTML = `
+          <div class="p-4 flex gap-3">
+            <div class="h-16 w-16 bg-gray-200 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-gray-400 text-3xl">store</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-sm font-bold">${job.job_title}</p>
+              <p class="text-xs text-gray-500">${job.workplace_name}</p>
+              <p class="text-xs text-gray-400 mt-1">📍 ${job.address ?? "ไม่ระบุที่อยู่"}</p>
+              <p class="mt-1 text-sm font-bold text-emerald-600">
+                ${job.wage_amount} / ${job.wage_type}
+              </p>
+              <p class="text-xs text-gray-400">ต้องการ ${job.workers_needed} คน</p>
+            </div>
+          </div>`;
+        container.appendChild(card);
+      });
+    }
 
-            if (!user || authError) {
-                window.location.href = "signin.html";
-                return;
-            }
-
-            // 📦 load profile
-            const { data: profile, error } = await supabaseClient
-                .from("profiles")
-                .select("first_name, last_name")
-                .eq("id", user.id)
-                .single();
-            const { data: job_seekers, error: jobSeekersError } = await supabaseClient
-                .from("job_seekers")
-                .select("avatar_url")
-                .eq("user_id", user.id)
-                .single();
-
-            if (error) {
-                console.error("Profile error:", error);
-                return;
-            }
-
-            // 👤 set name
-            const fullName =
-                `${profile.first_name || ""}`.trim() || "User";
+    loadProfile();
+    loadApplicationCount();
+    loadRecommendedJobs();
+  </script>
 
 
-            document.getElementById("greeting").textContent = fullName;
+  
+</body>
 
-            // 🖼 set avatar
-            const avatarDiv = document.getElementById("avatar");
-            if (job_seekers.avatar_url) {
-                avatarDiv.style.backgroundImage = `url('${job_seekers.avatar_url}')`;
-            } else {
-                avatarDiv.innerHTML =
-                    `<span class="material-symbols-outlined text-gray-400">person</span>`;
-            }
-        }
+</html>
+</html>
 
-        loadProfile();
 
-    </script>
 
 </body>
 
