@@ -93,6 +93,8 @@ console.log("❌ AUTH ERROR:", error)
     window.location.replace("job_seeker_home.html")
   } else if (profile.role === "employer") {
     window.location.replace("employer_home.html")
+  } else if (profile.role === "Owner") {
+    window.location.replace("Admin_Dashboard.html")
   }
 }
 
