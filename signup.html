@@ -90,6 +90,8 @@ async function redirectByRole(user) {
     location.href = "job_seeker_home.html"
   } else if (profile.role === "employer") {
     location.href = "employer_home.html"
+  } else if (profile.role === "Owner") {
+    location.href = "Admin_Dashboard.html"
   }
 }
 
