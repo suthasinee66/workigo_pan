@@ -1,156 +1,178 @@
-<!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Employer - Manage Post / Applicants</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Employer - Manage Post / Applicants</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script>
     tailwind.config = {
-      darkMode: "class",
       theme: {
         extend: {
           colors: {
-            "primary": "#345395",
-            "accent": "#f95e07",
-            "success": "#208672",
+            primary: "#345395",
+            accent: "#f95e07",
+            success: "#208672",
             "background-light": "#f6f7f8",
-            "background-dark": "#14171e",
           },
           fontFamily: {
-            "display": ["Plus Jakarta Sans", "sans-serif"]
-          },
-          borderRadius: {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-        },
-      },
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          }
+        }
+      }
     }
   </script>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="font-display">
-<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-10 flex items-center bg-background-light dark:bg-background-dark p-4 pb-3 justify-between border-b border-gray-200 dark:border-gray-800">
-<div class="flex size-12 shrink-0 items-center justify-start">
-  <button onclick="window.location.href='employer_home.html'" class="flex size-10 items-center justify-center text-foreground-light dark:text-foreground-dark cursor-pointer">
-<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
-</button>
+</head>
 
-</div>
-<h2 class="text-gray-900 dark:text-gray-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Manage: Barista</h2>
-<div class="flex w-12 items-center justify-end">
-<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-gray-800 dark:text-gray-200 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
-<span class="material-symbols-outlined" style="font-size: 28px;">more_horiz</span>
-</button>
-</div>
-</div>
-<main class="flex-grow pb-24">
-<!-- Post Management Buttons -->
-<div class="p-4 grid grid-cols-2 gap-3">
-<button class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary/20 text-primary">
-<span class="material-symbols-outlined text-lg">edit</span>
-<span onclick="window.location.href='employer_post_a_job_form.html'"class="truncate font-semibold">Edit Post</span>
-</button>
-<button class="flex h-12 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-accent/20 text-accent">
-<span class="material-symbols-outlined text-lg">cancel</span>
-<span onclick="window.location.href='employer_home.html'"class="truncate font-semibold">Close Post</span>
-</button>
-</div>
-<!-- Section Header -->
-<h2 class="text-gray-900 dark:text-gray-100 text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Applicants (3)</h2>
-<!-- Applicant Card 1 -->
-<div class="p-4 pt-0 @container">
-<div class="flex flex-col items-stretch justify-start rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-white dark:bg-gray-800/50">
-<div class="flex w-full grow flex-col items-stretch justify-center gap-4 p-4">
-<div class="flex items-start gap-4">
-<img onclick="window.location.href='ReviewProfilejobseeker.html'"class="h-14 w-14 shrink-0 rounded-full object-cover" data-alt="Profile picture of Elara Vance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2ScYPS0EDGZTofktr2n7e9JlSnuzqSwY8-D5F2aJyMft0qBc8bkJjNO1lt7k84PgFE6wnrEzQacGwDUduzOdvBsRITs_I6PGIwbIIpmGEYVwkVVW7st9GCX5zgeWsNZnqU6YpKvvNPJ08T4gy9BSow2wc391gtFqD-TwB_Og_7sWdTKd8gCl4smuUDz98vqF-pocXTctRFH5SDjDwCLpOOJbTNnbSuqEgG0-UHyUkfmyCjd1y6tmxCOnzDQY60_t3I7i1ZtdDaVc"/>
-<div class="flex flex-col gap-1">
-<p onclick="window.location.href='ReviewProfilejobseeker.html'"class="text-primary text-lg font-bold leading-tight tracking-[-0.015em]">Alex Doe</p>
-<div class="flex items-center gap-1 text-yellow-500">
-<span class="material-symbols-outlined !text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">4.8</span>
-</div>
-</div>
-</div>
-<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
-              Experienced barista with a passion for latte art and customer service. Eager to bring my skills to a dynamic cafe environment.
+<body class="font-display bg-background-light">
+  <div class="min-h-screen flex flex-col">
+
+    <div class="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+      <button onclick="history.back()">
+        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+      </button>
+      <h2 class="font-bold">Manage: Barista</h2>
+      <span class="material-symbols-outlined">more_horiz</span>
+    </div>
+
+    <main class="flex-grow pb-24">
+      <div class="p-4 grid grid-cols-2 gap-3">
+        <button class="h-12 bg-primary/20 text-primary rounded-lg">Edit Post</button>
+        <button class="h-12 bg-accent/20 text-accent rounded-lg">Close Post</button>
+      </div>
+
+      <h2 class="text-xl font-bold px-4 pb-3 pt-5">
+        Applicants (<span id="count">0</span>)
+      </h2>
+
+      <div id="applicants-container" class="space-y-6 px-4"></div>
+    </main>
+  </div>
+
+<script>
+const SUPABASE_URL = "https://ispbevvwwggbktfczmui.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzcGJldnZ3d2dnYmt0ZmN6bXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MTI1MDcsImV4cCI6MjA4MDA4ODUwN30.hMjTylGyabNAmySdJwduGgfOqnFTaTqJ4VwrRroKj-w";
+
+const jobpostId = 22;
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function renderAvailability(avail = {}) {
+  const days = ["mon","tue","wed","thu","fri","sat","sun"];
+  const labels = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+  function row(label, key) {
+    return `
+      <div class="grid grid-cols-8 gap-2 text-center items-center">
+        <div class="text-left font-medium">${label}</div>
+        ${days.map(d => `
+          <div class="h-3 rounded-full ${
+            avail?.[d]?.includes(key)
+              ? "bg-success"
+              : "bg-gray-200"
+          }"></div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="space-y-2 text-xs text-gray-600">
+
+      <!-- Header -->
+      <div class="grid grid-cols-8 gap-2 text-center font-bold">
+        <div></div>
+        ${labels.map(d => `<div>${d}</div>`).join("")}
+      </div>
+
+      ${row("Morning", "morning")}
+      ${row("Afternoon", "afternoon")}
+      ${row("Evening", "evening")}
+
+    </div>
+  `;
+}
+
+async function loadApplicants() {
+  const { data, error } = await sb
+    .from("job_applications")
+    .select(`
+      job_application_id,
+      application_status,
+      job_seekers (
+        bio,
+        gender,
+        availability,
+        avatar_url,
+        profiles (
+          first_name,
+          last_name
+        )
+      )
+    `)
+    .eq("jobpost_id", jobpostId);
+
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
+
+  if (error) return;
+
+  document.getElementById("count").innerText = data.length;
+  const container = document.getElementById("applicants-container");
+  container.innerHTML = "";
+
+  data.forEach(app => {
+    const s = app.job_seekers;
+    if (!s) return;
+
+    container.innerHTML += `
+      <div class="bg-white rounded-xl shadow p-6 space-y-4">
+        <div class="flex items-center gap-4">
+          <img class="h-16 w-16 rounded-full object-cover"
+               src="${s.avatar_url || 'https://via.placeholder.com/150'}">
+          <div>
+            <p class="text-primary text-lg font-bold">
+              ${s.profiles?.first_name || ""} ${s.profiles?.last_name || ""}
             </p>
-<div class="flex flex-col gap-2">
-<p class="text-gray-800 dark:text-gray-200 text-sm font-semibold">Availability</p>
-<div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-gray-500 dark:text-gray-400">
-<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
-<!-- Row 1: AM -->
-<div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-<!-- Row 2: PM -->
-<div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-</div>
-</div>
-</div>
-<div class="flex flex-1 gap-3 p-4 pt-0 justify-between">
-<button class="flex min-w-[84px] flex-1 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-accent text-white text-sm font-bold leading-normal tracking-[0.015em]">
-<span class="truncate">Decline</span>
-</button>
-<button
-  onclick="window.location.href='ShiftDetail_employer.html'"
-  class="flex min-w-[84px] flex-1 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-success text-white text-sm font-bold leading-normal tracking-[0.015em]">
-  Accept
-</button>
+            <p class="text-gray-500 text-sm">${s.gender || ""}</p>
+          </div>
+        </div>
 
+        <p class="text-gray-600">${s.bio || "No bio provided"}</p>
 
+        <div>
+          <p class="font-semibold mb-2">Availability</p>
+          ${renderAvailability(s.availability || {})}
+        </div>
 
-</div>
-</div>
-</div>
-<!-- Applicant Card 2 -->
-<div class="p-4 pt-0 @container">
-<div class="flex flex-col items-stretch justify-start rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-white dark:bg-gray-800/50">
-<div class="flex w-full grow flex-col items-stretch justify-center gap-4 p-4">
-<div class="flex items-start gap-4">
-<img class="h-14 w-14 shrink-0 rounded-full object-cover" data-alt="Profile picture of Marcus Thorne" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKtXLs9ln6cwAg0Uoy0zH8VYHTG4BOI7Qtd6yAlwRGVC3Sd461t_EvQKktNI-Y7AVswh1c-4RrxaBaNoyeTM9Q24A5JMkEXReIlM14eZsdFpwiMQXkPd14T7-2SwPlV85D27yt6d4bWvocC8wPNlSs6-aJl7IHCa9qw8XHBlElCKn6Kf62Tuv2pvBijDReE4hha6dtVja5uGGRF9KMxQXZ9kMsHD2qe3kIa3Y-O8w462oqYbVHFprq4QU85S0VI7YR5vyKB99rxcM"/>
-<div class="flex flex-col gap-1">
-<p class="text-primary text-lg font-bold leading-tight tracking-[-0.015em]">Marcus Thorne</p>
-<div class="flex items-center gap-1 text-yellow-500">
-<span class="material-symbols-outlined !text-base" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">4.5</span>
-</div>
-</div>
-</div>
-<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
-              Dedicated and efficient team player with 2+ years of experience in fast-paced coffee shops. Skilled in inventory management.
-            </p>
-<div class="flex flex-col gap-2">
-<p class="text-gray-800 dark:text-gray-200 text-sm font-semibold">Availability</p>
-<div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-gray-500 dark:text-gray-400">
-<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
-<!-- Row 1: AM -->
-<div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div>
-<!-- Row 2: PM -->
-<div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-gray-200 dark:bg-gray-700"></div><div class="h-3 rounded-full bg-success"></div><div class="h-3 rounded-full bg-success"></div>
-</div>
-</div>
-</div>
-<div class="flex flex-1 gap-3 p-4 pt-0 justify-between">
-<button class="flex min-w-[84px] flex-1 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-accent text-white text-sm font-bold leading-normal tracking-[0.015em]">
-<span class="truncate">Decline</span>
-</button>
-<button class="flex min-w-[84px] flex-1 max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-4 bg-success text-white text-sm font-bold leading-normal tracking-[0.015em]">
-<span class="truncate">Accept</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Applicant Card 3 -->
-<div class="p-4 pt-0 @container">
-<div class="flex flex-col items-stretch justify-start rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)] bg-white dark:bg-gray-800/50">
-<div class="flex w-full g
+        <div class="grid grid-cols-2 gap-4 pt-2">
+          <button onclick="updateStatus('${app.job_application_id}', 'Declined')"
+            class="h-12 bg-accent text-white rounded-lg">Decline</button>
+
+          <button onclick="updateStatus('${app.job_application_id}', 'Accepted')"
+            class="h-12 bg-success text-white rounded-lg">Accept</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+async function updateStatus(id, status) {
+  await sb
+    .from("job_applications")
+    .update({ application_status: status })
+    .eq("job_application_id", id);
+
+  loadApplicants();
+}
+
+loadApplicants();
+</script>
+</body>
+</html>
