@@ -1,13 +1,23 @@
-<!DOCTYPE html>
+#file job_search
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Job Search</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
-<script id="tailwind-config">
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Job Search</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -36,260 +46,227 @@
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         .material-symbols-outlined.fill-1 {
             font-variation-settings: 'FILL' 1;
         }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        /* เพิ่ม Animation เวลาโหลด */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
+</head>
+
 <body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-<!-- Main Content Area -->
-<main class="flex-1 pb-24">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-10 bg-background-light dark:bg-background-dark pt-4">
-<div class="flex items-center p-4 pb-2 justify-between">
-<h1 class="text-text-primary-light dark:text-text-primary-dark text-2xl font-bold leading-tight tracking-tight">Job Search</h1>
-</div>
-</div>
-<!-- Search Bar -->
-<div class="px-4 py-3">
-<label class="flex flex-col min-w-40 h-14 w-full">
-<div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm">
-<div class="text-text-secondary-light dark:text-text-secondary-dark flex border-none bg-white dark:bg-zinc-800 items-center justify-center pl-4 rounded-l-xl border-r-0">
-<span class="material-symbols-outlined text-2xl">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-primary-light dark:text-text-primary-dark focus:outline-0 focus:ring-0 border-none bg-white dark:bg-zinc-800 h-full placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark px-4 rounded-r-xl border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Search by job title, skill, or company" value=""/>
-</div>
-</label>
-</div>
-<!-- Chips -->
-<<div class="flex gap-3 px-4 py-3 overflow-x-auto">
-  <button data-sort="newest"
-    class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-4 pr-4">
-    <p class="text-white text-sm font-medium leading-normal">Newest</p>
-  </button>
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <main class="flex-1 pb-24">
+            <div class="sticky top-0 z-10 bg-background-light dark:bg-background-dark pt-4">
+                <div class="flex items-center p-4 pb-2 justify-between">
+                    <h1
+                        class="text-text-primary-light dark:text-text-primary-dark text-2xl font-bold leading-tight tracking-tight">
+                        Job Search</h1>
+                </div>
+            </div>
 
-  <button data-sort="pay"
-    class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-zinc-800 pl-4 pr-4">
-    <p class="text-text-primary-light dark:text-text-primary-dark text-sm font-medium leading-normal">Pay</p>
-  </button>
+            <div class="px-4 py-3">
+                <label class="flex flex-col min-w-40 h-14 w-full">
+                    <div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm">
+                        <div
+                            class="text-text-secondary-light dark:text-text-secondary-dark flex border-none bg-white dark:bg-zinc-800 items-center justify-center pl-4 rounded-l-xl border-r-0">
+                            <span class="material-symbols-outlined text-2xl">search</span>
+                        </div>
+                        <input id="searchInput"
+                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-primary-light dark:text-text-primary-dark focus:outline-0 focus:ring-0 border-none bg-white dark:bg-zinc-800 h-full placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark px-4 rounded-r-xl border-l-0 pl-2 text-base font-normal leading-normal"
+                            placeholder="Search by job title, skill, or company" value="" />
+                    </div>
+                </label>
+            </div>
 
-  <button data-sort="nearest"
-    class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-zinc-800 pl-4 pr-4">
-    <p class="text-text-primary-light dark:text-text-primary-dark text-sm font-medium leading-normal">Nearest</p>
-  </button>
+            <div class="flex gap-3 px-4 py-3 overflow-x-auto">
+                <button
+                    class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-4 pr-4">
+                    <p class="text-white text-sm font-medium leading-normal">Newest</p>
+                </button>
+                <button
+                    class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-zinc-800 pl-4 pr-4">
+                    <p class="text-text-primary-light dark:text-text-primary-dark text-sm font-medium leading-normal">
+                        Pay</p>
+                </button>
+                <div class="flex-grow"></div>
+                <button onclick="window.location.href='job_filters_modal.html'"
+                    class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800">
+                    <span
+                        class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark text-2xl">tune</span>
+                </button>
+            </div>
 
-  <div class="flex-grow"></div>
+            <div class="h-2"></div>
 
-  <button onclick="window.location.href='job_filters_modal.html'"
-    class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800">
-    <span class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark text-2xl">tune</span>
-  </button>
-</div>
+            <div id="jobListContainer" class="p-4 pt-2 flex flex-col gap-4">
 
-<!-- Spacer -->
-<div class="h-2"></div>
-<!-- Job Cards -->
-<div id="job-list" class="p-4 pt-2 flex flex-col gap-4"></div>
+                <div id="loadingText" class="text-center text-gray-500 py-10">
+                    <span class="material-symbols-outlined animate-spin text-4xl">progress_activity</span>
+                    <p class="mt-2">Loading jobs...</p>
+                </div>
 
-<!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
-<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_seeker_home.html">
-<span class="material-symbols-outlined">home</span>
-<span class="text-xs font-medium">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent" href="job_search.html">
-<span class="material-symbols-outlined fill-1">search</span>
-<span class="text-xs font-bold">Search</span>
-</a>
-<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_seeker_my_shifts.html">
-<span class="material-symbols-outlined">calendar_month</span>
-<span class="text-xs font-medium">Shifts</span>
-</a>
-<a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Myprofile_seeker.html">
-<span class="material-symbols-outlined">person</span>
-<span class="text-xs font-medium">Profile</span>
-</a>
-</nav>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const supabaseClient = window.supabase.createClient(
-  "https://ispbevvwwggbktfczmui.supabase.co",
-  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-);
-let currentSort = "newest";
-let searchKeyword = "";
+            </div>
+        </main>
 
-const jobList = document.getElementById("job-list");
-const searchInput = document.querySelector("input[placeholder^='Search']");
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark"
+                href="job_seeker_home.html">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent"
+                href="job_search.html">
+                <span class="material-symbols-outlined fill-1">search</span>
+                <span class="text-xs font-bold">Search</span>
+            </a>
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark"
+                href="job_seeker_my_shifts.html">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-xs font-medium">Shifts</span>
+            </a>
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark"
+                href="Myprofile_seeker.html">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-xs font-medium">Profile</span>
+            </a>
+        </nav>
+    </div>
 
-/* ===============================
-   LOAD JOBS
-=============================== */
-async function loadJobs() {
-  let query = supabaseClient
-    .from("jobposts")
-    .select(`
-      jobpost_id,
-      job_title,
-      workplace_name,
-      address,
-      wage_amount,
-      wage_type,
-      created_at
-    `)
-    .eq("approval_status", "Approved");
+    <script>
+        // 1. Config
+        const supabaseUrl = 'https://ispbevvwwggbktfczmui.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzcGJldnZ3d2dnYmt0ZmN6bXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MTI1MDcsImV4cCI6MjA4MDA4ODUwN30.hMjTylGyabNAmySdJwduGgfOqnFTaTqJ4VwrRroKj-w'; // <--- ใส่ Key เดิมของคุณ
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-  // 🔍 Search
-  if (searchKeyword) {
-    query = query.or(
-      `job_title.ilike.%${searchKeyword}%,workplace_name.ilike.%${searchKeyword}%`
-    );
-  }
+        const container = document.getElementById('jobListContainer');
+        const loadingText = document.getElementById('loadingText');
+        const searchInput = document.getElementById('searchInput'); // อ้างอิงช่องค้นหา
 
-  // 🔃 Sorting
-  if (currentSort === "newest") {
-    query = query.order("created_at", { ascending: false });
-  }
-  if (currentSort === "pay") {
-    query = query.order("wage_amount", { ascending: false });
-  }
+        // 2. ฟังก์ชันดึงข้อมูล (รับ parameter query)
+        async function fetchJobs(query = '') {
+            // แสดง Loading
+            if (container.innerHTML === '') {
+                if (loadingText) loadingText.style.display = 'block';
+            }
 
-  const { data, error } = await query;
+            try {
+                // เริ่มต้นสร้าง Query
+                let queryBuilder = supabaseClient
+                    .from('jobposts')
+                    .select('*')
+                    .eq('approval_status', 'Approved') // <--- เพิ่มบรรทัดนี้ครับ! (เลือกเฉพาะที่อนุมัติแล้ว)
+                    .order('created_at', { ascending: false });
 
-  jobList.innerHTML = "";
+                // --- Logic การค้นหา (คงเดิม) ---
+                if (query && query.trim() !== '') {
+                    const term = query.trim();
+                    queryBuilder = queryBuilder.or(`job_description.ilike.%${term}%,workplace_name.ilike.%${term}%`);
+                }
+                // --------------------------------
 
-  if (error || !data) {
-    jobList.innerHTML = `<p class="text-gray-400">ไม่พบงาน</p>`;
-    return;
-  }
+                const { data: jobs, error } = await queryBuilder;
 
-  data.forEach(job => {
-    const card = document.createElement("div");
-    card.className =
-      "flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-zinc-800 p-4 shadow-sm";
+                if (error) {
+                    console.error("❌ Supabase Error:", error);
+                    return;
+                }
 
-    card.innerHTML = `
-      <div class="flex flex-[2_2_0px] flex-col gap-3">
-        <div>
-          <p class="text-sm text-gray-400">
-            ${job.wage_amount} / ${job.wage_type}
-          </p>
-          <p class="text-base font-bold">${job.job_title}</p>
-          <p class="text-sm text-gray-500">
-            ${job.workplace_name}
-          </p>
-          <p class="text-xs text-gray-400 mt-1">
-            📍 ${job.address ?? "ไม่ระบุที่อยู่"}
-          </p>
-        </div>
+                // ซ่อน Loading
+                if (loadingText) loadingText.style.display = 'none';
 
-        <button
-          onclick="location.href='job_details.html?id=${job.jobpost_id}'"
-          class="w-fit rounded-lg bg-accent text-white px-4 h-9 text-sm font-medium flex items-center gap-2">
-          Quick Apply
-          <span class="material-symbols-outlined text-base">arrow_forward</span>
-        </button>
-      </div>
+                // ถ้าหาไม่เจอ
+                if (!jobs || jobs.length === 0) {
+                    container.innerHTML = `
+                    <div class="text-center py-10 text-gray-500">
+                        <span class="material-symbols-outlined text-4xl mb-2">search_off</span>
+                        <p>ไม่พบงานที่ค้นหา "${query}"</p>
+                    </div>`;
+                    return;
+                }
 
-      <div class="w-24 aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
-        <span class="material-symbols-outlined text-gray-400 text-3xl">store</span>
-      </div>
-    `;
+                // วนลูปสร้างการ์ด (Logic เดิม)
+                let htmlContent = '';
+                const fallbackImage = "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg";
 
-    jobList.appendChild(card);
-  });
-}
+                jobs.forEach((job) => {
+                    const amount = job.wage_amount || 0;
+                    const desc = job.job_description || 'Job Position';
+                    const place = job.workplace_name || 'Location';
+                    const status = job.approval_status || 'Pending';
+                    const imgUrl = job.job_images ? job.job_images : fallbackImage;
+                    const wageUnit = job.wage_type === 'Daily' ? '/วัน' : '/ชม.';
 
-/* ===============================
-   SEARCH EVENT
-=============================== */
-searchInput.addEventListener("input", (e) => {
-  searchKeyword = e.target.value.trim();
-  loadJobs();
-});
+                    htmlContent += `
+                    <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-zinc-800 p-4 shadow-sm mb-4 border border-gray-100 dark:border-zinc-700 fade-in cursor-pointer hover:shadow-md transition-shadow" 
+                         onclick="window.location.href='job_details.html?id=${job.jobpost_id}'">
+                        <div class="flex flex-[2_2_0px] flex-col gap-4">
+                            <div class="flex flex-col gap-1">
+                                <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">${amount} บาท${wageUnit}</p>
+                                <p class="text-text-primary-light dark:text-text-primary-dark text-base font-bold line-clamp-1">${desc}</p>
+                                <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm line-clamp-1">${place}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-zinc-700 text-gray-600 dark:text-gray-300">
+                                    ${status}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="w-24 bg-gray-200 rounded-lg shrink-0" 
+                             style="background-image: url('${imgUrl}'); background-size: cover; background-position: center;">
+                        </div>
+                    </div>
+                `;
+                });
 
-/* ===============================
-   FILTER BUTTONS
-=============================== */
-document.querySelectorAll("button").forEach(btn => {
-  if (btn.innerText === "Newest") {
-    btn.onclick = () => {
-      currentSort = "newest";
-      loadJobs();
-    };
-  }
+                container.innerHTML = htmlContent;
 
-  if (btn.innerText === "Pay") {
-    btn.onclick = () => {
-      currentSort = "pay";
-      loadJobs();
-    };
-  }
+            } catch (err) {
+                console.error("❌ Crashed:", err);
+            }
+        }
 
-  if (btn.innerText === "Nearest") {
-    btn.onclick = () => {
-      loadNearestJobs(); // ⭐ ใช้ GPS จริง
-    };
-  }
-});
+        // 3. เรียกใช้งานครั้งแรก (โหลดงานทั้งหมด)
+        document.addEventListener('DOMContentLoaded', () => fetchJobs());
 
+        // 4. Event Listener สำหรับช่องค้นหา
+        // ใช้ debounce technique แบบง่าย (รอให้พิมพ์หยุด 0.5 วิ ค่อยค้นหา) เพื่อประหยัด API
+        let debounceTimer;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const keyword = e.target.value;
+                console.log("Searching for:", keyword);
+                fetchJobs(keyword);
+            }, 500); // รอ 500ms หลังหยุดพิมพ์
+        });
 
-filterButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    currentSort = btn.dataset.sort;
-    setActiveFilter(btn);
-    loadJobs();
-  });
-});
-function getUserLocation() {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      pos => resolve({
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude
-      }),
-      err => reject(err),
-      { enableHighAccuracy: true }
-    );
-  });
-}
-async function loadNearestJobs() {
-  try {
-    const location = await getUserLocation();
+    </script>
+</body>
 
-    const { data, error } = await supabaseClient.rpc(
-      "get_nearest_jobs",
-      {
-        user_lat: location.lat,
-        user_lng: location.lng,
-        limit_count: 20
-      }
-    );
-
-    if (error) throw error;
-
-    renderJobs(data);
-
-  } catch (err) {
-    alert("ไม่สามารถเข้าถึงตำแหน่งของคุณได้");
-    console.error(err);
-  }
-}
-
-/* ===============================
-   INIT
-=============================== */
-loadJobs();
-</script>
-
-</body></html>
+</html>
