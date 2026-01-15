@@ -1,209 +1,435 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Employer - Post a Job Form (Themed)</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#ff6a00",
-              "background-light": "#f8f7f5",
-              "background-dark": "#23170f",
-              "dark-blue": "#1F3A5F",
-              "light-gray": "#F5F7FA",
-            },
-            fontFamily: {
-              "display": ["Manrope", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
-            boxShadow: {
-              'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
-            }
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Employer - Post a Job Form (Themed)</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ff6a00",
+            "background-light": "#f8f7f5",
+            "background-dark": "#23170f",
+            "dark-blue": "#1F3A5F",
+            "light-gray": "#F5F7FA",
           },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+          boxShadow: {
+            'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
+          }
         },
-      }
-    </script>
-<style>.material-symbols-outlined {
-    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-    font-size: 24px
+      },
     }
-.form-select {
-    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDl1xhZU7hAJBb7QgINLXlPnHa9PWXu9LUPn7DsoA3KoW3BK0nBd-tGD0OcYMoVgw7txKFlrk7c7dF3AE37U06jgJ-D8HxvTuqK9QCnnKH3VHhNY4xsIukvNDMT39Z2PAI3HN1zIjeC1ELT-x014Zk7cIVfVJlcLEInNQ8-kSWF_Q8YKJk4VjYKhMSBKQiA70cwNJ2k7hAzWO2zC0dCVMQcWmzvaK6ZYNVwVM7cq_ikZ-tcWHlAArLZp12-vcSkcB4CGumIoG731N0l);
-    background-position: right 0.5rem center;
-    background-repeat: no-repeat;
-    background-size: 1.5em 1.5em;
-    padding-right: 2.5rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none
-    }</style>
-<style>
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      font-size: 24px
+    }
+
+    .form-select {
+      background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDl1xhZU7hAJBb7QgINLXlPnHa9PWXu9LUPn7DsoA3KoW3BK0nBd-tGD0OcYMoVgw7txKFlrk7c7dF3AE37U06jgJ-D8HxvTuqK9QCnnKH3VHhNY4xsIukvNDMT39Z2PAI3HN1zIjeC1ELT-x014Zk7cIVfVJlcLEInNQ8-kSWF_Q8YKJk4VjYKhMSBKQiA70cwNJ2k7hAzWO2zC0dCVMQcWmzvaK6ZYNVwVM7cq_ikZ-tcWHlAArLZp12-vcSkcB4CGumIoG731N0l);
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none
+    }
+  </style>
+  <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
-  </head>
-<body class="font-display bg-background-light dark:bg-background-dark">
-<div class="relative flex min-h-screen w-full flex-col">
-<!-- Top App Bar -->
-<header class="sticky top-0 z-10 flex h-16 items-center justify-between bg-dark-blue px-4 shadow-md">
-<button onclick="window.location.href='employer_home.html'"class="flex size-10 items-center justify-center rounded-full text-white">
-<span class="material-symbols-outlined">arrow_back_ios_new</span>
-</button>
-<h1 class="text-xl font-bold text-white">Post a Job</h1>
-<button onclick="window.location.href='employer_home.html'" class="flex size-10 items-center justify-center rounded-full text-white">
-<span class="material-symbols-outlined">draft</span>
-</button>
-</header>
-<!-- Form Content -->
-<main class="flex-1 space-y-4 p-4 pb-48">
-<!-- Job Information Card -->
-<div class="rounded-xl bg-light-gray p-4 shadow-soft">
-<h3 class="text-lg font-bold text-[#181410] mb-4">Job Information</h3>
-<div class="space-y-4">
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Job title</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="e.g. Barista" value=""/>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Job type</p>
-<select class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
-<option value="">Select job type</option>
-<option value="daily">Daily</option>
-<option value="hourly">Hourly</option>
-<option value="part-time">Part-time</option>
-<option value="full-time">Full-time</option>
-</select>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Number of workers</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="e.g. 5" type="number"/>
-</label>
-</div>
-</div>
-<!-- Job Details Card -->
-<div class="rounded-xl bg-light-gray p-4 shadow-soft">
-<h3 class="text-lg font-bold text-[#181410] mb-4">Job Details</h3>
-<div class="space-y-4">
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Job description</p>
-<textarea class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white min-h-[120px] placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="Describe the responsibilities and tasks..."></textarea>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Qualifications</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="e.g. Food handling certificate" value=""/>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Gender &amp; age requirements <span class="text-gray-500 font-normal">(optional)</span></p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="e.g. Any gender, 18+ years old" value=""/>
-</label>
-</div>
-</div>
-<!-- Payment Card -->
-<div class="rounded-xl bg-light-gray p-4 shadow-soft">
-<h3 class="text-lg font-bold text-[#181410] mb-4">Payment</h3>
-<div class="grid grid-cols-2 gap-4">
-<label class="flex flex-col col-span-1">
-<p class="text-base font-medium text-[#181410] pb-2">Wage type</p>
-<select class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
-<option value="">Select</option>
-<option value="daily">Daily</option>
-<option value="hourly">Hourly</option>
-</select>
-</label>
-<label class="flex flex-col col-span-1">
-<p class="text-base font-medium text-[#181410] pb-2">Wage amount</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="e.g. 150" type="number"/>
-</label>
-</div>
-<label class="flex flex-col mt-4">
-<p class="text-base font-medium text-[#181410] pb-2">Payment method</p>
-<select class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
-<option value="">Select method</option>
-<option value="cash">Cash</option>
-<option value="bank">Bank Transfer</option>
-</select>
-</label>
-</div>
-<!-- Work Location Card -->
-<div class="rounded-xl bg-light-gray p-4 shadow-soft">
-<h3 class="text-lg font-bold text-[#181410] mb-4">Work Location</h3>
-<div class="space-y-4">
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Workplace name</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="e.g. The Coffee Corner" value=""/>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Address</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="Enter full address" value=""/>
-</label>
-<div>
-<div class="aspect-[16/9] bg-gray-200 rounded-lg overflow-hidden mt-2">
-<img alt="Map showing a pinned location for the job address." class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsyOqY8Gevp5ApNWE6z1VR8AhW-A6SpcCgntnRt_-EAyFwr5IoLfLLa6fpSm4Bc4JBU1zK9spEZvZO-9iBSkKR3-jKWXms9Lt-3tyn0Wt5NQAnxh_lRp_DC5wulyWCalRV-kDM_90CjYJkzVYmEfNFs0T9CxfRiZCBSetKLvYpIEh4vhl_jg4Jv181P4SzoLZ8Q5RbU-C3qlts_rnE-wSU_xEHSQq3_uyY2_NKQIgODCXhHNoaSJcUaHrSyiYlxfNBm0jUn_r69DGO"/>
-</div>
-</div>
-</div>
-</div>
-<!-- Work Schedule Card -->
-<div class="rounded-xl bg-light-gray p-4 shadow-soft">
-<h3 class="text-lg font-bold text-[#181410] mb-4">Work Schedule</h3>
-<div class="grid grid-cols-2 gap-4">
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Start date</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="Select date" type="date"/>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">End date</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="Select date" type="date"/>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Start time</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="Select time" type="time"/>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">End time</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="Select time" type="time"/>
-</label>
-</div>
-</div>
-<!-- Contact Card -->
-<div class="rounded-xl bg-light-gray p-4 shadow-soft">
-<h3 class="text-lg font-bold text-[#181410] mb-4">Contact</h3>
-<div class="space-y-4">
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Contact name</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="e.g. John Doe" value=""/>
-</label>
-<label class="flex flex-col">
-<p class="text-base font-medium text-[#181410] pb-2">Phone number</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal" placeholder="Enter phone number" type="tel"/>
-</label>
-<div class="flex items-center justify-between pt-2">
-<p class="text-base font-medium text-[#181410]">In-app chat enabled</p>
-<label class="relative inline-flex cursor-pointer items-center">
-<input checked="" class="peer sr-only" type="checkbox" value=""/>
-<div class="peer h-7 w-12 rounded-full bg-gray-300 after:absolute after:start-[4px] after:top-[4px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
-</label>
-</div>
-</div>
-</div>
-</main>
-<!-- Sticky Footer Action Bar -->
-<footer class="fixed bottom-0 left-0 right-0 z-10 bg-white/80 p-4 backdrop-blur-sm border-t border-gray-200">
-<div class="space-y-3">
-<button onclick="window.location.href='employer_post_job_preview.html'" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 bg-primary text-white text-lg font-bold shadow-soft">Post Job</button>
-<div class="flex gap-3">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<button onclick="window.location.href='employer_home.html'" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 bg-light-gray text-dark-blue text-base font-bold shadow-soft">Cancel</button>
-</div>
-</div>
-</footer>
-</div>
-</body></html>
+</head>
+
+
+<body class="font-display bg-background-light dark:bg-background-dark">
+  <div class="relative flex min-h-screen w-full flex-col">
+    <!-- Top App Bar -->
+    <header class="sticky top-0 z-10 flex h-16 items-center justify-between bg-dark-blue px-4 shadow-md">
+      <button onclick="window.location.href='employer_home.html'"
+        class="flex size-10 items-center justify-center rounded-full text-white">
+        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+      </button>
+      <h1 class="text-xl font-bold text-white">Post a Job</h1>
+      <button onclick="window.location.href='employer_home.html'"
+        class="flex size-10 items-center justify-center rounded-full text-white">
+        <span class="material-symbols-outlined">draft</span>
+      </button>
+    </header>
+    <!-- Form Content -->
+    <main class="flex-1 space-y-4 p-4 pb-48">
+      <!-- Job Information Card -->
+      <div class="rounded-xl bg-light-gray p-4 shadow-soft">
+        <h3 class="text-lg font-bold text-[#181410] mb-4">Job Information</h3>
+        <div class="space-y-4">
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Job title</p>
+            <input id="job_title"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="e.g. Barista" value="" />
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Job type</p>
+            <select id="job_type"
+              class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
+              <option value="">Select job type</option>
+              <option value="daily">Daily</option>
+              <option value="hourly">Hourly</option>
+              <option value="part-time">Part-time</option>
+              <option value="full-time">Full-time</option>
+            </select>
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Number of workers</p>
+            <input id="workers_needed"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="e.g. 5" type="number" />
+          </label>
+        </div>
+      </div>
+      <!-- Job Details Card -->
+      <div class="rounded-xl bg-light-gray p-4 shadow-soft">
+        <h3 class="text-lg font-bold text-[#181410] mb-4">Job Details</h3>
+        <div class="space-y-4">
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Job description</p>
+            <textarea id="job_description"
+              class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white min-h-[120px] placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="Describe the responsibilities and tasks..."></textarea>
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Qualifications</p>
+            <input id="qualifications"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="e.g. Food handling certificate" value="" />
+          </label>
+          <!-- Gender & Age -->
+          <label class="flex flex-col mb-6">
+            <p class="text-base font-medium pb-2">
+              Gender & Age requirements
+              <span class="text-gray-500 font-normal">(optional)</span>
+            </p>
+
+            <div class="grid grid-cols-2 gap-3">
+              <select id="gender_requirement" class="form-select h-14 rounded-lg border-gray-200">
+                <option value="">Any gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <input id="age_requirement" class="form-input h-14 rounded-lg border-gray-200"
+                placeholder="e.g. 18+, 20-35" />
+            </div>
+          </label>
+
+        </div>
+      </div>
+      <!-- Payment Card -->
+      <div class="rounded-xl bg-light-gray p-4 shadow-soft">
+        <h3 class="text-lg font-bold text-[#181410] mb-4">Payment</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="flex flex-col col-span-1">
+            <p class="text-base font-medium text-[#181410] pb-2">Wage type</p>
+            <select id="wage_type"
+              class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
+              <option value="">Select</option>
+              <option value="daily">Daily</option>
+              <option value="hourly">Hourly</option>
+            </select>
+          </label>
+          <label class="flex flex-col col-span-1">
+            <p class="text-base font-medium text-[#181410] pb-2">Wage amount</p>
+            <input id="wage_amount"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="e.g. 150" type="number" />
+          </label>
+        </div>
+        <label class="flex flex-col mt-4">
+          <p class="text-base font-medium text-[#181410] pb-2">Payment method</p>
+          <select id="payment_method"
+            class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
+            <option value="">Select method</option>
+            <option value="cash">Cash</option>
+            <option value="bank">Bank Transfer</option>
+          </select>
+        </label>
+      </div>
+      <!-- Work Location Card -->
+      <div class="rounded-xl bg-light-gray p-4 shadow-soft">
+        <h3 class="text-lg font-bold text-[#181410] mb-4">Work Location</h3>
+        <div class="space-y-4">
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Workplace name</p>
+            <input id="workplace_name"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="e.g. The Coffee Corner" value="" />
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Address</p>
+            <input id="address"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="Enter full address" value="" />
+            <button type="button" onclick="searchAddress()"
+              class="mt-2 w-full h-10 rounded-lg bg-gray-800 text-white text-sm font-medium">
+              📍 ค้นหาที่อยู่บนแผนที่
+            </button>
+
+          </label>
+          <div>
+            <div class="aspect-[16/9] bg-gray-200 rounded-lg overflow-hidden mt-2">
+              <div class="aspect-[16/9] bg-gray-200 rounded-lg overflow-hidden mt-2">
+                <div id="map" class="w-full h-full"></div>
+              </div>
+
+              <input type="hidden" id="latitude">
+              <input type="hidden" id="longitude">
+
+              <p id="map-status" class="text-sm text-gray-600 mt-2">
+                คลิกบนแผนที่เพื่อปักหมุดสถานที่ทำงาน
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Work Schedule Card -->
+      <div class="rounded-xl bg-light-gray p-4 shadow-soft">
+        <h3 class="text-lg font-bold text-[#181410] mb-4">Work Schedule</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Start date</p>
+            <input id="start_date"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="Select date" type="date" />
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">End date</p>
+            <input id="end_date"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="Select date" type="date" />
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Start time</p>
+            <input id="start_time"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="Select time" type="time" />
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">End time</p>
+            <input id="end_time"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="Select time" type="time" />
+          </label>
+        </div>
+      </div>
+      <!-- Contact Card -->
+      <div class="rounded-xl bg-light-gray p-4 shadow-soft">
+        <h3 class="text-lg font-bold text-[#181410] mb-4">Contact</h3>
+        <div class="space-y-4">
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Contact name</p>
+            <input id="contact_name"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="e.g. John Doe" value="" />
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Phone number</p>
+            <input id="phone_number"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
+              placeholder="Enter phone number" type="tel" />
+          </label>
+          <div class="flex items-center justify-between pt-2">
+            <p class="text-base font-medium text-[#181410]">In-app chat enabled</p>
+            <label class="relative inline-flex cursor-pointer items-center">
+              <input checked="" class="peer sr-only" type="checkbox" value="" />
+              <div
+                class="peer h-7 w-12 rounded-full bg-gray-300 after:absolute after:start-[4px] after:top-[4px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white">
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Sticky Footer Action Bar -->
+    <footer class="fixed bottom-0 left-0 right-0 z-10 bg-white/80 p-4 backdrop-blur-sm border-t border-gray-200">
+      <div class="space-y-3">
+        <button onclick="goPreview()"
+          class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 bg-primary text-white text-lg font-bold shadow-soft">
+          Post Job
+        </button>
+    </footer>
+  </div>
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const supabase = createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    );
+
+    let map, marker;
+
+
+    /* ================= MAP ================= */
+    function initMap(lat = 13.7563, lng = 100.5018) {
+      map = L.map("map").setView([lat, lng], 13);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap"
+      }).addTo(map);
+
+      map.on("click", (e) => {
+        placeMarker(e.latlng.lat, e.latlng.lng);
+        setLatLng(e.latlng.lat, e.latlng.lng);
+        setStatus(`📍 ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`);
+      });
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      initMap();
+    });
+    let employer_id = null;
+
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      alert("Please login again");
+      location.href = "login.html";
+    } else {
+      employer_id = "EM_" + user.id;
+    }
+
+
+    function placeMarker(lat, lng) {
+      marker
+        ? marker.setLatLng([lat, lng])
+        : marker = L.marker([lat, lng]).addTo(map);
+    }
+
+    function setLatLng(lat, lng) {
+      document.getElementById("latitude").value = lat;
+      document.getElementById("longitude").value = lng;
+    }
+
+    function setStatus(text) {
+      document.getElementById("map-status").textContent = text;
+    }
+
+    /* ================= SEARCH ADDRESS ================= */
+    async function searchAddress() {
+      const addressInput = document.querySelector("input[placeholder='Enter full address']");
+      const address = addressInput.value.trim();
+
+      if (!address) {
+        setStatus("❌ กรุณากรอกที่อยู่");
+        return;
+      }
+
+      let result = await geocode(address);
+
+      // fallback: ตัดคำเหลือจังหวัด/อำเภอ
+      if (!result) {
+        const shortAddr = address.split(",").slice(-2).join(",");
+        result = await geocode(shortAddr);
+      }
+
+      if (!result) {
+        map.setView([13.7563, 100.5018], 11);
+        setStatus("⚠️ ไม่พบที่อยู่แน่ชัด แสดงตำแหน่งใกล้เคียง");
+        return;
+      }
+
+      const lat = parseFloat(result.lat);
+      const lng = parseFloat(result.lon);
+
+      map.setView([lat, lng], 16);
+      placeMarker(lat, lng);
+      setLatLng(lat, lng);
+      setStatus(`✅ ${result.display_name}`);
+    }
+
+    async function geocode(query) {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`
+      );
+      const data = await res.json();
+      return data.length ? data[0] : null;
+    }
+
+    function goPreview() {
+  const lat = document.getElementById("latitude").value;
+  const lng = document.getElementById("longitude").value;
+
+  if (!lat || !lng) {
+    alert("❌ กรุณาปักหมุดสถานที่ทำงาน");
+    return;
+  }
+
+  const draft = {
+    job_title: document.getElementById("job_title").value,
+    job_type: document.getElementById("job_type").value,
+    job_description: document.getElementById("job_description").value,
+    qualifications: document.getElementById("qualifications").value,
+
+    workers_needed: Number(document.getElementById("workers_needed").value || 0),
+    gender_requirement: document.getElementById("gender_requirement").value,
+    age_requirement: document.getElementById("age_requirement").value,
+
+    wage_type: document.getElementById("wage_type").value,
+    wage_amount: document.getElementById("wage_amount").value,
+    payment_method: document.getElementById("payment_method").value,
+
+    workplace_name: document.getElementById("workplace_name").value,
+    address: document.getElementById("address").value,
+    latitude: lat,
+    longitude: lng,
+
+    start_date: document.getElementById("start_date").value,
+    end_date: document.getElementById("end_date").value,
+    start_time: document.getElementById("start_time").value,
+    end_time: document.getElementById("end_time").value,
+
+    contact_name: document.getElementById("contact_name").value,
+    phone_number: document.getElementById("phone_number").value
+  };
+
+  localStorage.setItem("jobPostDraft", JSON.stringify(draft));
+  location.href = "employer_post_job_preview.html";
+}
+
+window.goPreview = goPreview;
+
+    
+
+
+    window.searchAddress = searchAddress;
+    document.addEventListener("DOMContentLoaded", () => initMap());
+  </script>
+
+
+</body>
+
+</html>

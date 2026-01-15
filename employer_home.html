@@ -1,183 +1,250 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html class="light" lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Work-i-Go Employer Home</title>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
 <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#f95f06",
-                        "background-light": "#f8f6f5",
-                        "background-dark": "#23160f",
-                    },
-                    fontFamily: {
-                        "display": ["Plus Jakarta Sans", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings:
-                'FILL' 0,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 24;
-            font-size: 24px;
-        }
-        .material-symbols-outlined.fill {
-            font-variation-settings:
-                'FILL' 1,
-                'wght' 400,
-                'GRAD' 0,
-                'opsz' 24;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#f95f06",
+        "background-light": "#f8f6f5",
+        "background-dark": "#23160f",
+      },
+      fontFamily: {
+        display: ["Plus Jakarta Sans", "sans-serif"]
+      }
     }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative mx-auto flex h-auto min-h-screen w-full max-w-md flex-col bg-white dark:bg-black group/design-root overflow-x-hidden pb-24">
-<!-- Top App Bar -->
-<div class="sticky top-0 z-10 flex items-center bg-white dark:bg-black p-4 pb-2 justify-between">
-<div class="flex size-12 shrink-0 items-center" data-icon="List" data-size="24px" data-weight="regular">
-<!-- Placeholder for potential menu icon -->
+  }
+}
+</script>
+
+<style>
+.material-symbols-outlined {
+  font-size: 24px;
+}
+body {
+  min-height: max(884px, 100dvh);
+}
+</style>
+</head>
+
+<body class="bg-background-light font-display">
+<div class="relative mx-auto min-h-screen w-full max-w-md bg-white overflow-x-hidden pb-24">
+
+<!-- Top Bar -->
+<div class="sticky top-0 z-10 flex items-center p-4 justify-between bg-white">
+  <div class="w-12"></div>
+  <h1 class="text-[#345395] text-lg font-bold flex-1 text-center">Work-i-Go</h1>
+  <div class="w-12 text-right">
+    <span class="material-symbols-outlined">chat_bubble</span>
+  </div>
 </div>
-<h1 class="text-[#345395] dark:text-gray-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Work-i-Go</h1>
-<div class="flex w-12 items-center justify-end">
-<button onclick="window.location.href='employer_message.html'" class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="message.html">
-<span class="material-symbols-outlined text-2xl" >chat_bubble </span>
-</button>
-</div>
-</div>
+
+<!-- CONTENT -->
 <div class="flex-grow overflow-y-auto">
+
 <!-- Stats -->
-<div class="flex flex-wrap gap-3 p-4">
-<div class="flex min-w-[158px] flex-1 flex-col gap-1 rounded-xl bg-gray-50 dark:bg-gray-800/50 p-4 border border-gray-200 dark:border-gray-700">
-<p class="text-gray-600 dark:text-gray-400 text-sm font-medium leading-normal">Active Posts</p>
-<p class="text-[#345395] dark:text-white tracking-light text-3xl font-bold leading-tight">12</p>
-<p class="text-[#208672] dark:text-green-400 text-xs font-medium leading-normal">+5 this week</p>
+<div class="flex gap-3 p-4">
+  <div class="flex-1 bg-gray-50 p-4 rounded-xl border">
+    <p class="text-sm text-gray-500">Approved Posts</p>
+    <p id="approved-posts" class="text-3xl font-bold text-[#345395]">0</p>
+  </div>
+  <div class="flex-1 bg-gray-50 p-4 rounded-xl border">
+    <p class="text-sm text-gray-500">Applicants</p>
+    <p id="total-applicants" class="text-3xl font-bold text-[#345395]">0</p>
+  </div>
 </div>
-<div class="flex min-w-[158px] flex-1 flex-col gap-1 rounded-xl bg-gray-50 dark:bg-gray-800/50 p-4 border border-gray-200 dark:border-gray-700">
-<p class="text-gray-600 dark:text-gray-400 text-sm font-medium leading-normal">Applicants</p>
-<p class="text-[#345395] dark:text-white tracking-light text-3xl font-bold leading-tight">87</p>
-<p class="text-[#208672] dark:text-green-400 text-xs font-medium leading-normal">+12 this week</p>
+
+<!-- CTA -->
+<div class="px-4">
+  <button onclick="location.href='employer_post_a_job_form.html'"
+    class="w-full h-14 bg-primary text-white rounded-xl font-bold flex items-center justify-center gap-2">
+    <span class="material-symbols-outlined">add_circle</span>
+    Post a New Job
+  </button>
 </div>
+
+<!-- Recent Applicants -->
+<div class="px-4 pt-6 pb-2 flex justify-between">
+  <h2 class="text-[22px] font-bold text-[#345395]">Recent Applicants</h2>
 </div>
-<!-- Single Button CTA -->
-<div class="flex px-4 py-3">
-<button onclick="window.location.href='employer_post_a_job_form.html'" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 flex-1 bg-primary text-white gap-2.5 pl-5 text-lg font-bold leading-normal tracking-[0.015em]">
-<span class="material-symbols-outlined">add_circle</span>
-<span class="truncate">Post a New Job</span>
-</button>
+<div id="recent-applicants" class="px-4 space-y-2"></div>
+
+<!-- My Job Posts -->
+<div class="px-4 pt-8 pb-2 flex justify-between">
+  <h2 class="text-[22px] font-bold text-[#345395]">My Job Posts</h2>
 </div>
-<!-- Recent Applicants Section -->
-<div class="px-4 pb-3 pt-5 flex justify-between items-center">
-<h2 class="text-[#345395] dark:text-gray-200 text-[22px] font-bold leading-tight tracking-[-0.015em]">Recent Applicants</h2>
-<a class="text-primary text-sm font-bold" href="#">View All</a>
+<div id="my-job-posts" class="px-4 space-y-2"></div>
+
 </div>
-<div class="px-4 space-y-2">
-<!-- List Item 1 -->
-<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-3 min-h-[72px] rounded-xl border border-gray-200 dark:border-gray-700">
-<div class="flex items-center gap-4 flex-1">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Profile picture of Jane Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_wMAX47NUoILrz3IZCAEqQqQ7kjxHVSvvGopeeHKLXKpM1VPuoxKG-G1anLdxmjzg8A0jrYtO400Iq6EMlVdz1VbbuJiCKd42GXUxmeW7s__5aV2KL-B1vNo10SDB69qvJ5xoUZgMgWWOWnW18oydGGY-InBVIW3ii-ugO11y8tHIikL4iC4tXxbjxu2WCBaXXMAHqibBhUYxM7V_N8kWwtN7Ay44tkO0zDfg5pQffpsufmT3_Ejw4oHzSK8_oJD3CPjrmhgwZpI");'></div>
-<div class="flex flex-col justify-center">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal line-clamp-1">Jane Doe</p>
-<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Applied for 'Barista'</p>
+
+<!-- Bottom Nav -->
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t">
+  <div class="flex h-20 justify-around items-center">
+    <span class="material-symbols-outlined text-primary">home</span>
+    <span class="material-symbols-outlined">group</span>
+    <span class="material-symbols-outlined">calendar_month</span>
+    <span class="material-symbols-outlined">person</span>
+  </div>
 </div>
+
 </div>
-<div class="shrink-0"><button class="text-primary text-base font-bold leading-normal">View</button></div>
-</div>
-<!-- List Item 2 -->
-<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-3 min-h-[72px] rounded-xl border border-gray-200 dark:border-gray-700">
-<div class="flex items-center gap-4 flex-1">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Profile picture of John Smith" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaiuy-Fe8dd1bxIoiLO-Zr--tye7oPZlH5sxFUpgOXr3VDUVyjEG_j-a0PVgob3VkUGEwNvupQfCNXWDWZ4Iskzedk42PVYP24q85RjO7sgQ-S5wNTGXla4iSfvNz3XcATt3qgHYPwtji8yIoLZ2K4zd-wItCTmgJuiyq6zJbmmCUNMS1hINA_rOp8A2glX-IyYBa7AqSgp-_imLRSq67T7FoipoCQLd0R4U-5-z3xtsn-30fERe2ul3RVWy3cYWEFCoXCXlflFek");'></div>
-<div class="flex flex-col justify-center">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal line-clamp-1">John Smith</p>
-<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Applied for 'Retail Assistant'</p>
-</div>
-</div>
-<div class="shrink-0"><button class="text-primary text-base font-bold leading-normal">View</button></div>
-</div>
-<!-- List Item 3 -->
-<div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-3 min-h-[72px] rounded-xl border border-gray-200 dark:border-gray-700">
-<div class="flex items-center gap-4 flex-1">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-12 w-12" data-alt="Profile picture of Emily White" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCEf-xTUgtoa64GnDpymfewJ0qrP_N8NjTudNT228ySQ91e8WZOveU9F821fQXpSNQ49WvX_fqUqyT5uMXRCwQhmhiA_VQdMjhYaUooko1NQ4-zfhHSqiIOUoiQ3JPQ1vCvdz61I-OpCSmyMqlHzRRkKlCOa-bPSn6YGu_LR9OkocNGMMcK_7jq-jmGfWOZswRF80s7urh8vE3yYCYWRSuAajw6wiX_kcnYdfJ919hJKOhUjQMAJ-0EtEXmnEZwfeM8XMtuCQYk9Q");'></div>
-<div class="flex flex-col justify-center">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal line-clamp-1">Emily White</p>
-<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Applied for 'Cafe All-Rounder'</p>
-</div>
-</div>
-<div class="shrink-0"><button class="text-primary text-base font-bold leading-normal">View</button></div>
-</div>
-</div>
-<!-- My Job Posts Section -->
-<div class="px-4 pb-3 pt-8 flex justify-between items-center">
-<h2 class="text-[#345395] dark:text-gray-200 text-[22px] font-bold leading-tight tracking-[-0.015em]">My Job Posts</h2>
-<a class="text-primary text-sm font-bold" href="#">Manage</a>
-</div>
-<div class="px-4 space-y-2">
-<!-- Job Post 1 -->
-<div onclick="window.location.href='AcceptDecline.html'"class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-4 min-h-[72px] rounded-xl border border-gray-200 dark:border-gray-700">
-<div class="flex items-center gap-4 flex-1">
-<div class="flex flex-col justify-center">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal line-clamp-1">Barista</p>
-<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">24 Applicants</p>
-</div>
-</div>
-<div class="shrink-0"><span class="px-3 py-1 text-xs font-semibold rounded-full bg-[#208672]/10 dark:bg-[#208672]/20 text-[#208672] dark:text-green-300">Active</span></div>
-</div>
-<!-- Job Post 2 -->
-<div onclick="window.location.href='AcceptDecline.html'"class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-4 min-h-[72px] rounded-xl border border-gray-200 dark:border-gray-700">
-<div class="flex items-center gap-4 flex-1">
-<div class="flex flex-col justify-center">
-<p class="text-gray-900 dark:text-white text-base font-medium leading-normal line-clamp-1">Retail Assistant</p>
-<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">15 Applicants</p>
-</div>
-</div>
-<div class="shrink-0"><span class="px-3 py-1 text-xs font-semibold rounded-full bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300">Paused</span></div>
-</div>
-</div>
-</div>
-<!-- Bottom Navigation -->
-<div class="fixed bottom-0 left-0 right-0 z-10 mx-auto max-w-md border-t border-gray-200 bg-white/80 backdrop-blur-md dark:border-gray-700 dark:bg-black/80">
-<div class="flex h-20 items-center justify-around">
-<a class="flex flex-col items-center gap-1 text-primary" href="employer_home.html">
-<span class="material-symbols-outlined fill">home</span>
-<span class="text-xs font-bold">Home</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400" href="AcceptDecline.html">
-<span class="material-symbols-outlined">group</span>
-<span class="text-xs">Applicants</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400" href="ShiftDetail_employer.html">
-<span class="material-symbols-outlined">calendar_month</span>
-<span class="text-xs font-medium">Shifts</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400" href="ShopProfile.html">
-<span class="material-symbols-outlined">person</span>
-<span class="text-xs">Profile</span>
-</a>
-</div>
-</div>
-</div>
-</body></html>
+
+<!-- ================= SUPABASE ================= -->
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+async function loadDashboard() {
+  /* ================= AUTH ================= */
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if (!user || error) {
+    location.href = "login.html";
+    return;
+  }
+
+  const employer_id = "EM_" + user.id;
+
+  /* ================= JOB POSTS ================= */
+  const { data: jobposts, error: jobErr } = await supabase
+    .from("jobposts")
+    .select("jobpost_id, job_title, approval_status")
+    .eq("employer_id", employer_id)
+    .order("created_at", { ascending: false });
+
+  if (jobErr) {
+    console.error(jobErr);
+    return;
+  }
+
+  const jobpostIds = jobposts.map(j => j.jobpost_id);
+
+  /* ================= APPLICATIONS ================= */
+  let applications = [];
+
+  if (jobpostIds.length > 0) {
+    const { data, error } = await supabase
+  .from("job_applications")
+  .select(`
+    job_application_id,
+    jobpost_id,
+    applied_at,
+    job_seekers!inner (
+      profiles!inner (
+        first_name,
+        last_name,
+        avatar_url
+      )
+    )
+  `)
+  .in("jobpost_id", jobpostIds)
+  .order("applied_at", { ascending: false });
+
+
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    applications = data || [];
+  }
+
+  /* ================= STATS ================= */
+  document.getElementById("approved-posts").innerText =
+    jobposts.filter(j => j.approval_status === "Approved").length;
+
+  document.getElementById("total-applicants").innerText =
+    applications.length;
+
+  /* ================= RECENT APPLICANTS ================= */
+  const recentContainer = document.getElementById("recent-applicants");
+  recentContainer.innerHTML = "";
+
+  applications.slice(0, 5).forEach(app => {
+    const job = jobposts.find(j => j.jobpost_id === app.jobpost_id);
+    const profile = app.job_seekers?.profiles;
+
+    const fullName = profile
+      ? `${profile.first_name} ${profile.last_name}`
+      : "Unknown";
+
+    const avatar =
+      profile?.avatar_url || "https://via.placeholder.com/48";
+
+    recentContainer.innerHTML += `
+      <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border">
+        <div class="h-12 w-12 rounded-full bg-cover bg-center"
+          style="background-image:url('${avatar}')"></div>
+
+        <div class="flex-1">
+          <p class="font-medium text-gray-900">${fullName}</p>
+          <p class="text-sm text-gray-500">
+            Applied for '${job?.job_title || "-"}'
+          </p>
+        </div>
+
+        <button
+          onclick="location.href='AcceptDecline.html?jobpost_id=${app.jobpost_id}'"
+          class="text-primary font-bold">
+          View
+        </button>
+      </div>
+    `;
+  });
+
+  /* ================= MY JOB POSTS ================= */
+  const jobContainer = document.getElementById("my-job-posts");
+  jobContainer.innerHTML = "";
+
+  jobposts.forEach(job => {
+    const count = applications.filter(
+      a => a.jobpost_id === job.jobpost_id
+    ).length;
+
+    let badge = "";
+    if (job.approval_status === "Approved") {
+      badge = `<span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700">Approved</span>`;
+    } else if (job.approval_status === "Pending") {
+      badge = `<span class="px-3 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700">Pending</span>`;
+    } else {
+      badge = `<span class="px-3 py-1 text-xs rounded-full bg-red-100 text-red-600">Rejected</span>`;
+    }
+
+    jobContainer.innerHTML += `
+      <div onclick="location.href='AcceptDecline.html?jobpost_id=${job.jobpost_id}'"
+        class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border cursor-pointer">
+        <div class="flex-1">
+          <p class="font-medium">${job.job_title}</p>
+          <p class="text-sm text-gray-500">${count} Applicants</p>
+        </div>
+        ${badge}
+      </div>
+    `;
+  });
+}
+
+loadDashboard();
+
+</script>
+
+
+
+</body>
+</html>

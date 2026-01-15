@@ -72,69 +72,35 @@
 </label>
 </div>
 <!-- Chips -->
-<div class="flex gap-3 px-4 py-3 overflow-x-auto">
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-4 pr-4">
-<p class="text-white text-sm font-medium leading-normal">Newest</p>
-</button>
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-zinc-800 pl-4 pr-4">
-<p class="text-text-primary-light dark:text-text-primary-dark text-sm font-medium leading-normal">Pay</p>
-</button>
-<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-zinc-800 pl-4 pr-4">
-<p class="text-text-primary-light dark:text-text-primary-dark text-sm font-medium leading-normal">Nearest</p>
-</button>
-<div class="flex-grow"></div>
-<button onclick="window.location.href='job_filters_modal.html'" class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800">
-<span class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark text-2xl">tune</span>
-</button>
+<<div class="flex gap-3 px-4 py-3 overflow-x-auto">
+  <button data-sort="newest"
+    class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-4 pr-4">
+    <p class="text-white text-sm font-medium leading-normal">Newest</p>
+  </button>
+
+  <button data-sort="pay"
+    class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-zinc-800 pl-4 pr-4">
+    <p class="text-text-primary-light dark:text-text-primary-dark text-sm font-medium leading-normal">Pay</p>
+  </button>
+
+  <button data-sort="nearest"
+    class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-zinc-800 pl-4 pr-4">
+    <p class="text-text-primary-light dark:text-text-primary-dark text-sm font-medium leading-normal">Nearest</p>
+  </button>
+
+  <div class="flex-grow"></div>
+
+  <button onclick="window.location.href='job_filters_modal.html'"
+    class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-zinc-800">
+    <span class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark text-2xl">tune</span>
+  </button>
 </div>
+
 <!-- Spacer -->
 <div class="h-2"></div>
 <!-- Job Cards -->
-<div class="p-4 pt-2 flex flex-col gap-4">
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-zinc-800 p-4 shadow-sm">
-<div class="flex flex-[2_2_0px] flex-col gap-4">
-<div class="flex flex-col gap-1">
-<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">$18.50/hr</p>
-<p class="text-text-primary-light dark:text-text-primary-dark text-base font-bold leading-tight">Barista</p>
-<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">The Coffee House - 1.2 miles away</p>
-</div>
-<button onclick="window.location.href='job_details.html'" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-accent text-white gap-2 text-sm font-medium leading-normal w-fit">
-<span class="truncate">Quick Apply</span>
-<span class="material-symbols-outlined text-base">arrow_forward</span>
-</button>
-</div>
-<div class="w-24 bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="A cup of professionally made latte art." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuApNsEoL8gf2LlNfFnY0bS5-cwr1jV7XPrKPCPkk5PwpT8gEJZM9Bd6U_8feXys1Yky4XjtxIELVWHKdp_2axz3iADoOE5_7MDeOSdhhJOCX1LZSe51uXovxxQ86MWmE4JHuUe1BDxHM3nWisNV-pNDScbtqOMYDRoJj4SijJjWwszU7GI-PX1B1mzzL5DKxiQYjKTHjq_Swdc23aONzKyzmInPCBS5VvI6FZYIwquofRBQORJinGcTHusnenDkbQv7iQ_g85FRJQY");'></div>
-</div>
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-zinc-800 p-4 shadow-sm">
-<div class="flex flex-[2_2_0px] flex-col gap-4">
-<div class="flex flex-col gap-1">
-<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">$16.00/hr</p>
-<p class="text-text-primary-light dark:text-text-primary-dark text-base font-bold leading-tight">Weekend Retail Assistant</p>
-<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Fashion Forward - 3.5 miles away</p>
-</div>
-<button onclick="window.location.href='job_details.html'" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-accent text-white gap-2 text-sm font-medium leading-normal w-fit">
-<span class="truncate">Quick Apply</span>
-<span class="material-symbols-outlined text-base">arrow_forward</span>
-</button>
-</div>
-<div class="w-24 bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="Neatly folded colorful clothes on a store shelf." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQMzN-xL5d0Gemfi9oCwLPpUaIaSvUXm1LnDLdZJKo7fF9lSd-lCaWsEJ8m5PDRyo-95uA5J_vVCV5Qr6GS0UECZZrZ8nYg8o0xFiCrjawiWzLjRR6dLbLm3RnE5AYfNi10gZJzSA8hVsXNERJWRQDrYdvtWI4fDAb8uNNmCMSEI_cJTG9TsK5b4V9Kr9lfo-4uQQK2NZqi5tF60RjLd28xgTRLRKGigAouZe3eA8z3suO_in14oVoKJcefz_elmLJZQujlr7AJ-I");'></div>
-</div>
-<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-zinc-800 p-4 shadow-sm">
-<div class="flex flex-[2_2_0px] flex-col gap-4">
-<div class="flex flex-col gap-1">
-<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">$22.00/hr</p>
-<p class="text-text-primary-light dark:text-text-primary-dark text-base font-bold leading-tight">Front Desk Receptionist</p>
-<p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">City Health Clinic - 0.8 miles away</p>
-</div>
-<button onclick="window.location.href='job_application_status_list.html'" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-accent/20 text-accent gap-2 text-sm font-medium leading-normal w-fit">
-<span class="truncate">Applied</span>
-<span class="material-symbols-outlined text-base text-success">check_circle</span>
-</button>
-</div>
-<div class="w-24 bg-center bg-no-repeat aspect-square bg-cover rounded-lg" data-alt="A modern and clean reception desk in a clinic lobby." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYhiepq_MII9YSdYWMoH7Ji1D99MP6DI4GzPE9AxrU5Uv2dvGbuAb7iqwD_UskOFF28iEhmt42t-ATwugsRu40acX7Eufdo5q1YgmJrPmf5YkSxXZkivvTKvnuUSsiwMh-OdOa5u6ttW8-X7C8azwYuc1_NEonZo27GwkN7fEcSRD0ImwJxSm5Xa2_UGS-QxJTrytV7-YVGhzlUtHo5WwWW8PhgP0RGaQHNxjvJEDG6jwEm6eDvzgnTslQrxL0MaqKTrJ1TKhWKGo");'></div>
-</div>
-</div>
-</main>
+<div id="job-list" class="p-4 pt-2 flex flex-col gap-4"></div>
+
 <!-- Bottom Navigation -->
 <nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
 <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_seeker_home.html">
@@ -154,4 +120,176 @@
 <span class="text-xs font-medium">Profile</span>
 </a>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseClient = window.supabase.createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+let currentSort = "newest";
+let searchKeyword = "";
+
+const jobList = document.getElementById("job-list");
+const searchInput = document.querySelector("input[placeholder^='Search']");
+
+/* ===============================
+   LOAD JOBS
+=============================== */
+async function loadJobs() {
+  let query = supabaseClient
+    .from("jobposts")
+    .select(`
+      jobpost_id,
+      job_title,
+      workplace_name,
+      address,
+      wage_amount,
+      wage_type,
+      created_at
+    `)
+    .eq("approval_status", "Approved");
+
+  // 🔍 Search
+  if (searchKeyword) {
+    query = query.or(
+      `job_title.ilike.%${searchKeyword}%,workplace_name.ilike.%${searchKeyword}%`
+    );
+  }
+
+  // 🔃 Sorting
+  if (currentSort === "newest") {
+    query = query.order("created_at", { ascending: false });
+  }
+  if (currentSort === "pay") {
+    query = query.order("wage_amount", { ascending: false });
+  }
+
+  const { data, error } = await query;
+
+  jobList.innerHTML = "";
+
+  if (error || !data) {
+    jobList.innerHTML = `<p class="text-gray-400">ไม่พบงาน</p>`;
+    return;
+  }
+
+  data.forEach(job => {
+    const card = document.createElement("div");
+    card.className =
+      "flex items-stretch justify-between gap-4 rounded-xl bg-white dark:bg-zinc-800 p-4 shadow-sm";
+
+    card.innerHTML = `
+      <div class="flex flex-[2_2_0px] flex-col gap-3">
+        <div>
+          <p class="text-sm text-gray-400">
+            ${job.wage_amount} / ${job.wage_type}
+          </p>
+          <p class="text-base font-bold">${job.job_title}</p>
+          <p class="text-sm text-gray-500">
+            ${job.workplace_name}
+          </p>
+          <p class="text-xs text-gray-400 mt-1">
+            📍 ${job.address ?? "ไม่ระบุที่อยู่"}
+          </p>
+        </div>
+
+        <button
+          onclick="location.href='job_details.html?id=${job.jobpost_id}'"
+          class="w-fit rounded-lg bg-accent text-white px-4 h-9 text-sm font-medium flex items-center gap-2">
+          Quick Apply
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </button>
+      </div>
+
+      <div class="w-24 aspect-square bg-gray-200 rounded-lg flex items-center justify-center">
+        <span class="material-symbols-outlined text-gray-400 text-3xl">store</span>
+      </div>
+    `;
+
+    jobList.appendChild(card);
+  });
+}
+
+/* ===============================
+   SEARCH EVENT
+=============================== */
+searchInput.addEventListener("input", (e) => {
+  searchKeyword = e.target.value.trim();
+  loadJobs();
+});
+
+/* ===============================
+   FILTER BUTTONS
+=============================== */
+document.querySelectorAll("button").forEach(btn => {
+  if (btn.innerText === "Newest") {
+    btn.onclick = () => {
+      currentSort = "newest";
+      loadJobs();
+    };
+  }
+
+  if (btn.innerText === "Pay") {
+    btn.onclick = () => {
+      currentSort = "pay";
+      loadJobs();
+    };
+  }
+
+  if (btn.innerText === "Nearest") {
+    btn.onclick = () => {
+      loadNearestJobs(); // ⭐ ใช้ GPS จริง
+    };
+  }
+});
+
+
+filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentSort = btn.dataset.sort;
+    setActiveFilter(btn);
+    loadJobs();
+  });
+});
+function getUserLocation() {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+      }),
+      err => reject(err),
+      { enableHighAccuracy: true }
+    );
+  });
+}
+async function loadNearestJobs() {
+  try {
+    const location = await getUserLocation();
+
+    const { data, error } = await supabaseClient.rpc(
+      "get_nearest_jobs",
+      {
+        user_lat: location.lat,
+        user_lng: location.lng,
+        limit_count: 20
+      }
+    );
+
+    if (error) throw error;
+
+    renderJobs(data);
+
+  } catch (err) {
+    alert("ไม่สามารถเข้าถึงตำแหน่งของคุณได้");
+    console.error(err);
+  }
+}
+
+/* ===============================
+   INIT
+=============================== */
+loadJobs();
+</script>
+
 </body></html>
