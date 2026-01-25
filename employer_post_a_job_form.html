@@ -90,15 +90,22 @@
               placeholder="e.g. Barista" value="" />
           </label>
           <label class="flex flex-col">
-            <p class="text-base font-medium text-[#181410] pb-2">Job type</p>
-            <select id="job_type"
+            <p class="text-base font-medium text-[#181410] pb-2">Work time type</p>
+            <select id="work_time_type"
               class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
-              <option value="">Select job type</option>
+              <option value="">Select work time type</option>
               <option value="daily">Daily</option>
               <option value="hourly">Hourly</option>
               <option value="part-time">Part-time</option>
               <option value="full-time">Full-time</option>
             </select>
+          </label>
+          <label class="flex flex-col">
+            <p class="text-base font-medium text-[#181410] pb-2">Job type</p>
+            <select id="job_type" class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">>
+  <option value="">Select job type</option>
+</select>
+
           </label>
           <label class="flex flex-col">
             <p class="text-base font-medium text-[#181410] pb-2">Number of workers</p>
@@ -281,154 +288,178 @@
     </footer>
   </div>
   <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-    const supabase = createClient(
-      "https://ispbevvwwggbktfczmui.supabase.co",
-      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-    );
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
 
-    let map, marker;
+/* ================= URL PARAM ================= */
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode");       // edit | null
+const jobpostId = params.get("id");
 
+/* ================= LOAD JOB TYPES ================= */
+async function loadJobTypes() {
+  const { data } = await supabase
+    .from("job_types")
+    .select("job_type_id, job_type")
+    .order("job_type");
 
-    /* ================= MAP ================= */
-    function initMap(lat = 13.7563, lng = 100.5018) {
-      map = L.map("map").setView([lat, lng], 13);
+  const select = document.getElementById("job_type");
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap"
-      }).addTo(map);
+  data.forEach(t => {
+    const opt = document.createElement("option");
+    opt.value = t.job_type_id;   // FK
+    opt.textContent = t.job_type; // ชื่อ
+    select.appendChild(opt);
+  });
+}
 
-      map.on("click", (e) => {
-        placeMarker(e.latlng.lat, e.latlng.lng);
-        setLatLng(e.latlng.lat, e.latlng.lng);
-        setStatus(`📍 ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`);
-      });
-    }
-    document.addEventListener("DOMContentLoaded", () => {
-      initMap();
-    });
-    let employer_id = null;
-
-    const {
-      data: { user },
-      error: userError
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      alert("Please login again");
-      location.href = "login.html";
-    } else {
-      employer_id = "EM_" + user.id;
-    }
-    
+await loadJobTypes();
 
 
-    function placeMarker(lat, lng) {
-      marker
-        ? marker.setLatLng([lat, lng])
-        : marker = L.marker([lat, lng]).addTo(map);
-    }
+/* ================= MAP ================= */
+let map, marker;
+function placeMarker(lat, lng) {
+  if (marker) {
+    marker.setLatLng([lat, lng]);
+  } else {
+    marker = L.marker([lat, lng]).addTo(map);
+  }
+}
 
-    function setLatLng(lat, lng) {
-      document.getElementById("latitude").value = lat;
-      document.getElementById("longitude").value = lng;
-    }
+function setLatLng(lat, lng) {
+  document.getElementById("latitude").value = lat;
+  document.getElementById("longitude").value = lng;
+}
 
-    function setStatus(text) {
-      document.getElementById("map-status").textContent = text;
-    }
 
-    /* ================= SEARCH ADDRESS ================= */
-    async function searchAddress() {
-      const addressInput = document.querySelector("input[placeholder='Enter full address']");
-      const address = addressInput.value.trim();
+function initMap(lat = 13.7563, lng = 100.5018) {
+  if (map) return; // 🔥 กันพัง
 
-      if (!address) {
-        setStatus("❌ กรุณากรอกที่อยู่");
-        return;
-      }
+  map = L.map("map").setView([lat, lng], 13);
 
-      let result = await geocode(address);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
+  }).addTo(map);
 
-      // fallback: ตัดคำเหลือจังหวัด/อำเภอ
-      if (!result) {
-        const shortAddr = address.split(",").slice(-2).join(",");
-        result = await geocode(shortAddr);
-      }
+  map.on("click", e => {
+    placeMarker(e.latlng.lat, e.latlng.lng);
+    setLatLng(e.latlng.lat, e.latlng.lng);
+  });
+}
 
-      if (!result) {
-        map.setView([13.7563, 100.5018], 11);
-        setStatus("⚠️ ไม่พบที่อยู่แน่ชัด แสดงตำแหน่งใกล้เคียง");
-        return;
-      }
+initMap();
 
-      const lat = parseFloat(result.lat);
-      const lng = parseFloat(result.lon);
 
-      map.setView([lat, lng], 16);
-      placeMarker(lat, lng);
-      setLatLng(lat, lng);
-      setStatus(`✅ ${result.display_name}`);
-    }
 
-    async function geocode(query) {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`
-      );
-      const data = await res.json();
-      return data.length ? data[0] : null;
-    }
+/* ================= EDIT MODE ================= */
+if (mode === "edit" && jobpostId) {
+  const { data } = await supabase
+    .from("jobposts")
+    .select("*")
+    .eq("jobpost_id", jobpostId)
+    .single();
 
-    function goPreview() {
-  const lat = document.getElementById("latitude").value;
-  const lng = document.getElementById("longitude").value;
+  job_title.value = data.job_title;
+  job_description.value = data.job_description;
+  work_time_type.value = data.work_time_type;
+  job_type.value = data.job_type_id;
+  workers_needed.value = data.workers_needed;
+  qualifications.value = data.qualifications;
+  wage_type.value = data.wage_type;
+  wage_amount.value = data.wage_amount;
+  payment_method.value = data.payment_method;
+  workplace_name.value = data.workplace_name;
+  address.value = data.address;
+  age_requirement.value = data.age_requirement;
+  gender_requirement.value = data.gender_requirement;
+  start_date.value = data.start_date;
+  end_date.value = data.end_date;
+  start_time.value = data.start_time;
+  end_time.value = data.end_time;
+  contact_name.value = data.contact_name;
+  phone_number.value = data.phone_number;
+  latitude.value = data.latitude;
+  longitude.value =data.longitude;
+  contact_name.value = data.contact_name;
 
-  if (!lat || !lng) {
-    alert("❌ กรุณาปักหมุดสถานที่ทำงาน");
+
+  
+
+  map.setView([data.latitude, data.longitude], 15);
+  placeMarker(data.latitude, data.longitude);
+}
+
+
+/* ================= PREVIEW ================= */
+window.goPreview = function () {
+  if (!latitude.value || !longitude.value) {
+    alert("กรุณาปักหมุดสถานที่");
     return;
   }
 
   const draft = {
-    job_title: document.getElementById("job_title").value,
-    job_type: document.getElementById("job_type").value,
-    job_description: document.getElementById("job_description").value,
-    qualifications: document.getElementById("qualifications").value,
+    job_title: job_title.value,
+    work_time_type: work_time_type.value,
+    job_type_id: Number(job_type.value),
+    job_description: job_description.value,
+    qualifications: qualifications.value,
+    workers_needed: Number(workers_needed.value || 0),
+    wage_type: wage_type.value,
+    wage_amount: wage_amount.value,
+    payment_method: payment_method.value,
+    workplace_name: workplace_name.value,
+    address: address.value,
+    latitude: latitude.value,
+    longitude: longitude.value,
+    age_requirement: age_requirement.value,
+    start_date: start_date.value,
+    end_date: end_date.value,
+    start_time: start_time.value,
+    end_time: end_time.value,
+    phone_number: phone_number.value,
+    contact_name: contact_name.value
 
-    workers_needed: Number(document.getElementById("workers_needed").value || 0),
-    gender_requirement: document.getElementById("gender_requirement").value,
-    age_requirement: document.getElementById("age_requirement").value,
-
-    wage_type: document.getElementById("wage_type").value,
-    wage_amount: document.getElementById("wage_amount").value,
-    payment_method: document.getElementById("payment_method").value,
-
-    workplace_name: document.getElementById("workplace_name").value,
-    address: document.getElementById("address").value,
-    latitude: lat,
-    longitude: lng,
-
-    start_date: document.getElementById("start_date").value,
-    end_date: document.getElementById("end_date").value,
-    start_time: document.getElementById("start_time").value,
-    end_time: document.getElementById("end_time").value,
-
-    contact_name: document.getElementById("contact_name").value,
-    phone_number: document.getElementById("phone_number").value
   };
 
   localStorage.setItem("jobPostDraft", JSON.stringify(draft));
-  location.href = "employer_post_job_preview.html";
-}
 
-window.goPreview = goPreview;
+  location.href =
+    mode === "edit"
+      ? `employer_post_job_preview.html?id=${jobpostId}&mode=edit`
+      : `employer_post_job_preview.html?id=${draft}&mode=edit`;
+};
 
-    
+/* ================= SEARCH ADDRESS ================= */
+window.searchAddress = async function () {
+  const q = address.value.trim();
+  if (!q) {
+    alert("กรุณากรอกที่อยู่");
+    return;
+  }
 
+  const res = await fetch(
+    `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`
+  );
+  const data = await res.json();
 
-    window.searchAddress = searchAddress;
-    document.addEventListener("DOMContentLoaded", () => initMap());
-  </script>
+  if (!data.length) {
+    alert("ไม่พบที่อยู่");
+    return;
+  }
+
+  const lat = parseFloat(data[0].lat);
+  const lng = parseFloat(data[0].lon);
+
+  map.setView([lat, lng], 16);   // ✅ ถูก
+  placeMarker(lat, lng);
+  setLatLng(lat, lng);
+};
+
+</script>
 
 
 </body>

@@ -111,8 +111,17 @@ const supabase = createClient(
   "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
 );
 
+/* ================= ROUTE FUNCTION ================= */
+window.goToJob = function (jobpostId, status) {
+  if (status === "Approved") {
+    location.href = `AcceptDecline.html?jobpost_id=${jobpostId}`;
+  } else {
+    location.href = `employer_post_status.html?id=${jobpostId}`;
+  }
+};
+
+/* ================= LOAD DASHBOARD ================= */
 async function loadDashboard() {
-  /* ================= AUTH ================= */
   const { data: { user }, error } = await supabase.auth.getUser();
   if (!user || error) {
     location.href = "login.html";
@@ -121,7 +130,7 @@ async function loadDashboard() {
 
   const employer_id = "EM_" + user.id;
 
-  /* ================= JOB POSTS ================= */
+  /* ===== JOB POSTS ===== */
   const { data: jobposts, error: jobErr } = await supabase
     .from("jobposts")
     .select("jobpost_id, job_title, approval_status")
@@ -133,115 +142,44 @@ async function loadDashboard() {
     return;
   }
 
-  const jobpostIds = jobposts.map(j => j.jobpost_id);
-
-  /* ================= APPLICATIONS ================= */
-  let applications = [];
-
-  if (jobpostIds.length > 0) {
-    const { data, error } = await supabase
-  .from("job_applications")
-  .select(`
-    job_application_id,
-    jobpost_id,
-    applied_at,
-    job_seekers!inner (
-      profiles!inner (
-        first_name,
-        last_name,
-        avatar_url
-      )
-    )
-  `)
-  .in("jobpost_id", jobpostIds)
-  .order("applied_at", { ascending: false });
-
-
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    applications = data || [];
-  }
-
-  /* ================= STATS ================= */
-  document.getElementById("approved-posts").innerText =
-    jobposts.filter(j => j.approval_status === "Approved").length;
-
-  document.getElementById("total-applicants").innerText =
-    applications.length;
-
-  /* ================= RECENT APPLICANTS ================= */
-  const recentContainer = document.getElementById("recent-applicants");
-  recentContainer.innerHTML = "";
-
-  applications.slice(0, 5).forEach(app => {
-    const job = jobposts.find(j => j.jobpost_id === app.jobpost_id);
-    const profile = app.job_seekers?.profiles;
-
-    const fullName = profile
-      ? `${profile.first_name} ${profile.last_name}`
-      : "Unknown";
-
-    const avatar =
-      profile?.avatar_url || "https://via.placeholder.com/48";
-
-    recentContainer.innerHTML += `
-      <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border">
-        <div class="h-12 w-12 rounded-full bg-cover bg-center"
-          style="background-image:url('${avatar}')"></div>
-
-        <div class="flex-1">
-          <p class="font-medium text-gray-900">${fullName}</p>
-          <p class="text-sm text-gray-500">
-            Applied for '${job?.job_title || "-"}'
-          </p>
-        </div>
-
-        <button
-          onclick="location.href='AcceptDecline.html?jobpost_id=${app.jobpost_id}'"
-          class="text-primary font-bold">
-          View
-        </button>
-      </div>
-    `;
-  });
-
-  /* ================= MY JOB POSTS ================= */
+  /* ===== RENDER JOB POSTS ===== */
   const jobContainer = document.getElementById("my-job-posts");
   jobContainer.innerHTML = "";
 
   jobposts.forEach(job => {
-    const count = applications.filter(
-      a => a.jobpost_id === job.jobpost_id
-    ).length;
-
     let badge = "";
+
     if (job.approval_status === "Approved") {
       badge = `<span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700">Approved</span>`;
     } else if (job.approval_status === "Pending") {
       badge = `<span class="px-3 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700">Pending</span>`;
     } else {
-      badge = `<span class="px-3 py-1 text-xs rounded-full bg-red-100 text-red-600">Rejected</span>`;
+      badge = `<span class="px-3 py-1 text-xs rounded-full bg-red-100 text-red-700">Rejected</span>`;
     }
 
     jobContainer.innerHTML += `
-      <div onclick="location.href='AcceptDecline.html?jobpost_id=${job.jobpost_id}'"
+      <div
+        onclick="goToJob('${job.jobpost_id}', '${job.approval_status}')"
         class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border cursor-pointer">
+
         <div class="flex-1">
           <p class="font-medium">${job.job_title}</p>
-          <p class="text-sm text-gray-500">${count} Applicants</p>
+          <p class="text-sm text-gray-500">
+            Status: ${job.approval_status}
+          </p>
         </div>
+
         ${badge}
       </div>
     `;
   });
+
+  /* ===== STATS ===== */
+  document.getElementById("approved-posts").innerText =
+    jobposts.filter(j => j.approval_status === "Approved").length;
 }
 
 loadDashboard();
-
 </script>
 
 

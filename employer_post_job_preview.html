@@ -133,10 +133,11 @@ body {
 <!-- Bottom Action Bar -->
 <div class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow">
   <div class="flex gap-3">
-    <button onclick="window.location.href='employer_post_a_job_form.html'"
-      class="flex-1 rounded-full bg-dark-blue py-3.5 text-white font-bold">
-      Edit
-    </button>
+    <button onclick="goEdit()"
+  class="flex-1 rounded-full bg-dark-blue py-3.5 text-white font-bold">
+  Edit
+</button>
+
     <button onclick="confirmPost()"
       class="flex-1 rounded-full bg-primary py-3.5 text-white font-bold">
       Confirm Post
@@ -154,6 +155,9 @@ const supabase = createClient(
 
   
 const draft = JSON.parse(localStorage.getItem("jobPostDraft"));
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode");      // edit | null
+const jobpostId = params.get("id");   // jobpost_id
 
 if (!draft) {
   alert("ไม่พบข้อมูล Preview");
@@ -196,7 +200,7 @@ window.confirmPost = async function () {
   const payload = {
     employer_id,
     job_title: draft.job_title,
-    job_type: draft.job_type,
+    job_type_id: draft.job_type_id,
     job_description: draft.job_description,
     qualifications: draft.qualifications,
 
@@ -224,21 +228,58 @@ window.confirmPost = async function () {
     approval_status: "Pending"
   };
 
-  const { error } = await supabase
-    .from("jobposts")
-    .insert(payload);
+  let result;
 
-  if (error) {
-    alert("❌ บันทึกไม่สำเร็จ: " + error.message);
-    return;
+  if (mode === "edit" && jobpostId) {
+    // UPDATE
+    const { error } = await supabase
+      .from("jobposts")
+      .update(payload)
+      .eq("jobpost_id", jobpostId);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    // APPEAL +1
+    const { error: appealError } = await supabase.rpc("submit_appeal", {
+      p_jobpost_id: jobpostId
+    });
+
+    if (appealError) {
+      alert(appealError.message);
+      return;
+    }
+
+  } else {
+    // INSERT
+    const { error } = await supabase
+      .from("jobposts")
+      .insert(payload);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
   }
 
-  // ✅ ลบ draft เมื่อบันทึกสำเร็จ
   localStorage.removeItem("jobPostDraft");
-
-  // ✅ ไปหน้า success
   location.href = "employer_job_post_success_(themed).html";
-}
+};
+
+window.goEdit = function () {
+  const params = new URLSearchParams(location.search);
+  const jobpostId = params.get("id");
+
+  if (jobpostId) {
+    // edit จาก post ที่มีอยู่แล้ว
+    location.href = `employer_post_a_job_form.html?id=${jobpostId}&mode=edit`;
+  } else {
+    // edit จาก draft
+    location.href = `employer_post_a_job_form.html?mode=edit`;
+  }
+};
 
 
 </script>
