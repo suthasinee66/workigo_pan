@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Post Detail Review</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#ff6a00",
+            secondary: "#1F3A5F",
+            bg: "#f6f7fb",
+            card: "#ffffff",
+            error: "#ef4444",
+          },
+          fontFamily: { display: ["Inter"] },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: Inter, sans-serif; }
+  </style>
+</head>
+
+<body class="bg-bg text-slate-800">
+<div class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
+  <div class="max-w-md mx-auto flex items-center gap-3 p-4">
+    <button onclick="history.back()" class="p-2 rounded-lg hover:bg-gray-100">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <h1 class="flex-1 text-center font-bold text-lg">Job Post Review</h1>
+  </div>
+</header>
+
+<main class="max-w-md mx-auto pb-32">
+
+<!-- EMPLOYER -->
+<section class="p-4">
+  <div class="bg-card rounded-2xl shadow-sm p-4 space-y-1">
+    <p class="text-xs uppercase font-bold text-secondary/60">Employer</p>
+    <p id="employerName" class="text-lg font-bold">-</p>
+  </div>
+</section>
+
+<!-- JOB DETAILS -->
+<section class="px-4 space-y-4">
+  <h2 class="font-bold text-lg">Job Details</h2>
+
+  <div class="bg-card rounded-2xl shadow-sm divide-y">
+
+    <!-- Title -->
+    <div class="p-4 flex gap-3">
+      <span class="material-symbols-outlined text-primary">work</span>
+      <div>
+        <p id="jobTitle" class="font-semibold text-base">-</p>
+        <p id="jobType" class="text-sm text-gray-500">-</p>
+      </div>
+    </div>
+
+    <!-- Wage -->
+    <div class="p-4 flex gap-3">
+      <span class="material-symbols-outlined text-primary">payments</span>
+      <p id="wage" class="font-semibold">-</p>
+    </div>
+
+    <!-- Location -->
+    <div class="p-4 flex gap-3 text-sm text-gray-600">
+      <span class="material-symbols-outlined">location_on</span>
+      <p id="address">-</p>
+    </div>
+  </div>
+</section>
+
+<!-- DESCRIPTION -->
+<section class="px-4 pt-6">
+  <h2 class="font-bold mb-2">Description</h2>
+  <div class="bg-card rounded-2xl shadow-sm p-4">
+    <p id="jobDescription" class="text-sm leading-relaxed">-</p>
+  </div>
+</section>
+
+<!-- REQUIREMENTS -->
+<section class="px-4 pt-6">
+  <h2 class="font-bold mb-2">Requirements</h2>
+  <div class="bg-card rounded-2xl shadow-sm p-4 text-sm space-y-2">
+    <p><b>Workers Needed:</b> <span id="workers"></span></p>
+    <p><b>Gender:</b> <span id="gender"></span></p>
+    <p><b>Age:</b> <span id="age"></span></p>
+    <p><b>Payment Method:</b> <span id="payment"></span></p>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="px-4 pt-6">
+  <h2 class="font-bold mb-2">Schedule</h2>
+  <div class="bg-card rounded-2xl shadow-sm p-4 text-sm space-y-2">
+    <p><b>Date:</b> <span id="start_date"></span> → <span id="end_date"></span></p>
+    <p><b>Time:</b> <span id="start_time"></span> → <span id="end_time"></span></p>
+  </div>
+</section>
+
+<!-- COMMENT -->
+<section class="px-4 pt-6">
+  <h2 class="font-bold mb-2">Reviewer Comment</h2>
+  <textarea
+    id="appeal_comment"
+    class="w-full h-32 rounded-2xl border-gray-200 focus:ring-primary focus:border-primary text-sm p-4"
+    placeholder="Provide reason for rejection (required if rejecting)..."></textarea>
+</section>
+
+</main>
+
+<!-- ACTIONS -->
+<footer class="fixed bottom-0 left-0 right-0 bg-white border-t">
+  <div class="max-w-md mx-auto p-4 flex gap-3">
+    <button id="rejectBtn"
+      class="flex-1 h-12 rounded-xl bg-error text-white font-bold">
+      Reject
+    </button>
+    <button id="approveBtn"
+      class="flex-1 h-12 rounded-xl bg-primary text-white font-bold">
+      Approve
+    </button>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script type="module">
+const supabase = window.supabase.createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+/* AUTH */
+const { data:{ user } } = await supabase.auth.getUser();
+if (!user) location.href = "login.html";
+
+/* GET ID */
+const jobId = new URLSearchParams(location.search).get("id");
+if (!jobId) history.back();
+
+const el = id => document.getElementById(id);
+
+/* LOAD JOB */
+const { data, error } = await supabase
+  .from("jobposts")
+  .select("*")
+  .eq("jobpost_id", jobId)
+  .single();
+
+if (error) alert(error.message);
+
+el("employerName").textContent = data.workplace_name ?? "-";
+el("jobTitle").textContent = data.job_title ?? "-";
+el("jobType").textContent = data.work_time_type ?? "-";
+el("wage").textContent = data.wage_amount ? `${data.wage_amount} (${data.wage_type})` : "-";
+el("address").textContent = data.address ?? "-";
+el("jobDescription").textContent = data.job_description ?? "-";
+
+el("workers").textContent = data.workers_needed ?? "-";
+el("gender").textContent = data.gender_requirement ?? "-";
+el("age").textContent = data.age_requirement ?? "-";
+el("payment").textContent = data.payment_method ?? "-";
+el("start_date").textContent = data.start_date ?? "-";
+el("end_date").textContent = data.end_date ?? "-";
+el("start_time").textContent = data.start_time ?? "-";
+el("end_time").textContent = data.end_time ?? "-";
+
+el("appeal_comment").value = data.appeal_comment ?? "";
+
+/* ACTIONS */
+approveBtn.onclick = async () => {
+  const { error } = await supabase
+    .from("jobposts")
+    .update({
+      approval_status: "Approved",
+      approval_date: new Date()
+    })
+    .eq("jobpost_id", jobId);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Approved");
+  location.href = "Legal_management_post.html";
+};
+
+
+rejectBtn.onclick = async () => {
+  if (!appeal_comment.value.trim()) {
+    alert("Comment required");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("jobposts")
+    .update({
+      approval_status: "Rejected",
+      approval_date: new Date(),
+      appeal_comment: appeal_comment.value
+    })
+    .eq("jobpost_id", jobId);
+
+  if (error) {
+    console.error(error);
+    alert(error.message);
+    return;
+  }
+
+  alert("Rejected");
+  location.href = "Legal_management_post.html";
+};
+
+</script>
+
+</div>
+</body>
+</html>

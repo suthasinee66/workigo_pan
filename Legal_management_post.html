@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Legal Officer Job List Dashboard</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "pending": "#FF6A00",
+                        "approved": "#10b981",
+                        "rejected": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100">
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+  <div class="flex items-center justify-between p-4 max-w-md mx-auto">
+    <div class="flex items-center gap-3">
+      <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+      <div>
+        <h1 class="text-sm font-bold">Legal Officer</h1>
+        <p class="text-[11px] text-slate-500">Job Post Review</p>
+      </div>
+    </div>
+    <button class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+      <span class="material-symbols-outlined">logout</span>
+    </button>
+  </div>
+</header>
+
+<main class="max-w-md mx-auto pb-20">
+
+<!-- ================= WELCOME ================= -->
+<section class="px-4 pt-6 pb-2">
+  <h2 class="text-2xl font-bold">Welcome</h2>
+  <p class="text-slate-500 text-sm">Review all job posts below</p>
+</section>
+
+<!-- ================= FILTER TABS (UI ONLY) ================= -->
+<div class="flex px-4 gap-2 overflow-x-auto hide-scrollbar" id="filter-tabs">
+  <button data-status="ALL"
+    class="filter-btn px-5 py-2.5 rounded-full bg-primary text-white text-sm font-semibold">
+    All
+  </button>
+
+  <button data-status="Pending"
+    class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-sm font-semibold border">
+    Pending
+  </button>
+
+  <button data-status="Approved"
+    class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-sm font-semibold border">
+    Approved
+  </button>
+
+  <button data-status="Rejected"
+    class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-sm font-semibold border">
+    Rejected
+  </button>
+</div>
+
+</div>
+
+<!-- ================= JOB LIST (EMPTY CONTAINER) ================= -->
+<div id="job-list" class="flex flex-col gap-4 px-4 mt-2">
+  <!-- JS will render job cards here -->
+</div>
+
+</main>
+<!-- ===== SUPABASE ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script type="module">
+  const supabase = window.supabase.createClient(
+    "https://ispbevvwwggbktfczmui.supabase.co",
+    "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+  );
+  let allJobs = [];
+
+
+  /* ---------- AUTH ---------- */
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) {
+    location.href = "login.html";
+  }
+
+  /* ---------- ELEMENT ---------- */
+  const listEl = document.getElementById("job-list");
+
+  /* ---------- STATUS MAP ---------- */
+  const STATUS_MAP = {
+    Pending: { label: "Pending Review", color: "text-pending" },
+    Approved: { label: "Approved", color: "text-approved" },
+    Rejected: { label: "Rejected", color: "text-rejected" },
+  };
+
+  /* ---------- LOAD JOB POSTS ---------- */
+  async function loadJobPosts() {
+  const { data, error } = await supabase
+    .from("jobposts")
+    .select(`
+      jobpost_id,
+      job_title,
+      workplace_name,
+      address,
+      approval_status,
+      created_at
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    alert("Failed to load job posts");
+    return;
+  }
+
+  allJobs = data;
+  renderJobList(allJobs);
+}
+
+
+    listEl.innerHTML = "";
+
+    function renderJobList(jobs) {
+  listEl.innerHTML = "";
+
+  jobs.forEach(job => {
+    const status = STATUS_MAP[job.approval_status] || STATUS_MAP.Pending;
+
+    const card = document.createElement("div");
+    card.className =
+      "bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 active:scale-[0.98] transition-all";
+
+    card.innerHTML = `
+      <div class="p-4 flex flex-col gap-3">
+        <div>
+          <span class="text-[10px] font-bold tracking-wider uppercase ${status.color}">
+            ${status.label}
+          </span>
+          <h3 class="text-lg font-bold">${job.job_title}</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400">
+            ${job.workplace_name ?? "-"}
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-500">
+          <span class="material-symbols-outlined text-[18px]">location_on</span>
+          ${job.address ?? "Not specified"}
+        </div>
+
+        <div class="flex justify-between items-center border-t pt-3">
+          <span class="text-[11px] text-slate-400">
+            Job ID: ${String(job.jobpost_id).slice(0, 8)}
+          </span>
+
+          <button
+            class="text-primary text-sm font-bold flex items-center gap-1"
+            onclick="location.href='Legal_management_post_detail.html?id=${job.jobpost_id}'"
+          >
+            Review Details
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    `;
+
+    listEl.appendChild(card);
+  });
+}
+
+
+  loadJobPosts();
+
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    // UI active state
+    document.querySelectorAll(".filter-btn").forEach(b => {
+      b.classList.remove("bg-primary", "text-white");
+      b.classList.add("bg-white", "dark:bg-slate-800", "border");
+    });
+
+    btn.classList.add("bg-primary", "text-white");
+    btn.classList.remove("bg-white", "dark:bg-slate-800", "border");
+
+    const status = btn.dataset.status;
+
+    if (status === "ALL") {
+      renderJobList(allJobs);
+    } else {
+      renderJobList(allJobs.filter(job => job.approval_status === status));
+    }
+  });
+});
+
+</script>
+
+
+
+</body></html>

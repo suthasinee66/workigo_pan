@@ -204,7 +204,7 @@
       const { data: existingApplication } = await supabaseClient
         .from("job_applications")
         .select("job_application_id")
-        .eq("worker_id", jobSeeker.job_seeker_id)
+        .eq("job_seeker_id", jobSeeker.job_seeker_id)
         .eq("jobpost_id", jobpostId)
         .maybeSingle();
 
@@ -224,7 +224,7 @@
           const { error } = await supabaseClient
             .from("job_applications")
             .insert({
-              worker_id: jobSeeker.job_seeker_id,
+              job_seeker_id: jobSeeker.job_seeker_id,
               jobpost_id: jobpostId,
               application_status: "Pending",
               applied_at: new Date().toISOString()

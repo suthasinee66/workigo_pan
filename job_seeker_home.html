@@ -133,7 +133,7 @@
       const { data: profile } = await supabaseClient
         .from("profiles")
         .select("first_name")
-        .eq("id", user.id)
+        .eq("profile_id", user.id)
         .single();
 
       const { data: seeker } = await supabaseClient
