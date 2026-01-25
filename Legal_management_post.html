@@ -128,7 +128,7 @@
   /* ---------- AUTH ---------- */
   const { data: { user }, error: userError } = await supabase.auth.getUser();
   if (userError || !user) {
-    location.href = "login.html";
+    location.href = "signin.html";
   }
 
   /* ---------- ELEMENT ---------- */

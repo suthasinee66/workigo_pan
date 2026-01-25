@@ -195,7 +195,7 @@
       const { data: jobSeeker } = await supabaseClient
         .from("job_seekers")
         .select("job_seeker_id")
-        .eq("user_id", user.id)
+        .eq("profile_id", user.id)
         .maybeSingle();
 
       if (!jobSeeker) return;

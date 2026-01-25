@@ -115,7 +115,7 @@ const supabase = createClient(
 
 /* ===== AUTH ===== */
 const { data: { user }, error: userError } = await supabase.auth.getUser()
-        if (userError || !user) location.href = "login.html"
+        if (userError || !user) location.href = "signin.html"
 
 /* ===== ELEMENTS ===== */
 const job_seeker_id = "EM_" + user.id
@@ -193,7 +193,7 @@ submitBtn.addEventListener("click", async () => {
     .from("employers")
     .insert({
       employer_id: job_seeker_id,
-      user_id: user.id,
+      profile_id: user.id,
       business_name,
       business_type,
       address,

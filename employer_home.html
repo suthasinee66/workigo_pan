@@ -124,7 +124,7 @@ window.goToJob = function (jobpostId, status) {
 async function loadDashboard() {
   const { data: { user }, error } = await supabase.auth.getUser();
   if (!user || error) {
-    location.href = "login.html";
+    location.href = "signin.html";
     return;
   }
 

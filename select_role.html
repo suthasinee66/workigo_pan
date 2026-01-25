@@ -58,7 +58,7 @@
         )
 
         const { data: { user }, error: userError } = await supabase.auth.getUser()
-        if (userError || !user) location.href = "login.html"
+        if (userError || !user) location.href = "signin.html"
     </script>
 
 </body>

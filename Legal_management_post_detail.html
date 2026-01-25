@@ -147,7 +147,7 @@ const supabase = window.supabase.createClient(
 
 /* AUTH */
 const { data:{ user } } = await supabase.auth.getUser();
-if (!user) location.href = "login.html";
+if (!user) location.href = "signin.html";
 
 /* GET ID */
 const jobId = new URLSearchParams(location.search).get("id");
