@@ -416,13 +416,13 @@ window.goPreview = function () {
     latitude: latitude.value,
     longitude: longitude.value,
     age_requirement: age_requirement.value,
+    gender_requirement: gender_requirement.value,
     start_date: start_date.value,
     end_date: end_date.value,
     start_time: start_time.value,
     end_time: end_time.value,
     phone_number: phone_number.value,
     contact_name: contact_name.value
-
   };
 
   localStorage.setItem("jobPostDraft", JSON.stringify(draft));
@@ -430,8 +430,9 @@ window.goPreview = function () {
   location.href =
     mode === "edit"
       ? `employer_post_job_preview.html?id=${jobpostId}&mode=edit`
-      : `employer_post_job_preview.html?id=${draft}&mode=edit`;
+      : `employer_post_job_preview.html`;
 };
+
 
 /* ================= SEARCH ADDRESS ================= */
 window.searchAddress = async function () {

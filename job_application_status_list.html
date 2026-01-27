@@ -55,7 +55,7 @@ if (!user) location.href = "signin.html"
 const { data: jobSeeker } = await supabase
   .from("job_seekers")
   .select("job_seeker_id")
-  .eq("profile_id", user.id)
+  .eq("user_id", user.id)
   .single()
 
 if (!jobSeeker) {
@@ -80,7 +80,7 @@ const { data: applications, error } = await supabase
       workplace_name
     )
   `)
-  .eq("job_seeker_id", workerId)
+  .eq("worker_id", workerId)
   .order("applied_at", { ascending: false })
 
 if (error) {

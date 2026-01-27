@@ -193,7 +193,7 @@ submitBtn.addEventListener("click", async () => {
     .from("employers")
     .insert({
       employer_id: job_seeker_id,
-      profile_id: user.id,
+      user_id: user.id,
       business_name,
       business_type,
       address,
@@ -212,7 +212,7 @@ submitBtn.addEventListener("click", async () => {
   await supabase
     .from("profiles")
     .update({ role_id: 1})
-    .eq("profile_id", user.id)
+    .eq("id", user.id)
 
   window.location.href = "employer_home.html"
 })

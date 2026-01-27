@@ -82,7 +82,7 @@ async function redirectByRole(user) {
   const { data: profile, error } = await supabase
     .from("profiles")
     .select("role_id")
-    .eq("profile_id", user.id)
+    .eq("id", user.id)
     .single()
 
 console.log("USER FROM SUPABASE:", user)-
@@ -147,7 +147,7 @@ signupForm.addEventListener("submit", async (e) => {
   const { error: profileError } = await supabase
     .from("profiles")
     .upsert({
-      profile_id: data.user.id,
+      id: data.user.id,
       email: data.user.email,
       first_name: firstNameInput.value.trim(),
       last_name: lastNameInput.value.trim(),

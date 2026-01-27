@@ -324,7 +324,7 @@
   const { error: profileError } = await supabase
     .from("profiles")
     .upsert({
-      profile_id: user.id, // ต้องตรงกับ auth.uid()
+      id: user.id, // ต้องตรงกับ auth.uid()
       phone_number: phone,
       role: "jobseeker",
       role_id: 2,
@@ -344,7 +344,7 @@
     .from("job_seekers")
     .upsert({
       job_seeker_id,
-      profile_id: user.id,
+      user_id: user.id,
       avatar_url,
       bio,
       gender,

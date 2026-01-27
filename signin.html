@@ -78,7 +78,7 @@ async function redirectByRole(user) {
   const { data: profile, error } = await supabase
     .from("profiles")
     .select("role_id")
-    .eq("profile_id", user.id)
+    .eq("id", user.id)
     .single()
 
 console.log("USER FROM SUPABASE:", user)-

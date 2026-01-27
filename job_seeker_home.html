@@ -133,13 +133,13 @@
       const { data: profile } = await supabaseClient
         .from("profiles")
         .select("first_name")
-        .eq("profile_id", user.id)
+        .eq("id", user.id)
         .single();
 
       const { data: seeker } = await supabaseClient
         .from("job_seekers")
         .select("avatar_url")
-        .eq("profile_id", user.id)
+        .eq("user_id", user.id)
         .single();
 
       document.getElementById("greeting").textContent =
@@ -164,7 +164,7 @@
       const { data: seeker } = await supabaseClient
         .from("job_seekers")
         .select("job_seeker_id")
-        .eq("profile_id", user.id)
+        .eq("user_id", user.id)
         .single();
 
       if (!seeker) return;
@@ -173,7 +173,7 @@
       const { count } = await supabaseClient
         .from("job_applications")
         .select("*", { count: "exact", head: true })
-        .eq("job_seeker_id", seeker.job_seeker_id);
+        .eq("worker_id", seeker.job_seeker_id);
 
       document.getElementById("applicationsCount").textContent = count ?? 0;
     }

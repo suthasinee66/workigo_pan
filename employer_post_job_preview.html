@@ -169,7 +169,7 @@ const set = (id, val) =>
 
 set("job_title", draft.job_title);
 set("location", `${draft.workplace_name || "-"} | ${draft.address || "-"}`);
-set("job_type", draft.job_type);
+set("job_type", draft.job_type_id);
 set("workers_needed", draft.workers_needed);
 set("job_description", draft.job_description);
 set("qualifications", draft.qualifications);
@@ -187,7 +187,7 @@ window.confirmPost = async function () {
   const {
     data: { user },
     error: userError
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser(); 
 
   if (userError || !user) {
     alert("กรุณา login ใหม่");
@@ -225,35 +225,46 @@ window.confirmPost = async function () {
     contact_name: draft.contact_name,
     phone_number: draft.phone_number,
 
-    approval_status: "Pending"
+    approval_status: "Pending",
+
   };
 
   let result;
 
   if (mode === "edit" && jobpostId) {
-    // UPDATE
-    const { error } = await supabase
+
+    // 1. ดึงสถานะเก่า
+    const { data: currentPost } = await supabase
+      .from("jobposts")
+      .select("approval_status")
+      .eq("jobpost_id", jobpostId)
+      .single();
+
+    // 2. update งาน
+    const { error: updateError } = await supabase
       .from("jobposts")
       .update(payload)
       .eq("jobpost_id", jobpostId);
 
-    if (error) {
-      alert(error.message);
+    if (updateError) {
+      alert(updateError.message);
       return;
     }
 
-    // APPEAL +1
-    const { error: appealError } = await supabase.rpc("submit_appeal", {
-      p_jobpost_id: jobpostId
-    });
+    // 3. เพิ่ม appeal เฉพาะกรณี Rejected
+    if (currentPost?.approval_status === "Rejected") {
+      const { error: appealError } = await supabase.rpc("submit_appeal", {
+        p_jobpost_id: jobpostId
+      });
 
-    if (appealError) {
-      alert(appealError.message);
-      return;
+      if (appealError) {
+        alert(appealError.message);
+        return;
+      }
     }
 
   } else {
-    // INSERT
+    /* ===== NEW POST ===== */
     const { error } = await supabase
       .from("jobposts")
       .insert(payload);
