@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF6A00",
+                        "secondary": "#1F3A5F",
+                        "background": "#FFFFFF",
+                        "card": "#F5F7FA",
+                        "accent1": "#A0C4FF",
+                        "accent2": "#FFC1D6",
+                        "neutral-gray": "#E5E7EB",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="font-display">
+    <!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+  <div class="flex items-center justify-between p-4 max-w-md mx-auto">
+    <div class="flex items-center gap-3">
+      <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+      <div>
+        <h1 class="text-sm font-bold">Owner</h1>
+      </div>
+    </div>
+    <button class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+      <span class="material-symbols-outlined">logout</span>
+    </button>
+  </div>
+</header>
+    <!-- ================= DASHBOARD ================= -->
+    <section id="page_dashboard">
+
+        <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+            <header
+                class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-neutral-gray/50 bg-background/80 px-4 backdrop-blur-sm">
+                <h1 class="text-xl font-bold text-secondary">Dashboard</h1>
+                <button class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-secondary">
+                    <span class="material-symbols-outlined text-2xl">account_circle</span>
+                </button>
+            </header>
+            <main class="flex-1 p-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-2 rounded-xl bg-card p-4 shadow-sm">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/10">
+                            <span class="material-symbols-outlined text-base text-secondary">group</span>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">1,482</p>
+                        <p class="text-sm font-medium text-slate-500">Total Users</p>
+                    </div>
+                    <div class="flex flex-col gap-2 rounded-xl bg-card p-4 shadow-sm">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/10">
+                            <span class="material-symbols-outlined text-base text-secondary">person_off</span>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">15</p>
+                        <p class="text-sm font-medium text-slate-500">Suspended</p>
+                    </div>
+                    <div class="flex flex-col gap-2 rounded-xl bg-card p-4 shadow-sm">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/10">
+                            <span class="material-symbols-outlined text-base text-secondary">pending_actions</span>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">8</p>
+                        <p class="text-sm font-medium text-slate-500">Pending Jobs</p>
+                    </div>
+                    <div class="flex flex-col gap-2 rounded-xl bg-card p-4 shadow-sm">
+                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/10">
+                            <span class="material-symbols-outlined text-base text-secondary">flag</span>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">3</p>
+                        <p class="text-sm font-medium text-slate-500">Reports</p>
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-col gap-2 rounded-xl bg-card p-4 shadow-sm">
+                    <p class="text-base font-bold text-slate-900">Daily Activity</p>
+                    <p class="text-sm font-medium text-slate-500">Last 7 Days</p>
+                    <div
+                        class="grid min-h-[160px] grid-flow-col grid-rows-[1fr_auto] items-end justify-items-center gap-4 px-2 pt-4">
+                        <div class="flex h-full w-full flex-col-reverse gap-1">
+                            <div class="w-full rounded-full bg-primary/50" style="height: 40%;"></div>
+                            <div class="w-full rounded-full bg-secondary/50" style="height: 60%;"></div>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500">Mon</p>
+                        <div class="flex h-full w-full flex-col-reverse gap-1">
+                            <div class="w-full rounded-full bg-primary/50" style="height: 50%;"></div>
+                            <div class="w-full rounded-full bg-secondary/50" style="height: 70%;"></div>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500">Tue</p>
+                        <div class="flex h-full w-full flex-col-reverse gap-1">
+                            <div class="w-full rounded-full bg-primary/50" style="height: 90%;"></div>
+                            <div class="w-full rounded-full bg-secondary/50" style="height: 100%;"></div>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500">Wed</p>
+                        <div class="flex h-full w-full flex-col-reverse gap-1">
+                            <div class="w-full rounded-full bg-primary/50" style="height: 80%;"></div>
+                            <div class="w-full rounded-full bg-secondary/50" style="height: 90%;"></div>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500">Thu</p>
+                        <div class="flex h-full w-full flex-col-reverse gap-1">
+                            <div class="w-full rounded-full bg-primary/50" style="height: 40%;"></div>
+                            <div class="w-full rounded-full bg-secondary/50" style="height: 30%;"></div>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500">Fri</p>
+                        <div class="flex h-full w-full flex-col-reverse gap-1">
+                            <div class="w-full rounded-full bg-primary/50" style="height: 30%;"></div>
+                            <div class="w-full rounded-full bg-secondary/50" style="height: 30%;"></div>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500">Sat</p>
+                        <div class="flex h-full w-full flex-col-reverse gap-1">
+                            <div class="w-full rounded-full bg-primary/50" style="height: 25%;"></div>
+                            <div class="w-full rounded-full bg-secondary/50" style="height: 20%;"></div>
+                        </div>
+                        <p class="text-xs font-bold text-slate-500">Sun</p>
+                    </div>
+                    <div class="mt-4 flex items-center justify-center gap-6 text-sm">
+                        <div class="flex items-center gap-2">
+                            <div class="h-2.5 w-2.5 rounded-full bg-secondary/50"></div>
+                            <span class="text-slate-600">Sign-ups</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="h-2.5 w-2.5 rounded-full bg-primary/50"></div>
+                            <span class="text-slate-600">Job Posts</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-col gap-4 rounded-xl bg-card p-4 shadow-sm">
+                    <div class="flex flex-col">
+                        <p class="text-base font-bold text-slate-900">Job Postings Status</p>
+                        <p class="text-sm font-medium text-slate-500">1,240 Total</p>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="relative flex h-36 w-36 items-center justify-center">
+                            <svg class="h-full w-full -rotate-90 transform" viewBox="0 0 36 36">
+                                <circle class="stroke-current text-neutral-gray/50" cx="18" cy="18" fill="transparent"
+                                    r="15.9155" stroke-width="4"></circle>
+                                <circle class="stroke-current text-secondary" cx="18" cy="18" fill="transparent"
+                                    r="15.9155" stroke-dasharray="70 30" stroke-dashoffset="0" stroke-width="4">
+                                </circle>
+                                <circle class="stroke-current text-green-400" cx="18" cy="18" fill="transparent"
+                                    r="15.9155" stroke-dasharray="15 85" stroke-dashoffset="-70" stroke-width="4">
+                                </circle>
+                                <circle class="stroke-current text-primary" cx="18" cy="18" fill="transparent"
+                                    r="15.9155" stroke-dasharray="15 85" stroke-dashoffset="-85" stroke-width="4">
+                                </circle>
+                            </svg>
+                            <div class="absolute flex flex-col items-center justify-center">
+                                <span class="text-2xl font-bold text-slate-900">70%</span>
+                                <span class="text-xs text-slate-500">Approved</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-1 flex-col justify-center gap-3">
+                            <div class="flex items-center gap-2">
+                                <div class="h-2.5 w-2.5 flex-shrink-0 rounded-full bg-secondary"></div>
+                                <div class="flex flex-col">
+                                    <p class="text-sm font-semibold text-slate-800">Approved</p>
+                                    <p class="text-xs text-slate-500">868 posts</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="h-2.5 w-2.5 flex-shrink-0 rounded-full bg-green-400"></div>
+                                <div class="flex flex-col">
+                                    <p class="text-sm font-semibold text-slate-800">Pending</p>
+                                    <p class="text-xs text-slate-500">186 posts</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="h-2.5 w-2.5 flex-shrink-0 rounded-full bg-primary"></div>
+                                <div class="flex flex-col">
+                                    <p class="text-sm font-semibold text-slate-800">Rejected</p>
+                                    <p class="text-xs text-slate-500">186 posts</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-slate-900">Recent Reports</h3>
+                        <button class="text-sm font-semibold text-primary">View All</button>
+                    </div>
+                    <div class="flex flex-col divide-y divide-neutral-gray/50 rounded-xl bg-card shadow-sm">
+                        <div class="flex items-start gap-4 p-4">
+                            <div
+                                class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-red-100">
+                                <span class="material-symbols-outlined text-red-600">report</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-slate-800">Misleading Job Description</p>
+                                <p class="text-sm text-slate-500">User reported the salary range was inaccurate.</p>
+                            </div>
+                            <p class="text-xs text-slate-400">2m ago</p>
+                        </div>
+                        <div class="flex items-start gap-4 p-4">
+                            <div
+                                class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-orange-100">
+                                <span class="material-symbols-outlined text-orange-600">question_mark</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-slate-800">Unresponsive Employer</p>
+                                <p class="text-sm text-slate-500">Applicant claims no response after 2 weeks.</p>
+                            </div>
+                            <p class="text-xs text-slate-400">1h ago</p>
+                        </div>
+                        <div class="flex items-start gap-4 p-4">
+                            <div
+                                class="flex h-1.0 w-10 flex-shrink-0 items-center justify-center rounded-full bg-red-100">
+                                <span class="material-symbols-outlined text-red-600">gavel</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-slate-800">Policy Violation</p>
+                                <p class="text-sm text-slate-500">Job posting contains discriminatory language.</p>
+                            </div>
+                            <p class="text-xs text-slate-400">3h ago</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-5"></div>
+            </main>
+
+    </section>
+
+    <!-- ================= ANALYTICS ================= -->
+    <section id="page_analytics" class="hidden">
+
+        <div
+            class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+            <!-- TopAppBar -->
+            <div
+                class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+                <div class="flex size-12 shrink-0 items-center justify-center text-text-light dark:text-text-dark">
+
+                </div>
+                <h2
+                    class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                    System Analytics</h2>
+                <div class="flex size-12 shrink-0 items-center"></div>
+            </div>
+            <!-- Chips -->
+            <div class="flex gap-3 p-4 overflow-x-auto">
+                <div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-5 pr-5">
+                    <p class="text-white text-sm font-medium leading-normal">7D</p>
+                </div>
+                <div
+                    class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark pl-5 pr-5">
+                    <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">30D</p>
+                </div>
+                <div
+                    class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark pl-5 pr-5">
+                    <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">90D</p>
+                </div>
+                <div
+                    class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark pl-5 pr-5">
+                    <p class="text-text-light dark:text-text-dark text-sm font-medium leading-normal">Custom</p>
+                </div>
+            </div>
+            <!-- Charts -->
+            <div class="flex flex-col gap-4 px-4 py-4">
+                <div
+                    class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">User Growth</p>
+                    <p
+                        class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">
+                        1,204</p>
+                    <div class="flex gap-1">
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">
+                            from last month</p>
+                        <p class="text-[#078834] text-base font-medium leading-normal">+15%</p>
+                    </div>
+                    <div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+                        <svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z"
+                                fill="url(#paint0_linear_1)"></path>
+                            <path
+                                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
+                                stroke="#A0C4FF" stroke-linecap="round" stroke-width="3"></path>
+                            <defs>
+                                <lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_1" x1="236" x2="236"
+                                    y1="1" y2="149">
+                                    <stop stop-color="#A0C4FF" stop-opacity="0.3"></stop>
+                                    <stop offset="1" stop-color="#A0C4FF" stop-opacity="0"></stop>
+                                </lineargradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Active Jobs</p>
+                    <p
+                        class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">
+                        890</p>
+                    <div class="flex gap-1">
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">
+                            from last month</p>
+                        <p class="text-[#078834] text-base font-medium leading-normal">+5%</p>
+                    </div>
+                    <div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+                        <svg fill="none" height="148" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0 65C18.1538 65 18.1538 129 36.3077 129C54.4615 129 54.4615 89 72.6154 89C90.7692 89 90.7692 25 108.923 25C127.077 25 127.077 97 145.231 97C163.385 97 163.385 57 181.538 57C199.692 57 199.692 109 217.846 109C236 109 236 125 254.154 125C272.308 125 272.308 1 290.462 1C308.615 1 308.615 29 326.769 29C344.923 29 344.923 149 363.077 149C381.231 149 381.231 69 399.385 69C417.538 69 417.538 121 435.692 121C453.846 121 453.846 25 472 25V149H0V65Z"
+                                fill="url(#paint0_linear_2)"></path>
+                            <path
+                                d="M0 65C18.1538 65 18.1538 129 36.3077 129C54.4615 129 54.4615 89 72.6154 89C90.7692 89 90.7692 25 108.923 25C127.077 25 127.077 97 145.231 97C163.385 97 163.385 57 181.538 57C199.692 57 199.692 109 217.846 109C236 109 236 125 254.154 125C272.308 125 272.308 1 290.462 1C308.615 1 308.615 29 326.769 29C344.923 29 344.923 149 363.077 149C381.231 149 381.231 69 399.385 69C417.538 69 417.538 121 435.692 121C453.846 121 453.846 25 472 25"
+                                stroke="#FFC0CB" stroke-linecap="round" stroke-width="3"></path>
+                            <defs>
+                                <lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_2" x1="236" x2="236"
+                                    y1="1" y2="149">
+                                    <stop stop-color="#FFC0CB" stop-opacity="0.3"></stop>
+                                    <stop offset="1" stop-color="#FFC0CB" stop-opacity="0"></stop>
+                                </lineargradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Check-in/out
+                        Logs</p>
+                    <p
+                        class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">
+                        3,450</p>
+                    <div class="flex gap-1">
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">
+                            from last month</p>
+                        <p class="text-[#e73508] text-base font-medium leading-normal">-2%</p>
+                    </div>
+                    <div
+                        class="grid min-h-[180px] grid-cols-2 gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
+                        <div class="bg-chart-blue/80 w-full rounded-t" style="height: 60%;"></div>
+                        <div class="bg-chart-pink/80 w-full rounded-t" style="height: 100%;"></div>
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">
+                            Check-in</p>
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">
+                            Check-out</p>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-1 flex-col gap-2 rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium leading-normal">Rule Violations
+                    </p>
+                    <p
+                        class="text-text-light dark:text-text-dark tracking-light text-[32px] font-bold leading-tight truncate">
+                        112</p>
+                    <div class="flex gap-1">
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal">
+                            from last month</p>
+                        <p class="text-[#078834] text-base font-medium leading-normal">+8%</p>
+                    </div>
+                    <div
+                        class="grid min-h-[180px] grid-cols-2 gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3 pt-4">
+                        <div class="bg-chart-blue/80 w-full rounded-t" style="height: 50%;"></div>
+                        <div class="bg-chart-pink/80 w-full rounded-t" style="height: 25%;"></div>
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">
+                            Spam</p>
+                        <p
+                            class="text-text-subtle-light dark:text-text-subtle-dark text-[13px] font-bold leading-normal tracking-[0.015em]">
+                            Content</p>
+                    </div>
+                </div>
+            </div>
+            <!-- SectionHeader -->
+            <h3
+                class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+                Export Data</h3>
+            <!-- BodyText -->
+            <p
+                class="text-text-subtle-light dark:text-text-subtle-dark text-base font-normal leading-normal pb-3 pt-1 px-4">
+                Download a report of the current data view.</p>
+            <!-- Buttons -->
+            <div class="flex flex-col gap-4 px-4 py-4">
+                <button
+                    class="flex h-12 w-full items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark text-text-light dark:text-text-dark text-base font-semibold leading-normal">
+                    <span class="material-symbols-outlined">description</span>
+                    Export as CSV
+                </button>
+                <button
+                    class="flex h-12 w-full items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark text-text-light dark:text-text-dark text-base font-semibold leading-normal">
+                    <span class="material-symbols-outlined">picture_as_pdf</span>
+                    Export as PDF
+                </button>
+            </div>
+            <div class="h-5 bg-background-light dark:bg-background-dark"></div>
+        </div>
+
+        <div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= MANAGEMENT ================= -->
+    <section id="page_management" class="hidden">
+
+        <!-- ACCOUNT -->
+        <section id="mg_account">
+            <!-- Top App Bar -->
+            <header
+                class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-border-color/0 dark:border-border-color/0">
+                <div class="flex size-12 shrink-0 items-center justify-start">
+                </div>
+                <h1
+                    class="text-text-primary dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                    Management</h1>
+                <div class="flex w-12 items-center justify-end">
+
+                </div>
+            </header>
+            <!-- Search Bar -->
+            <div class="px-4 py-3">
+                <label class="flex flex-col min-w-40 h-12 w-full">
+                    <div
+                        class="flex w-full flex-1 items-stretch rounded-lg h-full shadow-sm bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark">
+                        <div
+                            class="text-text-secondary dark:text-text-secondary-dark flex items-center justify-center pl-3">
+                            <span class="material-symbols-outlined">search</span>
+                        </div>
+                        <input
+                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-primary dark:text-text-primary-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-text-secondary dark:placeholder:text-text-secondary-dark pl-2 text-base font-normal leading-normal"
+                            placeholder="Search by name or email..." value="" />
+                    </div>
+                </label>
+            </div>
+            <!-- Filter Chips -->
+            <div class="flex gap-2 p-4 pt-1 overflow-x-auto"> <button onclick="showMgmt('mg_account')"
+                    class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-primary text-white px-4">
+                    <p class="text-sm font-medium leading-normal">Account</p>
+                </button> <button onclick="showMgmt('mg_report')"
+                    class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+                    <p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">
+                        Reports</p>
+                 </div>
+
+            <!-- ================= MANAGEMENT ================= -->
+            <section class="p-4">
+                <h2 class="text-lg font-bold mb-3">User Management</h2>
+
+                <!-- USER LIST -->
+                <div id="user-list" class="flex flex-col gap-3"></div>
+            </section>
+
+
+            </div>
+
+
+        </section>
+
+        <!-- REPORTS -->
+        <section id="mg_report" class="hidden">
+
+            <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+                <!-- Top App Bar -->
+                <header
+                    class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-border-color/0 dark:border-border-color/0">
+                    <div class="flex size-12 shrink-0 items-center justify-start">
+                    </div>
+                    <h1
+                        class="text-text-primary dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                        Management</h1>
+                    <div class="flex w-12 items-center justify-end">
+
+                    </div>
+                </header>
+                <!-- Search Bar -->
+                <div class="px-4 py-3">
+                    <label class="flex flex-col min-w-40 h-12 w-full">
+                        <div
+                            class="flex w-full flex-1 items-stretch rounded-lg h-full shadow-sm bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark">
+                            <div
+                                class="text-text-secondary dark:text-text-secondary-dark flex items-center justify-center pl-3">
+                                <span class="material-symbols-outlined">search</span>
+                            </div>
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden text-text-primary dark:text-text-primary-dark focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-text-secondary dark:placeholder:text-text-secondary-dark pl-2 text-base font-normal leading-normal"
+                                placeholder="Search by name or email..." value="" />
+                        </div>
+                    </label>
+                </div>
+                <!-- Filter Chips -->
+                <div class="flex gap-2 p-4 pt-1 overflow-x-auto">
+                    <button onclick="showMgmt('mg_account')"
+                        class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-surface dark:bg-surface-dark border border-border-color dark:border-border-color-dark px-4">
+                        <p class="text-sm font-medium leading-normal">Account</p>
+                    </button>
+                    <button onclick="showMgmt('mg_report')"
+                        class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full bg-primary text-white px-4">
+                        <p class="text-text-primary dark:text-text-primary-dark text-sm font-medium leading-normal">
+                            Reports</p>
+                    </button>
+                </div>
+                <!-- Report Type Selector -->
+<div class="flex gap-2 p-4 pt-1 overflow-x-auto">
+  <button
+    id="btnReportAccount"
+    onclick="setReportType('account')"
+    class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full px-4 border text-black">
+    <p class="text-sm font-medium leading-normal">Account</p>
+  </button>
+
+  <button
+    id="btnReportPost"
+    onclick="setReportType('post')"
+    class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-full px-4 border text-black">
+    <p class="text-sm font-medium leading-normal">Post</p>
+  </button>
+</div>
+
+
+                <div id="report-list" class="flex flex-col gap-4 px-4 py-3"></div>
+
+        </section>
+
+    </section>
+
+    <!-- ================= BOTTOM NAV ================= -->
+
+    <nav
+        class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 bg-white/80 backdrop-blur-sm">
+
+        <a onclick="showPage('dashboard',this)"
+            class="nav-btn flex flex-col items-center justify-center gap-1 w-full text-primary">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="text-xs">Dashboard</span>
+        </a>
+
+        <a onclick="showPage('management',this)" class="nav-btn flex flex-col items-center justify-center gap-1 w-full">
+            <span class="material-symbols-outlined fill-1">man</span>
+            <span class="text-xs">Management</span>
+        </a>
+
+        <a onclick="showPage('analytics',this)" class="nav-btn flex flex-col items-center justify-center gap-1 w-full">
+            <span class="material-symbols-outlined">bar_chart</span>
+            <span class="text-xs">Analytics</span>
+        </a>
+
+    </nav>
+
+    <div class="h-24"></div>
+
+    <script>
+
+        function showPage(p) {
+
+            document.querySelectorAll("#page_dashboard,#page_management,#page_analytics")
+                .forEach(e => e.classList.add("hidden"))
+
+            document.getElementById("page_" + p).classList.remove("hidden")
+
+            if (p === "management") showMgmt("mg_account")
+
+            window.scrollTo(0, 0)
+        }
+
+        function showMgmt(id) {
+            document.querySelectorAll("#mg_account,#mg_report")
+                .forEach(e => e.classList.add("hidden"))
+
+            document.getElementById(id).classList.remove("hidden")
+
+            window.scrollTo(0, 0)
+        }
+
+
+        function showPage(p, el) {
+
+            document.querySelectorAll("#page_dashboard,#page_management,#page_analytics")
+                .forEach(e => e.classList.add("hidden"))
+
+            document.getElementById("page_" + p).classList.remove("hidden")
+
+            /* highlight nav */
+            document.querySelectorAll(".nav-btn").forEach(b => {
+                b.classList.remove("text-primary")
+                b.classList.add("text-gray-400")
+            })
+
+            el.classList.remove("text-gray-400")
+            el.classList.add("text-primary")
+
+            if (p === "management") showMgmt("mg_account")
+
+            window.scrollTo(0, 0)
+        }
+
+        /* default active */
+        document.querySelector(".nav-btn")?.click()
+    </script>
+    <script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+/* ================= SUPABASE CONFIG ================= */
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+)
+
+/* ================= LOAD PROFILES ================= */
+async function loadProfiles() {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select(`
+      id,
+      email,
+      first_name,
+      last_name,
+      status,
+      avatar_url,
+      created_at
+    `)
+    .order("created_at", { ascending: false })
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  renderProfiles(data)
+}
+
+/* ================= STATUS CORE ================= */
+async function addStatus(userId, newStatus) {
+  const { data, error: fetchError } = await supabase
+    .from("profiles")
+    .select("status")
+    .eq("id", userId)
+    .single()
+
+  if (fetchError) {
+    console.error(fetchError)
+    return
+  }
+
+  let current = data.status ?? []
+
+  // remove Active if closing
+  if (newStatus === "Close an account") {
+    current = current.filter(s => s !== "Active")
+
+    // add InActive instead
+    if (!current.includes("InActive")) {
+      current.push("InActive")
+    }
+  }
+
+  // normal add
+  if (!current.includes(newStatus)) {
+    current.push(newStatus)
+  }
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ status: current })
+    .eq("id", userId)
+
+  if (error) {
+    console.error(error)
+    alert("Update failed")
+    return
+  }
+
+  loadProfiles()
+}
+
+/* ================= ACTIONS ================= */
+
+async function suspendUser(id) {
+  await addStatus(id, "Suspended")
+}
+
+async function deleteUser(id) {
+  await addStatus(id, "Close an account")
+}
+async function sendToLegal(id) {
+  await addStatus(id, "Legal")
+}
+
+
+/* ================= BADGE COMPONENT ================= */
+
+function renderStatusBadge(label) {
+  if (label === "Suspended") {
+    return `
+      <div class="flex items-center justify-center rounded-full bg-amber-500/20 px-3 py-1">
+        <p class="text-amber-700 text-xs font-semibold">Suspended</p>
+      </div>
+    `
+  }
+
+  if (label === "Close an account") {
+    return `
+      <div class="flex items-center justify-center rounded-full bg-red-500/20 px-3 py-1">
+        <p class="text-red-700 text-xs font-semibold">Closed</p>
+      </div>
+    `
+  }
+
+  if (label === "InActive") {
+    return `
+      <div class="flex items-center justify-center rounded-full bg-gray-400/20 px-3 py-1">
+        <p class="text-gray-600 text-xs font-semibold">InActive</p>
+      </div>
+    `
+  }
+  if (label === "Legal") {
+    return `
+      <div class="flex items-center justify-center rounded-full bg-purple-500/20 px-3 py-1">
+        <p class="text-purple-700 text-xs font-semibold">Legal</p>
+      </div>
+    `
+  }
+
+  // Active (default)
+  return `
+    <div class="flex items-center justify-center rounded-full bg-sky-500/20 px-3 py-1">
+      <p class="text-sky-700 text-xs font-semibold">Active</p>
+    </div>
+  `
+}
+
+
+
+
+/* ================= RENDER ================= */
+
+function renderProfiles(users) {
+  const container = document.getElementById("user-list")
+  container.innerHTML = ""
+
+  users.forEach(u => {
+    const avatar =
+      u.avatar_url ??
+      `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        `${u.first_name ?? ""} ${u.last_name ?? ""}`
+      )}`
+
+    const status = u.status ?? []
+
+    let left = ""
+
+if (status.includes("InActive")) {
+  left = renderStatusBadge("InActive")
+} else if (status.includes("Active")) {
+  left = renderStatusBadge("Active")
+}
+
+
+    const right = []
+
+    if (status.includes("Suspended")) right.push(renderStatusBadge("Suspended"))
+    if (status.includes("Close an account")) right.push(renderStatusBadge("Close an account"))
+    if (status.includes("Legal")) right.push(renderStatusBadge("Legal"))
+
+
+    const badges = `
+      <div class="flex justify-between w-full">
+        <div>${left}</div>
+        <div class="flex gap-2">${right.join("")}</div>
+      </div>
+    `
+
+    container.innerHTML += `
+      <div class="flex flex-col gap-4 px-4 py-3">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-soft overflow-hidden">
+
+          <div class="flex gap-4 p-4">
+            <div
+              class="bg-center bg-cover rounded-full h-[56px] w-[56px]"
+              style="background-image:url('${avatar}')">
+            </div>
+
+            <div class="flex flex-col flex-1 gap-1">
+              <p class="font-bold">${u.first_name ?? ""} ${u.last_name ?? ""}</p>
+              <p class="text-sm opacity-70">${u.email}</p>
+              ${badges}
+            </div>
+          </div>
+
+          <div class="flex border-t">
+
+  <button
+    class="flex-1 h-12 text-purple-600 font-bold"
+    onclick="sendToLegal('${u.id}')">
+    Send to Legal
+  </button>
+
+  <button
+    class="flex-1 h-12 text-soft-yellow font-bold border-l"
+    onclick="suspendUser('${u.id}')">
+    Suspend
+  </button>
+
+  <button
+    class="flex-1 h-12 text-soft-red font-bold border-l"
+    onclick="deleteUser('${u.id}')">
+    Close Account
+  </button>
+
+</div>
+
+    `
+  })
+}
+
+/* ================= INIT ================= */
+
+window.addEventListener("DOMContentLoaded", loadProfiles)
+
+window.suspendUser = suspendUser
+window.deleteUser = deleteUser
+window.sendToLegal = sendToLegal
+
+
+let reportType = "account"
+
+function setReportType(type) {
+  reportType = type
+
+  const acc = document.getElementById("btnReportAccount")
+  const post = document.getElementById("btnReportPost")
+
+  if (type === "account") {
+    acc.classList.add("bg-primary", "text-white")
+    acc.classList.remove("text-black")
+
+    post.classList.remove("bg-primary", "text-white")
+    post.classList.add("text-black")
+  } else {
+    post.classList.add("bg-primary", "text-white")
+    post.classList.remove("text-black")
+
+    acc.classList.remove("bg-primary", "text-white")
+    acc.classList.add("text-black")
+  }
+
+  loadReports()
+}
+
+
+
+
+
+async function loadReports() {
+
+  let query = supabase
+    .from("reports")
+    .select(`
+      report_id,
+      jobpost_id,
+      topic,
+      description,
+      created_at,
+      status,
+
+      jobposts (
+        jobpost_id,
+        workplace_name
+      ),
+
+      reporter:reporter_profile_id (
+        first_name,
+        last_name,
+        email
+      ),
+
+      reported:reported_profile_id (
+        first_name,
+        last_name,
+        email
+      )
+    `)
+    .order("created_at", { ascending: false })
+
+  /* ================= FILTER TYPE ================= */
+
+  if (reportType === "account") {
+    query = query.is("jobpost_id", null)
+  }
+
+  if (reportType === "post") {
+    query = query.not("jobpost_id", "is", null)
+  }
+
+  const { data, error } = await query
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  renderReports(data)
+}
+/* ================= REPORT STATUS ================= */
+
+async function sendReportToLegal(id) {
+
+  const { data, error: fetchErr } = await supabase
+    .from("reports")
+    .select("status")
+    .eq("report_id", id)
+    .single()
+
+  if (fetchErr) return console.error(fetchErr)
+
+  let current = data.status ?? []
+
+  // ensure Pending exists
+  if (!current.includes("Pending")) current.push("Pending")
+
+  // add Legal
+  if (!current.includes("Legal")) current.push("Legal")
+
+  const { error } = await supabase
+    .from("reports")
+    .update({ status: current })
+    .eq("report_id", id)
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  loadReports()
+}
+
+
+
+
+async function resolveReport(id) {
+
+  const { error } = await supabase
+    .from("reports")
+    .update({
+      status: ["Resolved"]
+    })
+    .eq("report_id", id)
+
+  if (error) {
+    console.error(error)
+    alert("Update failed")
+    return
+  }
+
+  loadReports()
+}
+
+
+window.sendReportToLegal = sendReportToLegal
+window.resolveReport = resolveReport
+
+function renderReportBadge(statusArr = []) {
+
+  if (!statusArr || statusArr.length === 0) return ""
+
+  let badges = []
+
+  if (statusArr.includes("Pending")) {
+    badges.push(`
+      <span class="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-600 text-xs font-semibold">
+        Pending
+      </span>
+    `)
+  }
+
+  if (statusArr.includes("Legal")) {
+    badges.push(`
+      <span class="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-700 text-xs font-semibold">
+        Legal
+      </span>
+    `)
+  }
+
+  if (statusArr.includes("Resolved")) {
+    badges.push(`
+      <span class="px-2 py-0.5 rounded-full bg-green-500/20 text-green-700 text-xs font-semibold">
+        Resolved
+      </span>
+    `)
+  }
+
+  return `
+    <div class="flex gap-2 flex-wrap">
+      ${badges.join("")}
+    </div>
+  `
+}
+
+function renderReports(list) {
+
+  const box = document.getElementById("report-list")
+  box.innerHTML = ""
+
+  if (!list.length) {
+    box.innerHTML = `<p class="text-center opacity-50">No reports</p>`
+    return
+  }
+
+  list.forEach(r => {
+
+    const isPost = r.jobpost_id !== null
+
+    box.innerHTML += `
+      <div class="bg-white rounded-xl shadow p-4 flex flex-col gap-2">
+
+        <div class="flex justify-between items-center">
+  <div class="font-bold">${r.topic}</div>
+  ${renderReportBadge(r.status)}
+</div>
+
+
+        <div class="text-sm opacity-70">${r.description}</div>
+
+        <div class="text-xs text-gray-400">
+          ${new Date(r.created_at).toLocaleString()}
+        </div>
+
+        ${
+          isPost
+            ? `<div class="text-sm font-semibold">
+                 Post: ${r.jobposts?.workplace_name ?? "-"}
+               </div>`
+            : `<div class="text-sm font-semibold">
+                 Account: ${r.reported?.first_name ?? ""} ${r.reported?.last_name ?? ""}
+               </div>`
+        }
+
+        <div class="text-sm">
+          Reporter: ${r.reporter?.first_name ?? ""} ${r.reporter?.last_name ?? ""}
+        </div>
+
+        <div class="flex gap-2 mt-2">
+
+  <button
+    class="flex-1 h-9 rounded-full bg-purple-500/20 text-purple-700 font-bold"
+    onclick="sendReportToLegal(${r.report_id})">
+    Send to Legal
+  </button>
+
+  <button
+    class="flex-1 h-9 rounded-full bg-green-500/20 text-green-700 font-bold"
+    onclick="resolveReport(${r.report_id})">
+    Resolved
+  </button>
+
+</div>
+
+
+      </div>
+    `
+  })
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadProfiles()
+  loadReports()
+})
+window.setReportType = setReportType
+
+
+
+</script>
+
+</body>
+
+</html>

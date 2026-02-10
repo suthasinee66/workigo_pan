@@ -103,6 +103,17 @@
       </div>
     </section>
 
+    <section class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="font-semibold">Firstname</label>
+        <input id="firstname" type="text" class="w-full rounded-xl border p-3 mt-2" placeholder="Your firstname" />
+      </div>
+      </div>
+      <div>
+        <label class="font-semibold">Lastname</label>
+        <input id="lastname" type="text" class="w-full rounded-xl border p-3 mt-2" placeholder="Your lastname" />
+      </div>
+    </section>
 
     <!-- BIO -->
     <section>
@@ -136,23 +147,30 @@
     <section>
       <h2 class="text-xl font-bold">Top Skills</h2>
       <div class="flex flex-wrap gap-2 mt-3">
-        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Cashier">Cashier</span>
-        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Barista">Barista</span>
-        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Food Prep">Food
-          Prep</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Customer Service Mindset">Customer
+          Service Mindset</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Problem Solving">Problem Solving
+        </span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Time Management">Time Management</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Machine Operation">Machine Operation</span>
         <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer"
-          data-skill="Customer Service">Customer Service</span>
-      </div>
-    </section>
-
-    <!-- JOB TYPES -->
-    <section>
-      <h2 class="text-xl font-bold">Job Types</h2>
-      <div class="grid grid-cols-2 gap-3 mt-3">
-        <button class="job selectable border rounded-xl p-4" data-job="Retail">Retail</button>
-        <button class="job selectable border rounded-xl p-4" data-job="Hospitality">Hospitality</button>
-        <button class="job selectable border rounded-xl p-4" data-job="Delivery">Delivery</button>
-        <button class="job selectable border rounded-xl p-4" data-job="Events">Events</button>
+          data-skill="Quality Control">Quality Control</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Safety Awareness">Safety Awareness</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Route Planning">Route Planning</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Vehicle Maintenance">Vehicle Maintenance</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Punctuality">Punctuality</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Document Management">Document Management</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Communication Skills">Communication Skills</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Basic Computer Skills">Basic Computer Skills</span>
+        
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer"
+          data-skill="Negotiation">Negotiation</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer"
+          data-skill="Persuasion">Persuasion</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Relationship Building">Relationship Building</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Programming Basics">Programming Basics</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="System Troubleshooting">System Troubleshooting</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Database Management">Database Management</span>
       </div>
     </section>
 
@@ -263,107 +281,111 @@
     const submitBtn = document.getElementById("submitBtn")
 
     submitBtn.addEventListener("click", async () => {
-  submitBtn.disabled = true
-  submitBtn.innerText = "Saving..."
+      submitBtn.disabled = true
+      submitBtn.innerText = "Saving..."
 
-  // ✅ ดึง user ที่ล็อกอิน
-  const { data: { user }, error: userError } = await supabase.auth.getUser()
-  if (userError || !user) {
-    alert("Please log in again")
-    location.href = "signin.html"
-    return
-  }
+      // ✅ ดึง user ที่ล็อกอิน
+      const { data: { user }, error: userError } = await supabase.auth.getUser()
+      if (userError || !user) {
+        alert("Please log in again")
+        location.href = "signin.html"
+        return
+      }
+      const firstname = document.getElementById("firstname").value.trim()
+      const lastname = document.getElementById("lastname").value.trim()
+      const bio = document.getElementById("bio").value.trim()
+      const phone = document.getElementById("phone").value.trim()
+      const gender = document.getElementById("gender").value
+      const birth_date = document.getElementById("dob").value || null
 
-  const job_seeker_id = "JS_" + user.id
-  const bio = document.getElementById("bio").value.trim()
-  const phone = document.getElementById("phone").value.trim()
-  const gender = document.getElementById("gender").value
-  const birth_date = document.getElementById("dob").value || null
+      const skills = [...document.querySelectorAll(".skill.active")]
+        .map(el => el.dataset.skill)
 
-  const skills = [...document.querySelectorAll(".skill.active")]
-    .map(el => el.dataset.skill)
 
-  const job_types = [...document.querySelectorAll(".job.active")]
-    .map(el => el.dataset.job)
+      const availability = {}
+      document.querySelectorAll(".availability.active").forEach(el => {
+        const d = el.dataset.day
+        const t = el.dataset.time
+        if (!availability[d]) availability[d] = []
+        availability[d].push(t)
+      })
 
-  const availability = {}
-  document.querySelectorAll(".availability.active").forEach(el => {
-    const d = el.dataset.day
-    const t = el.dataset.time
-    if (!availability[d]) availability[d] = []
-    availability[d].push(t)
-  })
+      // ===== UPLOAD AVATAR =====
+      let avatar_url = null
 
-  // ===== UPLOAD AVATAR =====
-  let avatar_url = null
-  if (avatarFile) {
-    avatarLoading.classList.remove("hidden")
+      if (avatarFile) {
+        avatarLoading.classList.remove("hidden")
 
-    const ext = avatarFile.name.split(".").pop()
-    const filePath = `avatars/${user.id}.${ext}`
+        const ext = avatarFile.name.split(".").pop()
+        const filePath = `${user.id}/avatar.jpg`
 
-    const { error: uploadError } = await supabase.storage
-      .from("avatars")
-      .upload(filePath, avatarFile, { upsert: true })
+        const { error: uploadError } = await supabase.storage
+          .from("profile-avatars")
+          .upload(filePath, avatarFile, { upsert: true })
 
-    avatarLoading.classList.add("hidden")
+        avatarLoading.classList.add("hidden")
 
-    if (uploadError) {
-      alert(uploadError.message)
-      submitBtn.disabled = false
-      submitBtn.innerText = "Complete Profile"
-      return
-    }
+        if (uploadError) {
+          alert(uploadError.message)
+          submitBtn.disabled = false
+          submitBtn.innerText = "Complete Profile"
+          return
+        }
 
-    avatar_url = supabase.storage
-      .from("avatars")
-      .getPublicUrl(filePath).data.publicUrl
-  }
+        avatar_url = supabase.storage
+          .from("profile-avatars")
+          .getPublicUrl(filePath).data.publicUrl
+      }
+      // ===== SAVE JOB SEEKERS (RLS friendly) =====
+      const { data, error: jobSeekerError } = await supabase
+        .from("job_seekers")
+        .upsert({
+          user_id: user.id,
+          avatar_url,
+          bio,
+          gender,
+          birth_date,
+          skills,
+          availability,
 
-  // ===== SAVE PROFILES (RLS friendly) =====
-  const { error: profileError } = await supabase
-    .from("profiles")
-    .upsert({
-      id: user.id, // ต้องตรงกับ auth.uid()
-      phone_number: phone,
-      role: "jobseeker",
-      role_id: 2,
-      birth_date,
-      avatar_url
+          onboarding_completed: true
+        },
+          {
+            onConflict: "user_id" // ⭐ สำคัญมาก
+          })
+        .select()
+
+      console.log("job_seekers data", data)
+      console.log("job_seekers error", jobSeekerError)
+      // ✅ update role ใน profiles
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .update({
+          role_id: 2,
+          first_name: firstname,
+          last_name: lastname,
+          phone_number: phone,
+          avatar_url: avatar_url,
+          birth_date: birth_date
+        })
+        .eq("id", user.id)
+
+      if (profileError) {
+        alert("Profile update error: " + profileError.message)
+        submitBtn.disabled = false
+        submitBtn.innerText = "Complete Profile"
+        return
+      }
+      if (jobSeekerError) {
+        alert("Job seeker save error: " + jobSeekerError.message)
+        submitBtn.disabled = false
+        submitBtn.innerText = "Complete Profile"
+        return
+      }
+
+
+      location.href = "job_seeker_home.html"
     })
-
-  if (profileError) {
-    alert("Profile save error: " + profileError.message)
-    submitBtn.disabled = false
-    submitBtn.innerText = "Complete Profile"
-    return
-  }
-
-  // ===== SAVE JOB SEEKERS (RLS friendly) =====
-  const { error: jobSeekerError } = await supabase
-    .from("job_seekers")
-    .upsert({
-      job_seeker_id,
-      user_id: user.id,
-      avatar_url,
-      bio,
-      gender,
-      birth_date,
-      skills,
-      job_types,
-      availability,
-      onboarding_completed: true
-    })
-
-  if (jobSeekerError) {
-    alert("Job seeker save error: " + jobSeekerError.message)
-    submitBtn.disabled = false
-    submitBtn.innerText = "Complete Profile"
-    return
-  }
-
-  location.href = "job_seeker_home.html"
-})
 
   </script>
 

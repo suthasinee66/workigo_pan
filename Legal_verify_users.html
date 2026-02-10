@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>User Verification</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "pending": "#FF6A00",
+                        "approved": "#10b981",
+                        "rejected": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100">
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+  <div class="flex items-center justify-between p-4 max-w-md mx-auto">
+    <div class="flex items-center gap-3">
+      <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+      <div>
+        <h1 class="text-sm font-bold">Legal Officer</h1>
+        <p class="text-[11px] text-slate-500">Job Post Review</p>
+      </div>
+    </div>
+    <button class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+      <span class="material-symbols-outlined">logout</span>
+    </button>
+  </div>
+</header>
+
+<main class="max-w-md mx-auto pb-20">
+
+<!-- ================= WELCOME ================= -->
+<section class="px-4 pt-6 pb-2">
+  <h2 class="text-2xl font-bold">User Verification</h2>
+</section>
+<div class="flex gap-2 px-4 pt-3">
+
+<button onclick="setFilter('all')" id="f-all"
+class="flex-1 bg-primary text-white rounded-lg py-2 text-sm">
+All
+</button>
+
+<button onclick="setFilter('jobseeker')" id="f-jobseeker"
+class="flex-1 border rounded-lg py-2 text-sm">
+Jobseeker
+</button>
+
+<button onclick="setFilter('employer')" id="f-employer"
+class="flex-1 border rounded-lg py-2 text-sm">
+Employer
+</button>
+
+</div>
+
+
+<main class="max-w-md mx-auto pb-20 px-4 pt-4">
+
+<div id="user-list" class="flex flex-col gap-4 px-4">
+
+<!-- MOCK USER -->
+<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
+
+<img src="https://i.pravatar.cc/80?img=12" class="w-12 h-12 rounded-full"/>
+
+<div class="flex-1">
+  <p class="font-bold">Sarah Johnson</p>
+  <p class="text-xs text-slate-500">sarah@gmail.com</p>
+
+  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-600">
+    Pending
+  </span>
+
+  <div class="flex gap-2 mt-3">
+    <button class="flex-1 bg-primary text-white rounded-lg py-1.5 text-sm font-semibold">
+      Verify
+    </button>
+
+    <button class="flex-1 border rounded-lg py-1.5 text-sm">
+      Reject
+    </button>
+  </div>
+</div>
+
+</div>
+
+<!-- MOCK USER -->
+<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
+
+<img src="https://i.pravatar.cc/80?img=32" class="w-12 h-12 rounded-full"/>
+
+<div class="flex-1">
+  <p class="font-bold">Michael Cafe</p>
+  <p class="text-xs text-slate-500">michael@mail.com</p>
+
+  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-600">
+    Verified
+  </span>
+
+</div>
+</div>
+
+<!-- MOCK USER -->
+<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
+
+<img src="https://i.pravatar.cc/80?img=5" class="w-12 h-12 rounded-full"/>
+
+<div class="flex-1">
+  <p class="font-bold">Anna Smith</p>
+  <p class="text-xs text-slate-500">anna@mail.com</p>
+
+  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-600">
+    Rejected
+  </span>
+
+</div>
+</div>
+
+</div>
+<div id="user-detail" class="hidden space-y-4">
+
+<button onclick="backToList()" class="flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined">arrow_back</span>
+Back
+</button>
+
+<!-- profile -->
+<div class="bg-white rounded-xl border p-4 flex gap-3">
+
+<img id="detail-avatar"
+src="https://i.pravatar.cc/100"
+class="w-16 h-16 rounded-full">
+
+<div>
+<p id="detail-name" class="font-bold text-lg"></p>
+<p id="detail-email" class="text-sm text-slate-500"></p>
+
+<span id="detail-status"
+class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-600">
+Pending
+</span>
+</div>
+
+</div>
+<!-- personal info -->
+<div class="bg-white rounded-xl border p-4 space-y-2">
+
+<p class="font-bold mb-1">Personal Information</p>
+
+<div class="text-sm">
+<p><span class="text-slate-500">Citizen ID:</span> <span id="detail-citizen"></span></p>
+<p><span class="text-slate-500">Date of Birth:</span> <span id="detail-dob"></span></p>
+<p><span class="text-slate-500">Phone:</span> <span id="detail-phone"></span></p>
+<p><span class="text-slate-500">Address:</span> <span id="detail-address"></span></p>
+</div>
+
+</div>
+
+<!-- Face -->
+<div class="bg-white rounded-xl border p-4">
+
+<p class="font-bold mb-2">Face Photo</p>
+
+<img
+id="detail-face"
+class="rounded-lg border w-full object-cover">
+
+</div>
+
+<!-- ID Card -->
+<div class="bg-white rounded-xl border p-4">
+
+<p class="font-bold mb-2">National ID Card</p>
+
+<img
+id="detail-idcard"
+class="rounded-lg border w-full">
+
+</div>
+
+
+<!-- actions -->
+<div class="flex gap-3">
+
+<button onclick="approveUser()"
+class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-xl py-3 font-semibold transition">
+Verify
+</button>
+
+<button onclick="rejectUser()"
+class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-xl py-3 font-semibold transition">
+Reject
+</button>
+
+</div>
+
+
+</div>
+
+
+
+</main>
+
+<!-- ===== Bottom Nav ===== -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t">
+<div class="max-w-md mx-auto flex">
+
+<button onclick="location.href='Legal_management_post.html'" class="flex-1 py-3 flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">work</span>
+<span class="text-xs">Job Approvals</span>
+</button>
+
+<button class="flex-1 py-3 flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="text-xs">User Verification</span>
+</button>
+
+<button onclick="location.href='Legal_user_add_report.html'" class="flex-1 py-3 flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">report</span>
+<span class="text-xs">Users & Reports</span>
+</button>
+
+</div>
+</nav>
+
+<script>
+
+const USERS = [
+{
+name:"Sarah Johnson",
+email:"sarah@gmail.com",
+avatar:"https://i.pravatar.cc/150?img=12",
+idcard:"https://image.mfa.go.th/mfa/0/91fPdh6NtO/Consular-Services/%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B3%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2/Thai_ID_Card_Mockup.png",
+status:"Pending",
+citizen:"1234567890123",
+dob:"1998-05-12",
+phone:"089-123-4567",
+address:"Bangkok, Thailand",
+face:"https://clipart-library.com/2024/cartoon-boy-images/cartoon-boy-images-15.webp",
+role:"jobseeker",
+},
+{
+name:"Michael Cafe",
+email:"michael@mail.com",
+avatar:"https://i.pravatar.cc/150?img=32",
+idcard:"https://image.mfa.go.th/mfa/0/91fPdh6NtO/Consular-Services/%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B3%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2/Thai_ID_Card_Mockup.png",
+status:"Verified",
+citizen:"9876543210987",
+dob:"1995-02-20",
+phone:"081-555-8899",
+address:"Chiang Mai, Thailand",
+face:"https://clipart-library.com/2024/face-cartoon/face-cartoon-9.webp",
+role:"employer",
+},
+{
+name:"Anna Smith",
+email:"anna@mail.com",
+avatar:"https://i.pravatar.cc/150?img=5",
+idcard:"https://image.mfa.go.th/mfa/0/91fPdh6NtO/Consular-Services/%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%B3%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2/Thai_ID_Card_Mockup.png",
+status:"Rejected",
+citizen:"5556667778889",
+dob:"2000-11-03",
+phone:"092-444-2211",
+address:"Phuket, Thailand",
+face:"https://img.favpng.com/11/15/23/3d-girl-avatar-cute-animated-girl-with-braided-hair-mb7TQiRH.jpg",
+role:"jobseeker",
+}
+
+];
+
+
+const list = document.getElementById("user-list");
+const detail = document.getElementById("user-detail");
+
+list.innerHTML="";
+
+let currentFilter="all";
+
+function renderUsers(){
+
+list.innerHTML="";
+
+USERS
+.filter(u=> currentFilter==="all" ? true : u.role===currentFilter)
+.forEach(u=>{
+
+const div=document.createElement("div");
+
+div.className="bg-white rounded-xl border p-4 flex gap-3 cursor-pointer";
+
+const roleBadge =
+u.role==="jobseeker"
+? `<span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">Jobseeker</span>`
+: `<span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">Employer</span>`;
+
+const statusColor =
+u.status==="Verified" ? "bg-green-100 text-green-600" :
+u.status==="Rejected" ? "bg-red-100 text-red-600" :
+"bg-orange-100 text-orange-600";
+
+div.innerHTML=`
+<img src="${u.avatar}" class="w-12 h-12 rounded-full">
+
+<div class="flex-1">
+<p class="font-bold">${u.name}</p>
+<p class="text-xs text-slate-500">${u.email}</p>
+
+<div class="flex gap-2 mt-1">
+<span class="text-xs ${statusColor} px-2 py-0.5 rounded-full">${u.status}</span>
+${roleBadge}
+</div>
+
+</div>
+`;
+
+div.onclick=()=>openUser(u);
+
+list.appendChild(div);
+
+});
+
+}
+
+renderUsers();
+;
+function setFilter(type){
+
+currentFilter=type;
+
+document.querySelectorAll("[id^='f-']").forEach(b=>{
+b.className="flex-1 border rounded-lg py-2 text-sm";
+});
+
+document.getElementById("f-"+type)
+.className="flex-1 bg-primary text-white rounded-lg py-2 text-sm";
+
+renderUsers();
+
+}
+
+function openUser(u){
+
+list.classList.add("hidden");
+detail.classList.remove("hidden");
+
+document.getElementById("detail-avatar").src=u.avatar;
+document.getElementById("detail-name").innerText=u.name;
+document.getElementById("detail-email").innerText=u.email;
+document.getElementById("detail-idcard").src=u.idcard;
+document.getElementById("detail-status").innerText=u.status;
+document.getElementById("detail-citizen").innerText=u.citizen;
+document.getElementById("detail-dob").innerText=u.dob;
+document.getElementById("detail-phone").innerText=u.phone;
+document.getElementById("detail-address").innerText=u.address;
+document.getElementById("detail-face").src=u.face;
+
+
+}
+
+function backToList(){
+detail.classList.add("hidden");
+list.classList.remove("hidden");
+}
+
+function approveUser(){
+
+const badge = document.getElementById("detail-status");
+
+badge.innerText = "Verified";
+
+badge.className =
+"inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-600";
+
+}
+
+function rejectUser(){
+
+const badge = document.getElementById("detail-status");
+
+badge.innerText = "Rejected";
+
+badge.className =
+"inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-600";
+
+}
+
+
+</script>
+
+
+<script type="module">
+const supabase = window.supabase.createClient(
+"https://ispbevvwwggbktfczmui.supabase.co",
+"sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+const list = document.getElementById("user-list");
+
+async function loadUsers(){
+
+const { data } = await supabase
+.from("profiles")
+.select("id,full_name,profile_status");
+
+data?.forEach(u=>{
+const div=document.createElement("div");
+div.className="bg-white border rounded-xl p-4";
+
+div.innerHTML=`
+<p class="font-bold">${u.full_name ?? "-"}</p>
+<p class="text-sm text-slate-500">${u.profile_status}</p>
+`;
+
+list.appendChild(div);
+});
+}
+
+loadUsers();
+</script>
+
+</body>
+</html>

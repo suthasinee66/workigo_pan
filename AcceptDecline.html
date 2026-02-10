@@ -38,15 +38,11 @@
       <button onclick="history.back()">
         <span class="material-symbols-outlined">arrow_back_ios_new</span>
       </button>
-      <h2 class="font-bold">Manage: Barista</h2>
+      <h2 id="job-title" class="font-bold">Manage</h2>
       <span class="material-symbols-outlined">more_horiz</span>
     </div>
 
     <main class="flex-grow pb-24">
-      <div class="p-4 grid grid-cols-2 gap-3">
-        <button class="h-12 bg-primary/20 text-primary rounded-lg">Edit Post</button>
-        <button class="h-12 bg-accent/20 text-accent rounded-lg">Close Post</button>
-      </div>
 
       <h2 class="text-xl font-bold px-4 pb-3 pt-5">
         Applicants (<span id="count">0</span>)
@@ -60,7 +56,7 @@
 const SUPABASE_URL = "https://ispbevvwwggbktfczmui.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzcGJldnZ3d2dnYmt0ZmN6bXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MTI1MDcsImV4cCI6MjA4MDA4ODUwN30.hMjTylGyabNAmySdJwduGgfOqnFTaTqJ4VwrRroKj-w";
 
-const jobpostId = 22;
+const jobpostId = 58;
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function renderAvailability(avail = {}) {
@@ -98,6 +94,22 @@ function renderAvailability(avail = {}) {
     </div>
   `;
 }
+async function loadJobTitle() {
+  const { data, error } = await sb
+    .from("jobposts")
+    .select("job_description")
+    .eq("jobpost_id", jobpostId)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  document.getElementById("job-title").innerText =
+    "Manage: " + (data.job_description || "");
+}
+
 
 async function loadApplicants() {
   const { data, error } = await sb
@@ -172,7 +184,9 @@ async function updateStatus(id, status) {
   loadApplicants();
 }
 
+loadJobTitle();
 loadApplicants();
+
 </script>
 </body>
 </html>

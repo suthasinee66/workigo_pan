@@ -129,12 +129,14 @@
         window.location.href = "signin.html";
         return;
       }
+      
 
       const { data: profile } = await supabaseClient
         .from("profiles")
         .select("first_name")
         .eq("id", user.id)
         .single();
+        
 
       const { data: seeker } = await supabaseClient
         .from("job_seekers")

@@ -134,8 +134,12 @@ window.googleLogin = async () => {
 supabase.auth.onAuthStateChange(async (event, session) => {
   console.log("AUTH EVENT:", event)
   console.log("SESSION:", session)
+  console.log("AUTH EVENT:", event)
+  console.log("SESSION:", session)
+  console.log("USER:", session?.user)
 
   const user = session?.user
+  
 
   if (
     (event === "SIGNED_IN" || event === "INITIAL_SESSION") &&
