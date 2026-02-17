@@ -192,36 +192,63 @@
       const container = document.getElementById("recommended-list");
 
       const { data } = await supabaseClient
-        .from("jobposts")
-        .select("jobpost_id, job_title, workplace_name, address, wage_amount, wage_type, workers_needed")
-        .eq("approval_status", "Approved")
-        .order("created_at", { ascending: false });
-
-      container.innerHTML = "";
+  .from("jobposts")
+  .select(`
+    jobpost_id,
+    job_title,
+    employer_id,
+    workplace_name,
+    address,
+    wage_amount,
+    workers_needed,
+    geographies_id,
+    province_id,
+    district_id,
+    sub_district_id,
+    employers!jobposts_employer_id_fkey (
+      store_image_url
+    )
+  `)
+  .eq("approval_status", "Approved");
 
       data?.forEach(job => {
-        const card = document.createElement("div");
-        card.className = "rounded-xl bg-white shadow cursor-pointer";
-        card.onclick = () =>
-          window.location.href = `job_details.html?id=${job.jobpost_id}`;
+        console.log({
+  employer_id: job.employer_id,
+  employers: job.employers
+});
+  const card = document.createElement("div");
+  card.className = "rounded-xl bg-white shadow cursor-pointer";
+  card.onclick = () =>
+    window.location.href = `job_details.html?id=${job.jobpost_id}`;
 
-        card.innerHTML = `
-          <div class="p-4 flex gap-3">
-            <div class="h-16 w-16 bg-gray-200 rounded-lg flex items-center justify-center">
-              <span class="material-symbols-outlined text-gray-400 text-3xl">store</span>
-            </div>
-            <div class="flex-1">
-              <p class="text-sm font-bold">${job.job_title}</p>
-              <p class="text-xs text-gray-500">${job.workplace_name}</p>
-              <p class="text-xs text-gray-400 mt-1">📍 ${job.address ?? "ไม่ระบุที่อยู่"}</p>
-              <p class="mt-1 text-sm font-bold text-emerald-600">
-                ${job.wage_amount} / ${job.wage_type}
-              </p>
-              <p class="text-xs text-gray-400">ต้องการ ${job.workers_needed} คน</p>
-            </div>
-          </div>`;
-        container.appendChild(card);
-      });
+  const imageUrl =
+  job.employers?.store_image_url ||
+  "https://placehold.co/64x64?text=Shop";
+
+  card.innerHTML = `
+    <div class="p-4 flex gap-3">
+      <!-- STORE IMAGE -->
+      <img
+  src="${imageUrl}"
+  class="h-16 w-16 rounded-lg object-cover border bg-gray-100"
+  alt="Store"
+/>
+
+      <div class="flex-1">
+        <p class="text-sm font-bold">${job.job_title}</p>
+        <p class="text-xs text-gray-500">${job.workplace_name}</p>
+        <p class="text-xs text-gray-400 mt-1">📍 ${job.address ?? "ไม่ระบุที่อยู่"}</p>
+        <p class="mt-1 text-sm font-bold text-emerald-600">
+          ${job.wage_amount} / ชม.
+        </p>
+        <p class="text-xs text-gray-400">
+          ต้องการ ${job.workers_needed} คน
+        </p>
+      </div>
+    </div>
+  `;
+  container.appendChild(card);
+});
     }
 
     loadProfile();

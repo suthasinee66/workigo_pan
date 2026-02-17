@@ -149,6 +149,20 @@ const supabase = window.supabase.createClient(
 const { data:{ user } } = await supabase.auth.getUser();
 if (!user) location.href = "signin.html";
 
+async function getLcoId(userId) {
+  const { data, error } = await supabase
+    .from("legal_compliance_officers")
+    .select("lco_id")
+    .eq("profile_id", userId)
+    .single();
+
+  if (error || !data) {
+    throw new Error("User is not a Legal Compliance Officer");
+  }
+
+  return data.lco_id;
+}
+
 /* GET ID */
 const jobId = new URLSearchParams(location.search).get("id");
 if (!jobId) history.back();
@@ -158,7 +172,14 @@ const el = id => document.getElementById(id);
 /* LOAD JOB */
 const { data, error } = await supabase
   .from("jobposts")
-  .select("*")
+  .select(`
+    *,
+    job_types!jobposts_job_type_id_fkey ( job_type ),
+
+    provinces!jobposts_province_id_fkey ( name_th ),
+    districts!jobposts_district_id_fkey ( name_th ),
+    sub_districts!jobposts_sub_district_id_fkey ( name_th )
+  `)
   .eq("jobpost_id", jobId)
   .single();
 
@@ -166,14 +187,25 @@ if (error) alert(error.message);
 
 el("employerName").textContent = data.workplace_name ?? "-";
 el("jobTitle").textContent = data.job_title ?? "-";
-el("jobType").textContent = data.work_time_type ?? "-";
-el("wage").textContent = data.wage_amount ? `${data.wage_amount} (${data.wage_type})` : "-";
-el("address").textContent = data.address ?? "-";
+el("jobType").textContent = data.job_types?.job_type ?? "-";
+el("wage").textContent = data.wage_amount ? `${data.wage_amount} บาท / ชม.` : "-";
+el("address").textContent = `
+${data.address ?? ""}
+ต.${data.sub_districts?.name_th ?? "-"}
+อ.${data.districts?.name_th ?? "-"}
+จ.${data.provinces?.name_th ?? "-"}
+${data.zip_code ?? ""}
+`;
 el("jobDescription").textContent = data.job_description ?? "-";
 
 el("workers").textContent = data.workers_needed ?? "-";
 el("gender").textContent = data.gender_requirement ?? "-";
-el("age").textContent = data.age_requirement ?? "-";
+if (data.age_requirement) {
+  el("age").textContent =
+    `${data.age_requirement.from ?? "-"} - ${data.age_requirement.to ?? "-"}`;
+} else {
+  el("age").textContent = "-";
+}
 el("payment").textContent = data.payment_method ?? "-";
 el("start_date").textContent = data.start_date ?? "-";
 el("end_date").textContent = data.end_date ?? "-";
@@ -184,21 +216,26 @@ el("appeal_comment").value = data.appeal_comment ?? "";
 
 /* ACTIONS */
 approveBtn.onclick = async () => {
-  const { error } = await supabase
-    .from("jobposts")
-    .update({
-      approval_status: "Approved",
-      approval_date: new Date()
-    })
-    .eq("jobpost_id", jobId);
+  try {
+    const lcoId = await getLcoId(user.id);
 
-  if (error) {
-    alert(error.message);
-    return;
+    const { error } = await supabase
+      .from("jobposts")
+      .update({
+        approval_status: "Approved",
+        approval_date: new Date(),
+        lco_id: lcoId
+      })
+      .eq("jobpost_id", jobId);
+
+    if (error) throw error;
+
+    alert("Approved");
+    location.href = "Legal_management_post.html";
+
+  } catch (err) {
+    alert(err.message);
   }
-
-  alert("Approved");
-  location.href = "Legal_management_post.html";
 };
 
 
@@ -208,23 +245,27 @@ rejectBtn.onclick = async () => {
     return;
   }
 
-  const { error } = await supabase
-    .from("jobposts")
-    .update({
-      approval_status: "Rejected",
-      approval_date: new Date(),
-      appeal_comment: appeal_comment.value
-    })
-    .eq("jobpost_id", jobId);
+  try {
+    const lcoId = await getLcoId(user.id);
 
-  if (error) {
-    console.error(error);
-    alert(error.message);
-    return;
+    const { error } = await supabase
+      .from("jobposts")
+      .update({
+        approval_status: "Rejected",
+        approval_date: new Date(),
+        appeal_comment: appeal_comment.value,
+        lco_id: lcoId
+      })
+      .eq("jobpost_id", jobId);
+
+    if (error) throw error;
+
+    alert("Rejected");
+    location.href = "Legal_management_post.html";
+
+  } catch (err) {
+    alert(err.message);
   }
-
-  alert("Rejected");
-  location.href = "Legal_management_post.html";
 };
 
 </script>

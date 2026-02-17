@@ -89,22 +89,13 @@
               class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
               placeholder="e.g. Barista" value="" />
           </label>
-          <label class="flex flex-col">
-            <p class="text-base font-medium text-[#181410] pb-2">Work time type</p>
-            <select id="work_time_type"
-              class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
-              <option value="">Select work time type</option>
-              <option value="daily">Daily</option>
-              <option value="hourly">Hourly</option>
-              <option value="part-time">Part-time</option>
-              <option value="full-time">Full-time</option>
-            </select>
-          </label>
+
           <label class="flex flex-col">
             <p class="text-base font-medium text-[#181410] pb-2">Job type</p>
-            <select id="job_type" class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">>
-  <option value="">Select job type</option>
-</select>
+            <select id="job_type"
+              class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">>
+              <option value="">Select job type</option>
+            </select>
 
           </label>
           <label class="flex flex-col">
@@ -140,14 +131,132 @@
 
             <div class="grid grid-cols-2 gap-3">
               <select id="gender_requirement" class="form-select h-14 rounded-lg border-gray-200">
-                <option value="">Any gender</option>
+                <option value="Any">Any</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="Other">Other</option>
               </select>
 
-              <input id="age_requirement" class="form-input h-14 rounded-lg border-gray-200"
-                placeholder="e.g. 18+, 20-35" />
+              <!-- Age range -->
+              <div class="grid grid-cols-2 gap-2">
+                <section id="age_requirement" class="flex gap-2">
+                  <select id="age_from" class="form-select h-14 rounded-lg border-gray-200">
+                    <option value="">From</option>
+                    <!-- 18 - 65 -->
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                    <option value="60">60</option>
+                    <option value="61">61</option>
+                    <option value="62">62</option>
+                    <option value="63">63</option>
+                    <option value="64">64</option>
+                    <option value="65">65</option>
+                    <option value="66">66</option>
+                    <option value="67">67</option>
+                    <option value="68">68</option>
+                    <option value="69">69</option>
+                    <option value="70">70</option>
+                  </select>
+
+                  <select id="age_to" class="form-select h-14 rounded-lg border-gray-200">
+                    <option value="">To</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                    <option value="60">60</option>
+                    <option value="61">61</option>
+                    <option value="62">62</option>
+                    <option value="63">63</option>
+                    <option value="64">64</option>
+                    <option value="65">65</option>
+                    <option value="66">66</option>
+                    <option value="67">67</option>
+                    <option value="68">68</option>
+                    <option value="69">69</option>
+                    <option value="70">70</option>
+                  </select>
+                </section>
+
+              </div>
             </div>
           </label>
 
@@ -158,20 +267,25 @@
         <h3 class="text-lg font-bold text-[#181410] mb-4">Payment</h3>
         <div class="grid grid-cols-2 gap-4">
           <label class="flex flex-col col-span-1">
-            <p class="text-base font-medium text-[#181410] pb-2">Wage type</p>
-            <select id="wage_type"
-              class="form-select w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 p-[15px] text-base font-normal leading-normal">
-              <option value="">Select</option>
-              <option value="daily">Daily</option>
-              <option value="hourly">Hourly</option>
-            </select>
+            <p class="text-base font-medium text-[#181410] pb-2">
+              Wage amount
+            </p>
+
+            <div class="flex items-center">
+              <input id="wage_amount" type="number" placeholder="e.g. 150" class="form-input flex-1 h-14 rounded-l-lg border border-gray-200
+             text-[#181410] placeholder:text-gray-400
+             focus:outline-none focus:ring-2 focus:ring-primary/50
+             p-[15px] text-base font-normal leading-normal" />
+
+              <span class="h-14 px-4 flex items-center
+             border border-l-0 border-gray-200
+             rounded-r-lg bg-gray-50
+             text-gray-600 text-base">
+                /Hour
+              </span>
+            </div>
           </label>
-          <label class="flex flex-col col-span-1">
-            <p class="text-base font-medium text-[#181410] pb-2">Wage amount</p>
-            <input id="wage_amount"
-              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
-              placeholder="e.g. 150" type="number" />
-          </label>
+
         </div>
         <label class="flex flex-col mt-4">
           <p class="text-base font-medium text-[#181410] pb-2">Payment method</p>
@@ -198,12 +312,40 @@
             <input id="address"
               class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
               placeholder="Enter full address" value="" />
+
+
+          </label>
+          <label class="flex flex-col">
+  <p class="pb-2 font-medium">Province</p>
+  <select id="province" class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal">
+    <option value="">Select province</option>
+  </select>
+</label>
+
+<label class="flex flex-col">
+  <p class="pb-2 font-medium">District</p>
+  <select id="district" class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal">
+    <option value="">Select district</option>
+  </select>
+</label>
+
+<label class="flex flex-col">
+  <p class="pb-2 font-medium">Sub-district</p>
+  <select id="sub_district" class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#181410] focus:outline-none focus:ring-2 focus:ring-primary/50 border border-gray-200 bg-white h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal">
+    <option value="">Select sub-district</option>
+  </select>
+</label>
+
+<label class="flex flex-col">
+  <p class="pb-2 font-medium">Zip Code</p>
+  <input id="zip_code"
+    class="form-input flex w-full min-w-0 flex-1 rounded-lg border border-gray-200 bg-white h-14 p-[15px]"
+    readonly />
+</label>
             <button type="button" onclick="searchAddress()"
               class="mt-2 w-full h-10 rounded-lg bg-gray-800 text-white text-sm font-medium">
               📍 ค้นหาที่อยู่บนแผนที่
             </button>
-
-          </label>
           <div>
             <div class="aspect-[16/9] bg-gray-200 rounded-lg overflow-hidden mt-2">
               <div class="aspect-[16/9] bg-gray-200 rounded-lg overflow-hidden mt-2">
@@ -281,148 +423,302 @@
     <!-- Sticky Footer Action Bar -->
     <footer class="fixed bottom-0 left-0 right-0 z-10 bg-white/80 p-4 backdrop-blur-sm border-t border-gray-200">
       <div class="space-y-3">
-        <button onclick="goPreview()"
+        <button id="postJobBtn"
           class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 bg-primary text-white text-lg font-bold shadow-soft">
           Post Job
         </button>
     </footer>
   </div>
   <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-const supabase = createClient(
-  "https://ispbevvwwggbktfczmui.supabase.co",
-  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-);
+    const supabase = createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    );
 
-/* ================= URL PARAM ================= */
-const params = new URLSearchParams(location.search);
-const mode = params.get("mode");       // edit | null
-const jobpostId = params.get("id");
+    /* ================= URL PARAM ================= */
+    const params = new URLSearchParams(location.search);
+    const mode = params.get("mode");       // edit | null
+    const jobpostId = params.get("id");
 
-/* ================= LOAD JOB TYPES ================= */
-async function loadJobTypes() {
-  const { data } = await supabase
+    /* ================= LOAD JOB TYPES ================= */
+    async function loadJobTypes(selectedId = null) {
+  const { data, error } = await supabase
     .from("job_types")
     .select("job_type_id, job_type")
     .order("job_type");
 
-  const select = document.getElementById("job_type");
+  if (error) {
+    console.error("JobTypes error:", error);
+    return;
+  }
 
-  data.forEach(t => {
+  const select = document.getElementById("job_type");
+  select.innerHTML = `<option value="">Select job type</option>`;
+
+  (data || []).forEach(t => {
     const opt = document.createElement("option");
-    opt.value = t.job_type_id;   // FK
-    opt.textContent = t.job_type; // ชื่อ
+    opt.value = t.job_type_id;
+    opt.textContent = t.job_type;
+
+    if (selectedId && t.job_type_id === selectedId) {
+      opt.selected = true;
+    }
+
     select.appendChild(opt);
   });
 }
 
-await loadJobTypes();
+    await loadJobTypes();
 
+/* ================= LOAD JOB TYPES ================= */
+    async function loadProvinces(selectedId = null) {
+  const { data } = await supabase
+    .from("provinces")
+    .select("id, name_th")
+    .order("name_th");
 
-/* ================= MAP ================= */
-let map, marker;
-function placeMarker(lat, lng) {
-  if (marker) {
-    marker.setLatLng([lat, lng]);
-  } else {
-    marker = L.marker([lat, lng]).addTo(map);
-  }
-}
+  const select = document.getElementById("province");
+  select.innerHTML = `<option value="">Select province</option>`;
 
-function setLatLng(lat, lng) {
-  document.getElementById("latitude").value = lat;
-  document.getElementById("longitude").value = lng;
-}
+  data.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p.id;
+    opt.textContent = p.name_th;
 
+    if (selectedId && p.id === selectedId) {
+      opt.selected = true;
+    }
 
-function initMap(lat = 13.7563, lng = 100.5018) {
-  if (map) return; // 🔥 กันพัง
-
-  map = L.map("map").setView([lat, lng], 13);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap"
-  }).addTo(map);
-
-  map.on("click", e => {
-    placeMarker(e.latlng.lat, e.latlng.lng);
-    setLatLng(e.latlng.lat, e.latlng.lng);
+    select.appendChild(opt);
   });
 }
+    await loadProvinces();
 
-initMap();
-
-
-
-/* ================= EDIT MODE ================= */
-if (mode === "edit" && jobpostId) {
+async function loadDistricts(provinceId, selectedId = null) {
   const { data } = await supabase
-    .from("jobposts")
-    .select("*")
-    .eq("jobpost_id", jobpostId)
+    .from("districts")
+    .select("id, name_th")
+    .eq("province_id", provinceId)
+    .order("name_th");
+
+  const select = document.getElementById("district");
+  select.innerHTML = `<option value="">Select district</option>`;
+
+  document.getElementById("sub_district").innerHTML =
+    `<option value="">Select sub-district</option>`;
+
+  (data || []).forEach(d => {
+    const opt = document.createElement("option");
+    opt.value = d.id;
+    opt.textContent = d.name_th;
+
+    if (selectedId && d.id === selectedId) {
+      opt.selected = true;
+    }
+
+    select.appendChild(opt);
+  });
+}
+async function loadSubDistricts(districtId, selectedId = null) {
+  const { data } = await supabase
+    .from("sub_districts")
+    .select("id, name_th")
+    .eq("district_id", districtId)
+    .order("name_th");
+
+  const select = document.getElementById("sub_district");
+  select.innerHTML = `<option value="">Select sub-district</option>`;
+
+  (data || []).forEach(s => {
+    const opt = document.createElement("option");
+    opt.value = s.id;
+    opt.textContent = s.name_th;
+
+    if (selectedId && s.id === selectedId) {
+      opt.selected = true;
+    }
+
+    select.appendChild(opt);
+  });
+}
+async function loadZipCode(subDistrictId) {
+  if (!subDistrictId) return;
+
+  const { data } = await supabase
+    .from("sub_districts")
+    .select("zip_code")
+    .eq("id", subDistrictId)
     .single();
 
-  job_title.value = data.job_title;
-  job_description.value = data.job_description;
-  work_time_type.value = data.work_time_type;
-  job_type.value = data.job_type_id;
-  workers_needed.value = data.workers_needed;
-  qualifications.value = data.qualifications;
-  wage_type.value = data.wage_type;
-  wage_amount.value = data.wage_amount;
-  payment_method.value = data.payment_method;
-  workplace_name.value = data.workplace_name;
-  address.value = data.address;
-  age_requirement.value = data.age_requirement;
-  gender_requirement.value = data.gender_requirement;
-  start_date.value = data.start_date;
-  end_date.value = data.end_date;
-  start_time.value = data.start_time;
-  end_time.value = data.end_time;
-  contact_name.value = data.contact_name;
-  phone_number.value = data.phone_number;
-  latitude.value = data.latitude;
-  longitude.value =data.longitude;
-  contact_name.value = data.contact_name;
-
-
-  
-
-  map.setView([data.latitude, data.longitude], 15);
-  placeMarker(data.latitude, data.longitude);
+  if (data) {
+    document.getElementById("zip_code").value = data.zip_code;
+  }
 }
+document.getElementById("province").addEventListener("change", e => {
+  const provinceId = Number(e.target.value);
+  if (!provinceId) return;
+  loadDistricts(provinceId);
+});
+
+document.getElementById("district").addEventListener("change", e => {
+  const districtId = Number(e.target.value);
+  if (!districtId) return;
+  loadSubDistricts(districtId);
+});
+document.getElementById("sub_district").addEventListener("change", e => {
+  const subId = Number(e.target.value);
+  if (!subId) return;
+
+  loadZipCode(subId);
+});
+
+/* ================= MAP ================= */
+    let map, marker;
+    function placeMarker(lat, lng) {
+      if (marker) {
+        marker.setLatLng([lat, lng]);
+      } else {
+        marker = L.marker([lat, lng]).addTo(map);
+      }
+    }
+
+    function setLatLng(lat, lng) {
+      document.getElementById("latitude").value = lat;
+      document.getElementById("longitude").value = lng;
+    }
 
 
-/* ================= PREVIEW ================= */
-window.goPreview = function () {
+    function initMap(lat = 13.7563, lng = 100.5018) {
+      if (map) return; // 🔥 กันพัง
+
+      map = L.map("map").setView([lat, lng], 13);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap"
+      }).addTo(map);
+
+      map.on("click", e => {
+        placeMarker(e.latlng.lat, e.latlng.lng);
+        setLatLng(e.latlng.lat, e.latlng.lng);
+      });
+    }
+
+    initMap();
+
+
+
+    /* ================= EDIT MODE ================= */
+    if (mode === "edit" && jobpostId) {
+      const { data } = await supabase
+        .from("jobposts")
+        .select("*")
+        .eq("jobpost_id", jobpostId)
+        .single();
+
+      job_title.value = data.job_title;
+      job_description.value = data.job_description;
+      workers_needed.value = data.workers_needed;
+      qualifications.value = data.qualifications;
+      wage_amount.value = data.wage_amount;
+      payment_method.value = data.payment_method;
+      workplace_name.value = data.workplace_name;
+      address.value = data.address;
+      if (data.age_requirement) {
+        age_from.value = data.age_requirement.from ?? "";
+        age_to.value = data.age_requirement.to ?? "";
+      }
+      gender_requirement.value = data.gender_requirement;
+      start_date.value = data.start_date;
+      end_date.value = data.end_date;
+      start_time.value = data.start_time;
+      end_time.value = data.end_time;
+      contact_name.value = data.contact_name;
+      phone_number.value = data.phone_number;
+      latitude.value = data.latitude;
+      longitude.value = data.longitude;
+      contact_name.value = data.contact_name;
+
+
+
+
+      map.setView([data.latitude, data.longitude], 15);
+      placeMarker(data.latitude, data.longitude);
+      await loadJobTypes(data.job_type_id);
+      await loadProvinces(data.province_id);
+      await loadDistricts(data.province_id, data.district_id);
+      await loadSubDistricts(data.district_id, data.sub_district_id);
+      await loadZipCode(data.sub_district_id);
+    }
+
+
+    /* ================= PREVIEW ================= */
+
+    document
+      .getElementById("postJobBtn")
+      .addEventListener("click", goPreview);
+
+    function goPreview() {
+
   if (!latitude.value || !longitude.value) {
     alert("กรุณาปักหมุดสถานที่");
     return;
   }
 
+  const provinceEl = document.getElementById("province");
+  const districtEl = document.getElementById("district");
+  const subDistrictEl = document.getElementById("sub_district");
+  const zipEl = document.getElementById("zip_code");
+
+  const jobTypeSelect = document.getElementById("job_type");
+
   const draft = {
     job_title: job_title.value,
-    work_time_type: work_time_type.value,
-    job_type_id: Number(job_type.value),
+
+    job_type_id: Number(jobTypeSelect.value),
+    job_type_name:
+      jobTypeSelect.options[jobTypeSelect.selectedIndex]?.text || "",
+
     job_description: job_description.value,
     qualifications: qualifications.value,
     workers_needed: Number(workers_needed.value || 0),
-    wage_type: wage_type.value,
     wage_amount: wage_amount.value,
     payment_method: payment_method.value,
     workplace_name: workplace_name.value,
     address: address.value,
+
+    province_id: Number(provinceEl.value || null),
+    district_id: Number(districtEl.value || null),
+    sub_district_id: Number(subDistrictEl.value || null),
+
+    province_name:
+      provinceEl.options[provinceEl.selectedIndex]?.text || "",
+    district_name:
+      districtEl.options[districtEl.selectedIndex]?.text || "",
+    sub_district_name:
+      subDistrictEl.options[subDistrictEl.selectedIndex]?.text || "",
+
+    zip_code: zipEl.value,
+
     latitude: latitude.value,
     longitude: longitude.value,
-    age_requirement: age_requirement.value,
+
+    age_requirement:
+      age_from.value || age_to.value
+        ? {
+            from: age_from.value || null,
+            to: age_to.value || null
+          }
+        : null,
+
     gender_requirement: gender_requirement.value,
     start_date: start_date.value,
     end_date: end_date.value,
     start_time: start_time.value,
     end_time: end_time.value,
     phone_number: phone_number.value,
-    contact_name: contact_name.value
+    contact_name: contact_name.value,
   };
 
   localStorage.setItem("jobPostDraft", JSON.stringify(draft));
@@ -431,36 +727,101 @@ window.goPreview = function () {
     mode === "edit"
       ? `employer_post_job_preview.html?id=${jobpostId}&mode=edit`
       : `employer_post_job_preview.html`;
-};
+}
 
+    /* ================= SEARCH ADDRESS ================= */
+    window.searchAddress = async function () {
+  const provinceText =
+    province.options[province.selectedIndex]?.text || "";
+  const districtText =
+    district.options[district.selectedIndex]?.text || "";
+  const subDistrictText =
+    sub_district.options[sub_district.selectedIndex]?.text || "";
+  const zip = zip_code.value || "";
 
-/* ================= SEARCH ADDRESS ================= */
-window.searchAddress = async function () {
-  const q = address.value.trim();
-  if (!q) {
-    alert("กรุณากรอกที่อยู่");
+  if (!provinceText || !districtText || !subDistrictText) {
+    alert("กรุณาเลือก จังหวัด / อำเภอ / ตำบล ก่อนค้นหา");
     return;
   }
 
-  const res = await fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`
-  );
-  const data = await res.json();
+  // 🔥 ใช้ข้อมูลพื้นที่ล้วน ๆ
+  const fullQuery = `${subDistrictText} ${districtText} ${provinceText} ${zip} Thailand`;
 
-  if (!data.length) {
-    alert("ไม่พบที่อยู่");
-    return;
+  try {
+    const url =
+      "https://nominatim.openstreetmap.org/search?" +
+      new URLSearchParams({
+        format: "json",
+        limit: 1,
+        q: fullQuery,
+        countrycodes: "th",
+      });
+
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": "job-post-app"
+      }
+    });
+
+    const data = await res.json();
+
+    if (!data.length) {
+      alert("ไม่พบพิกัดพื้นที่นี้");
+      return;
+    }
+
+    const lat = parseFloat(data[0].lat);
+    const lng = parseFloat(data[0].lon);
+
+    map.setView([lat, lng], 15);
+    placeMarker(lat, lng);
+    setLatLng(lat, lng);
+
+  } catch (err) {
+    console.error(err);
+    alert("เกิดข้อผิดพลาดในการค้นหา");
   }
-
-  const lat = parseFloat(data[0].lat);
-  const lng = parseFloat(data[0].lon);
-
-  map.setView([lat, lng], 16);   // ✅ ถูก
-  placeMarker(lat, lng);
-  setLatLng(lat, lng);
 };
+    const draft = JSON.parse(localStorage.getItem("jobPostDraft"));
 
-</script>
+    if (draft) {
+      job_title.value = draft.job_title;
+      job_description.value = draft.job_description;
+      workers_needed.value = draft.workers_needed;
+      qualifications.value = draft.qualifications;
+      wage_amount.value = draft.wage_amount;
+      payment_method.value = draft.payment_method;
+      workplace_name.value = draft.workplace_name;
+      address.value = draft.address;
+      if (draft.age_requirement) {
+      age_from.value = draft.age_requirement.from ?? "";
+      age_to.value = draft.age_requirement.to ?? "";
+    }
+      gender_requirement.value = draft.gender_requirement ?? "Any";
+      start_date.value = draft.start_date;
+      end_date.value = draft.end_date;
+      start_time.value = draft.start_time;
+      end_time.value = draft.end_time;
+      phone_number.value = draft.phone_number;
+      contact_name.value = draft.contact_name;
+
+      await loadJobTypes(draft.job_type_id);
+      await loadProvinces(draft.province_id);
+      await loadDistricts(draft.province_id, draft.district_id);
+      await loadSubDistricts(draft.district_id, draft.sub_district_id);
+      await loadZipCode(draft.sub_district_id);
+
+      if (draft.latitude && draft.longitude) {
+        const lat = parseFloat(draft.latitude);
+        const lng = parseFloat(draft.longitude);
+
+        map.setView([lat, lng], 15);
+        placeMarker(lat, lng);
+        setLatLng(lat, lng);   // 🔥 ตัวนี้ห้ามลืม
+      }
+    }
+
+  </script>
 
 
 </body>

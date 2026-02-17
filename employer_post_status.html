@@ -224,29 +224,31 @@ if (!jobpostId) {
 const { data, error } = await supabase
   .from("jobposts")
   .select(`
-    jobpost_id,
-    job_title,
-    job_description,
-    approval_status,
-    appeal_comment,
-    qualifications,
-    age_requirement,
-    gender_requirement,
-    wage_type,
-    wage_amount,
-    payment_method,
-    workplace_name,
-    address,
-    start_date,
-    start_time,
-    end_time,
-    end_date,
-    work_time_type,
-    contact_name,
-    phone_number,
-    appeal_count
+  jobpost_id,
+  job_title,
+  job_description,
+  approval_status,
+  appeal_comment,
+  qualifications,
+  age_requirement,
+  gender_requirement,
+  wage_amount,
+  payment_method,
+  workplace_name,
+  address,
+  start_date,
+  start_time,
+  end_time,
+  end_date,
+  contact_name,
+  phone_number,
+  appeal_count,
+  zip_code,
 
-  `)
+  provinces!jobposts_province_id_fkey(name_th),
+  districts!jobposts_district_id_fkey(name_th),
+  sub_districts!jobposts_sub_district_id_fkey(name_th)
+`)
   .eq("jobpost_id", jobpostId)
   .single();
 
@@ -262,8 +264,15 @@ const set = (id, val) =>
 set("job-title", data.job_title);
 set("job-description", data.job_description);
 set("workplace-name", data.workplace_name);
-set("address", data.address);
-set("wage", `${data.wage_amount} / ${data.wage_type}`);
+set(
+  "address",
+  `${data.address || ""} 
+  ต.${data.sub_districts?.name_th || "-"} 
+  อ.${data.districts?.name_th || "-"} 
+  จ.${data.provinces?.name_th || "-"} 
+  ${data.zip_code || ""}`
+);
+set("wage", `${data.wage_amount} บาท / ชม.`);
 set("payment", data.payment_method);
 set("gender", data.gender_requirement);
 set("date-range", `${data.start_date} → ${data.end_date}`);

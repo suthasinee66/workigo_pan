@@ -31,10 +31,10 @@
   </script>
 </head>
 
-<body class="font-display bg-background-light">
+<body class="font-display bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
   <div class="min-h-screen flex flex-col">
 
-    <div class="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+    <div class="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm p-4 flex justify-between items-center z-10">
       <button onclick="history.back()">
         <span class="material-symbols-outlined">arrow_back_ios_new</span>
       </button>
@@ -44,21 +44,47 @@
 
     <main class="flex-grow pb-24">
 
-      <h2 class="text-xl font-bold px-4 pb-3 pt-5">
+      <h2 class="text-2xl font-extrabold px-4 pb-3 pt-6 text-primary">
         Applicants (<span id="count">0</span>)
       </h2>
 
-      <div id="applicants-container" class="space-y-6 px-4"></div>
-    </main>
+      <div class="px-4 space-y-10">
+
+<div class="bg-white rounded-2xl shadow-md p-5">
+    <h3 class="font-bold text-yellow-600 mb-3">
+      Pending (<span id="pending-count">0</span>)
+    </h3>
+    <div id="pending-container" class="space-y-6"></div>
   </div>
 
-<script>
+  <div class="bg-white rounded-2xl shadow-md p-5">
+    <h3 class="font-bold text-green-600 mb-3">
+      Accepted (<span id="approved-count">0</span>)
+    </h3>
+    <div id="approved-container" class="space-y-6"></div>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-md p-5">
+    <h3 class="font-bold text-red-600 mb-3">
+      Declined (<span id="rejected-count">0</span>)
+    </h3>
+    <div id="rejected-container" class="space-y-6"></div>
+  </div>
+
+</div>
+    </main>
+  </div>
+  
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 const SUPABASE_URL = "https://ispbevvwwggbktfczmui.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzcGJldnZ3d2dnYmt0ZmN6bXVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MTI1MDcsImV4cCI6MjA4MDA4ODUwN30.hMjTylGyabNAmySdJwduGgfOqnFTaTqJ4VwrRroKj-w";
+const SUPABASE_ANON_KEY = "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7";
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const jobpostId = 58;
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const jobpostId = new URLSearchParams(location.search).get("jobpost_id");
 
+/* ---------- helpers ---------- */
 function renderAvailability(avail = {}) {
   const days = ["mon","tue","wed","thu","fri","sat","sun"];
   const labels = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
@@ -79,38 +105,36 @@ function renderAvailability(avail = {}) {
   }
 
   return `
-    <div class="space-y-2 text-xs text-gray-600">
-
-      <!-- Header -->
+    <div class="space-y-2 text-xs text-gray-500 bg-gray-50 p-3 rounded-xl">
       <div class="grid grid-cols-8 gap-2 text-center font-bold">
         <div></div>
         ${labels.map(d => `<div>${d}</div>`).join("")}
       </div>
-
       ${row("Morning", "morning")}
       ${row("Afternoon", "afternoon")}
       ${row("Evening", "evening")}
-
     </div>
   `;
 }
+
+/* ---------- load job title ---------- */
 async function loadJobTitle() {
   const { data, error } = await sb
     .from("jobposts")
-    .select("job_description")
+    .select("job_title")
     .eq("jobpost_id", jobpostId)
     .single();
 
   if (error) {
-    console.error(error);
+    console.error("Job title error:", error);
     return;
   }
 
   document.getElementById("job-title").innerText =
-    "Manage: " + (data.job_description || "");
+    "Manage: " + (data.job_title || "");
 }
 
-
+/* ---------- load applicants (ตัวหลัก) ---------- */
 async function loadApplicants() {
   const { data, error } = await sb
     .from("job_applications")
@@ -121,38 +145,48 @@ async function loadApplicants() {
         bio,
         gender,
         availability,
-        avatar_url,
         profiles (
           first_name,
-          last_name
+          last_name,
+          avatar_url
         )
       )
     `)
     .eq("jobpost_id", jobpostId);
 
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
-
   if (error) return;
 
-  document.getElementById("count").innerText = data.length;
-  const container = document.getElementById("applicants-container");
-  container.innerHTML = "";
+  const pending = document.getElementById("pending-container");
+  const approved = document.getElementById("approved-container");
+  const rejected = document.getElementById("rejected-container");
+
+  pending.innerHTML = "";
+  approved.innerHTML = "";
+  rejected.innerHTML = "";
+
+  let pendingCount = 0;
+  let approvedCount = 0;
+  let rejectedCount = 0;
 
   data.forEach(app => {
     const s = app.job_seekers;
-    if (!s) return;
+    const p = s?.profiles;
+    if (!s || !p) return;
 
-    container.innerHTML += `
-      <div class="bg-white rounded-xl shadow p-6 space-y-4">
+    const fullName =
+      `${p.first_name ?? ""} ${p.last_name ?? ""}`.trim() || "Unknown";
+
+    const avatar =
+      p.avatar_url || "https://via.placeholder.com/150";
+
+    const card = `
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 space-y-4 border border-gray-100">
+
         <div class="flex items-center gap-4">
-          <img class="h-16 w-16 rounded-full object-cover"
-               src="${s.avatar_url || 'https://via.placeholder.com/150'}">
+          <img class="h-16 w-16 rounded-full object-cover ring-4 ring-primary/10" src="${avatar}" />
           <div>
-            <p class="text-primary text-lg font-bold">
-              ${s.profiles?.first_name || ""} ${s.profiles?.last_name || ""}
-            </p>
-            <p class="text-gray-500 text-sm">${s.gender || ""}</p>
+            <p class="text-primary text-lg font-bold">${fullName}</p>
+            <p class="text-gray-500 text-sm">${s.gender ?? "-"}</p>
           </div>
         </div>
 
@@ -163,30 +197,69 @@ async function loadApplicants() {
           ${renderAvailability(s.availability || {})}
         </div>
 
-        <div class="grid grid-cols-2 gap-4 pt-2">
-          <button onclick="updateStatus('${app.job_application_id}', 'Declined')"
-            class="h-12 bg-accent text-white rounded-lg">Decline</button>
+        ${
+          app.application_status === "Pending"
+            ? `
+            <div class="grid grid-cols-2 gap-4 pt-2">
+              <button
+                onclick="updateStatus('${app.job_application_id}', 'Rejected')"
+                class="h-12 bg-red-500 hover:bg-red-600 text-white rounded-xl transition">
+                Decline
+              </button>
 
-          <button onclick="updateStatus('${app.job_application_id}', 'Accepted')"
-            class="h-12 bg-success text-white rounded-lg">Accept</button>
-        </div>
+              <button
+                onclick="updateStatus('${app.job_application_id}', 'Approved')"
+                class="h-12 bg-success hover:opacity-90 text-white rounded-xl transition">
+                Accept
+              </button>
+            </div>
+            `
+            : ""
+        }
       </div>
     `;
-  });
-}
 
-async function updateStatus(id, status) {
-  await sb
+    if (app.application_status === "Approved") {
+      approved.innerHTML += card;
+      approvedCount++;
+    } else if (app.application_status === "Rejected") {
+      rejected.innerHTML += card;
+      rejectedCount++;
+    } else {
+      pending.innerHTML += card;
+      pendingCount++;
+    }
+  });
+
+  document.getElementById("pending-count").innerText = pendingCount;
+  document.getElementById("approved-count").innerText = approvedCount;
+  document.getElementById("rejected-count").innerText = rejectedCount;
+
+  document.getElementById("count").innerText = data.length;
+}
+/* ---------- update status ---------- */
+window.updateStatus = async function (id, status) {
+  console.log("Updating:", id, status)
+
+  const { data, error } = await sb
     .from("job_applications")
     .update({ application_status: status })
-    .eq("job_application_id", id);
+    .eq("job_application_id", id)
+    .select()
 
-  loadApplicants();
+  console.log("UPDATE RESULT:", data, error)
+
+  if (error) {
+    alert("Update failed")
+    return
+  }
+
+  loadApplicants()
 }
 
+/* ---------- init ---------- */
 loadJobTitle();
 loadApplicants();
-
 </script>
 </body>
 </html>

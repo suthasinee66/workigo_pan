@@ -96,7 +96,7 @@ body {
   <h3 class="text-dark-blue text-lg font-bold mb-3">Requirements</h3>
   <p class="text-sm text-gray-800">
     Gender: <span id="gender_requirement"></span><br>
-    Age: <span id="age_requirement"></span>
+    Age: <span id="age_from"></span> - <span id="age_to"></span>
   </p>
 </div>
 
@@ -104,8 +104,7 @@ body {
 <div class="mx-4 mt-4 p-5 bg-[#F5F7FA] rounded-xl shadow-sm">
   <h3 class="text-dark-blue text-lg font-bold mb-3">Payment</h3>
   <p class="text-sm text-gray-800">
-    Wage: <span id="wage_amount"></span> /
-    <span id="wage_type"></span><br>
+    Wage: <span id="wage_amount"></span> / hour<br>
     Method: <span id="payment_method"></span>
   </p>
 </div>
@@ -133,7 +132,7 @@ body {
 <!-- Bottom Action Bar -->
 <div class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow">
   <div class="flex gap-3">
-    <button onclick="goEdit()"
+    <button onclick="goBack()"
   class="flex-1 rounded-full bg-dark-blue py-3.5 text-white font-bold">
   Edit
 </button>
@@ -168,15 +167,24 @@ const set = (id, val) =>
   document.getElementById(id).textContent = val || "-";
 
 set("job_title", draft.job_title);
-set("location", `${draft.workplace_name || "-"} | ${draft.address || "-"}`);
-set("job_type", draft.job_type_id);
+set(
+  "location",
+  `${draft.workplace_name || "-"} | 
+   ${draft.address || "-"} 
+   ตำบล${draft.sub_district_name || ""} 
+   อำเภอ${draft.district_name || ""} 
+   จังหวัด${draft.province_name || ""} 
+   ${draft.zip_code || ""}`
+);
+set("job_type", draft.job_type_name);
 set("workers_needed", draft.workers_needed);
 set("job_description", draft.job_description);
 set("qualifications", draft.qualifications);
 set("gender_requirement", draft.gender_requirement || "Any");
-set("age_requirement", draft.age_requirement || "Any");
+const age = draft.age_requirement;
+set("age_from", age?.from || "-");
+set("age_to", age?.to || "-");
 set("wage_amount", draft.wage_amount);
-set("wage_type", draft.wage_type);
 set("payment_method", draft.payment_method);
 set("date_range", `${draft.start_date || "-"} → ${draft.end_date || "-"}`);
 set("time_range", `${draft.start_time || "-"} → ${draft.end_time || "-"}`);
@@ -206,14 +214,27 @@ window.confirmPost = async function () {
 
     workers_needed: draft.workers_needed,
     gender_requirement: draft.gender_requirement,
-    age_requirement: draft.age_requirement,
+    age_requirement: draft.age_requirement
+  ? {
+      from: draft.age_requirement.from
+        ? Number(draft.age_requirement.from)
+        : null,
+      to: draft.age_requirement.to
+        ? Number(draft.age_requirement.to)
+        : null
+    }
+  : null,
 
-    wage_type: draft.wage_type,
     wage_amount: draft.wage_amount,
     payment_method: draft.payment_method,
 
     workplace_name: draft.workplace_name,
     address: draft.address,
+    province_id: draft.province_id,
+    district_id: draft.district_id,
+    sub_district_id: draft.sub_district_id,
+    zip_code: draft.zip_code,
+
     latitude: draft.latitude,
     longitude: draft.longitude,
 
@@ -292,7 +313,17 @@ window.goEdit = function () {
   }
 };
 
+window.goBack = function () {
+  const params = new URLSearchParams(location.search);
+  const jobpostId = params.get("id");
+  const mode = params.get("mode");
 
+  if (jobpostId) {
+    location.href = `employer_post_a_job_form.html?id=${jobpostId}&mode=${mode || "edit"}`;
+  } else {
+    location.href = "employer_post_a_job_form.html";
+  }
+};
 </script>
 
 </body>

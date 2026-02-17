@@ -52,9 +52,18 @@ tailwind.config = {
 <!-- JOB CARD -->
 <section class="bg-card rounded-2xl p-5 shadow-sm">
   <div class="flex gap-4">
-    <div class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-      <span class="material-symbols-outlined text-3xl">work</span>
-    </div>
+    <div class="h-16 w-16 rounded-xl bg-gray-200 overflow-hidden">
+  <img
+    id="employer-image"
+    class="h-full w-full object-cover hidden"
+  />
+  <span
+    id="employer-placeholder"
+    class="material-symbols-outlined text-3xl text-gray-400 flex h-full w-full items-center justify-center"
+  >
+    store
+  </span>
+</div>
     <div class="flex-1">
       <h2 id="jobTitle" class="text-xl font-bold leading-tight">-</h2>
       <p id="companyName" class="text-textSub font-medium">-</p>
@@ -160,12 +169,24 @@ const { data, error } = await supabase
     jobposts (
       job_title,
       workplace_name,
-      address
+      address,
+      employers (
+        store_image_url
+      )
     )
   `)
   .eq("job_application_id", id)
   .single()
+const img = document.getElementById("employer-image")
+const placeholder = document.getElementById("employer-placeholder")
 
+const imageUrl = data.jobposts?.employers?.store_image_url
+
+if (imageUrl) {
+  img.src = imageUrl
+  img.classList.remove("hidden")
+  placeholder.classList.add("hidden")
+}
 if (error || !data) {
   alert("Application not found")
   history.back()

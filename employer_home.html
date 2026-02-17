@@ -44,13 +44,32 @@ body {
 <div class="relative mx-auto min-h-screen w-full max-w-md bg-white overflow-x-hidden pb-24">
 
 <!-- Top Bar -->
-<div class="sticky top-0 z-10 flex items-center p-4 justify-between bg-white">
-  <div class="w-12"></div>
-  <h1 class="text-[#345395] text-lg font-bold flex-1 text-center">Work-i-Go</h1>
-  <div class="w-12 text-right">
-    <span class="material-symbols-outlined">chat_bubble</span>
-  </div>
-</div>
+<!-- ===== TOP BAR ===== -->
+        <div class="sticky top-0 z-10 flex items-center gap-3 bg-white px-4 py-3 shadow-sm">
+
+            <!-- Store Image -->
+            <div id="store_image"
+                class="h-11 w-11 rounded-full bg-gray-200 bg-cover bg-center flex items-center justify-center">
+            </div>
+
+            <!-- Greeting -->
+            <div class="flex flex-col leading-tight">
+                <span class="text-xs text-gray-400">Welcome 👋</span>
+                <h2 id="greeting" class="text-lg font-bold text-gray-900 tracking-tight">
+                    Loading...
+                </h2>
+            </div>
+
+            <!-- Spacer -->
+            <div class="flex-1"></div>
+
+            <!-- Chat Icon -->
+            <span class="material-symbols-outlined text-gray-600">
+                chat_bubble
+
+            </span>
+
+        </div>
 
 <!-- CONTENT -->
 <div class="flex-grow overflow-y-auto">
@@ -69,7 +88,7 @@ body {
 
 <!-- CTA -->
 <div class="px-4">
-  <button onclick="location.href='employer_post_a_job_form.html'"
+  <button id="createJobBtn"
     class="w-full h-14 bg-primary text-white rounded-xl font-bold flex items-center justify-center gap-2">
     <span class="material-symbols-outlined">add_circle</span>
     Post a New Job
@@ -119,6 +138,35 @@ window.goToJob = function (jobpostId, status) {
     location.href = `employer_post_status.html?id=${jobpostId}`;
   }
 };
+
+
+    /* ===============================
+       LOAD PROFILE
+    =============================== */
+    async function loadProfile() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        window.location.href = "signin.html";
+        return;
+      }
+      
+
+      const { data: employer } = await supabase
+        .from("employers")
+        .select("business_name, store_image_url")
+        .eq("user_id", user.id)
+        .single();
+
+      document.getElementById("greeting").textContent =
+        employer?.business_name || "User";
+
+      const storeImage = document.getElementById("store_image");
+      if (employer?.store_image_url) {
+        storeImage.style.backgroundImage = `url('${employer.store_image_url}')`;
+      } else {
+        storeImage.innerHTML = `<span class="material-symbols-outlined text-gray-400">business</span>`;
+      }
+    }
 
 /* ================= LOAD DASHBOARD ================= */
 async function loadDashboard() {
@@ -173,12 +221,114 @@ async function loadDashboard() {
       </div>
     `;
   });
+/* ===== RECENT APPLICANTS ===== */
+// 1. ดึง jobpost_id ทั้งหมดของ employer
+const { data: myJobs, error: jobErr2 } = await supabase
+  .from("jobposts")
+  .select("jobpost_id")
+  .eq("employer_id", employer_id)
 
+if (jobErr2) {
+  console.error(jobErr2)
+  return
+}
+
+const jobIds = myJobs.map(j => j.jobpost_id)
+
+// ถ้า employer ยังไม่มี job post
+if (jobIds.length === 0) {
+  document.getElementById("recent-applicants").innerHTML =
+    `<p class="text-sm text-gray-400">No applicants yet</p>`
+  return
+}
+
+// 2. ดึง applicants จาก jobpost_id เหล่านั้น
+const { data: applicants, error: appErr } = await supabase
+  .from("job_applications")
+  .select(`
+    job_application_id,
+    application_status,
+    applied_at,
+    jobposts (
+      job_title
+    ),
+    job_seekers (
+      profiles (
+        first_name,
+        last_name,
+        avatar_url
+      )
+    )
+  `)
+  .in("jobpost_id", jobIds)
+  .order("applied_at", { ascending: false })
+  .limit(5)
+
+if (appErr) {
+  console.error(appErr)
+  return
+}
+
+console.log(applicants[0])
+
+// 3. render
+const recentContainer = document.getElementById("recent-applicants")
+recentContainer.innerHTML = ""
+
+if (applicants.length === 0) {
+  recentContainer.innerHTML =
+    `<p class="text-sm text-gray-400">No applicants yet</p>`
+}
+
+applicants.forEach(app => {
+  const profile = app.job_seekers?.profiles
+
+  const fullName = profile
+    ? `${profile.first_name ?? ""} ${profile.last_name ?? ""}`.trim()
+    : "Unknown"
+
+  const avatar = profile?.avatar_url
+
+  recentContainer.innerHTML += `
+    <div class="flex items-center gap-3 bg-gray-50 border rounded-xl p-4">
+      
+      <!-- Avatar -->
+      <div class="h-12 w-12 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center">
+        ${
+          avatar
+            ? `<img src="${avatar}" class="h-full w-full object-cover" />`
+            : `<span class="material-symbols-outlined text-gray-400">person</span>`
+        }
+      </div>
+
+      <!-- Info -->
+      <div class="flex-1">
+        <p class="font-medium">${fullName || "Unknown"}</p>
+        <p class="text-sm text-gray-500">
+          Applied for: ${app.jobposts?.job_title ?? "-"}
+        </p>
+        <p class="text-xs text-gray-400">
+          ${new Date(app.applied_at).toLocaleDateString()}
+        </p>
+      </div>
+
+    </div>
+  `
+})
+
+// 4. stats
+document.getElementById("total-applicants").innerText = applicants.length
   /* ===== STATS ===== */
   document.getElementById("approved-posts").innerText =
     jobposts.filter(j => j.approval_status === "Approved").length;
 }
-
+document
+  .getElementById("createJobBtn")
+  .addEventListener("click", () => {
+    localStorage.removeItem("jobPostDraft");
+    location.href = "employer_post_a_job_form.html";
+  });
+loadProfile();
 loadDashboard();
 </script>
 

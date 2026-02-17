@@ -44,9 +44,14 @@
   <!-- IMAGE UPLOAD -->
   <div class="px-4 pb-6">
     <div class="border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-4">
-      <img id="preview"
+      <img id="imagePreview"
         src="https://via.placeholder.com/150"
         class="w-32 h-32 rounded-xl object-cover"/>
+
+        <div id="store_image_loading" class="hidden absolute inset-0 bg-black/40 rounded-full
+           flex items-center justify-center text-white text-sm font-semibold">
+              Uploading...
+            </div>
 
       <label class="cursor-pointer bg-gray-200 px-4 py-2 rounded-lg font-semibold">
         Upload Photo
@@ -62,14 +67,9 @@
       class="w-full rounded-lg border p-3"
       placeholder="Business Name"/>
 
-    <select id="businessType"
-      class="w-full rounded-lg border p-3">
-      <option value="">Select Business Type</option>
-      <option value="restaurant">Restaurant</option>
-      <option value="retail">Retail</option>
-      <option value="office">Office</option>
-      <option value="warehouse">Warehouse</option>
-    </select>
+    <input id="businessType"
+      class="w-full rounded-lg border p-3"
+      placeholder="Business Type"/>
 
     <input id="address"
       class="w-full rounded-lg border p-3"
@@ -118,24 +118,25 @@ const { data: { user }, error: userError } = await supabase.auth.getUser()
         if (userError || !user) location.href = "signin.html"
 
 /* ===== ELEMENTS ===== */
-const job_seeker_id = "EM_" + user.id
 const imageInput = document.getElementById("imageInput")
-const preview = document.getElementById("preview")
-const contactInput = document.getElementById("contactValue")
-const submitBtn = document.getElementById("submitBtn")
+const imagePreview = document.getElementById("imagePreview")
+const imageLoading = document.getElementById("imageLoading")
 
-let imageFile = null
+const contactInput = document.getElementById("contactValue")
+
+let storeImageFile = null
 let contactMethod = "phone"
 
 /* ===== IMAGE PREVIEW ===== */
 imageInput.addEventListener("change", () => {
-  imageFile = imageInput.files[0]
-  if (imageFile) {
-    preview.src = URL.createObjectURL(imageFile)
-  }
-})
+  storeImageFile = imageInput.files[0]
+  if (!storeImageFile) return
 
-/* ===== CONTACT METHOD ===== */
+  imagePreview.src = URL.createObjectURL(storeImageFile)
+})
+    const submitBtn = document.getElementById("submitBtn")
+
+    /* ===== CONTACT METHOD ===== */
 document.querySelectorAll(".contact-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".contact-btn")
@@ -156,9 +157,10 @@ submitBtn.addEventListener("click", async () => {
   submitBtn.textContent = "Saving..."
 
   const business_name = document.getElementById("businessName").value.trim()
-  const business_type = document.getElementById("businessType").value
+  const business_type = document.getElementById("businessType").value.trim
   const address = document.getElementById("address").value.trim()
   const contact_value = contactInput.value.trim()
+  
 
   if (!business_name || !business_type || !address || !contact_value) {
     alert("Please fill all required fields")
@@ -166,33 +168,37 @@ submitBtn.addEventListener("click", async () => {
     submitBtn.textContent = "Complete Profile"
     return
   }
+// ===== UPLOAD AVATAR =====
+      let store_image_url = null
 
-  let store_image_url = null
+      if (storeImageFile) {
+        store_image_loading.classList.remove("hidden")
 
-  if (imageFile) {
-    const ext = imageFile.name.split(".").pop()
-    const fileName = `${user.id}/${Date.now()}.${ext}`
+        const ext = storeImageFile.name.split(".").pop()
+        const filePath = `${user.id}/store_image.jpg`
 
-    const { error: uploadError } = await supabase.storage
-      .from("avatars")
-      .upload(fileName, imageFile, { upsert: true })
+        const { error: uploadError } = await supabase.storage
+          .from("store_image")
+          .upload(filePath, storeImageFile, { upsert: true })
 
-    if (uploadError) {
-      alert(uploadError.message)
-      submitBtn.disabled = false
-      submitBtn.textContent = "Complete Profile"
-      return
-    }
+        store_image_loading.classList.add("hidden")
 
-    store_image_url = supabase.storage
-      .from("avatars")
-      .getPublicUrl(fileName).data.publicUrl
-  }
+        if (uploadError) {
+          alert(uploadError.message)
+          submitBtn.disabled = false
+          submitBtn.innerText = "Complete Profile"
+          return
+        }
 
-  const { error } = await supabase
+        store_image_url = supabase.storage
+          .from("store_image")
+          .getPublicUrl(filePath).data.publicUrl
+      }
+  // ===== GET employer_id =====
+
+  const { data,error: employerError } = await supabase
     .from("employers")
-    .insert({
-      employer_id: job_seeker_id,
+    .upsert({
       user_id: user.id,
       business_name,
       business_type,
@@ -201,20 +207,28 @@ submitBtn.addEventListener("click", async () => {
       contact_value,
       store_image_url
     })
+    const { error: profileError } = await supabase
+        .from("profiles")
+        .update({
+          role_id: 1,
+          avatar_url: store_image_url
+        })
+        .eq("id", user.id)
 
-  if (error) {
-    alert(error.message)
+  if (profileError) {
+    alert("Profile update error: " + profileError.message)
     submitBtn.disabled = false
     submitBtn.textContent = "Complete Profile"
     return
   }
+  if (employerError) {
+        alert("Employer save error: " + employerError.message)
+        submitBtn.disabled = false
+        submitBtn.innerText = "Complete Profile"
+        return
+      }
 
-  await supabase
-    .from("profiles")
-    .update({ role_id: 1})
-    .eq("id", user.id)
-
-  window.location.href = "employer_home.html"
+  location.href = "employer_home.html"
 })
 
 </script>

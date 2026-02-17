@@ -40,9 +40,18 @@
       <div class="p-4">
         <div class="rounded-xl bg-white p-4 shadow">
           <div class="flex gap-4">
-            <div class="h-16 w-16 flex items-center justify-center rounded-xl bg-gray-200">
-              <span class="material-symbols-outlined text-3xl text-gray-400">store</span>
-            </div>
+            <div class="h-16 w-16 rounded-xl bg-gray-200 overflow-hidden">
+  <img
+    id="employer-image"
+    class="h-full w-full object-cover hidden"
+  />
+  <span
+    id="employer-placeholder"
+    class="material-symbols-outlined text-3xl text-gray-400 flex h-full w-full items-center justify-center"
+  >
+    store
+  </span>
+</div>
 
             <div class="flex-1">
               <p id="job-title" class="text-xl font-bold"></p>
@@ -115,7 +124,7 @@
       </div>
 
       <!-- ===== DESCRIPTION ===== -->
-      <div class="px-4">
+      <div class="px-4 mt-4">
         <h3 class="text-lg font-bold">Job Description</h3>
         <p id="job-description" class="mt-2 text-gray-600 leading-relaxed"></p>
       </div>
@@ -147,7 +156,13 @@
     async function loadJobDetail() {
       const { data, error } = await supabaseClient
         .from("jobposts")
-        .select("*")
+        .select(`
+  *,
+  employers ( store_image_url ),
+  provinces!jobposts_province_id_fkey ( name_th ),
+  districts!jobposts_district_id_fkey ( name_th ),
+  sub_districts!jobposts_sub_district_id_fkey ( name_th )
+`)
         .eq("jobpost_id", jobpostId)
         .single();
 
@@ -160,23 +175,55 @@
       document.getElementById("workplace-name").textContent = data.workplace_name ?? "-";
       document.getElementById("job-description").textContent = data.job_description ?? "-";
       document.getElementById("qualifications").textContent = data.qualifications ?? "-";
-      document.getElementById("age-requirement").textContent = data.age_requirement ?? "-";
+      
       document.getElementById("gender-requirement").textContent = data.gender_requirement ?? "Any";
-      document.getElementById("address").textContent = data.address ?? "-";
+      document.getElementById("address").textContent = `
+        ${data.address ?? ""}
+        ต.${data.sub_districts?.name_th ?? "-"}
+        อ.${data.districts?.name_th ?? "-"}
+        จ.${data.provinces?.name_th ?? "-"}
+        `;
       document.getElementById("workers-needed").textContent = data.workers_needed ?? "-";
-      document.getElementById("applicants-count").textContent = data.applicants_count ?? 0;
+
+      
       document.getElementById("deadline").textContent = data.application_deadline ?? "-";
 
+
+      const { count } = await supabaseClient
+    .from("job_applications")
+    .select("*", { count: "exact", head: true })
+    .eq("jobpost_id", jobpostId);
+
+  document.getElementById("applicants-count").textContent = count ?? 0;
+  
       const startDate = data.start_date ?? "-";
+      const endDate = data.end_date ?? "-";
       const startTime = data.start_time ?? "-";
       const endTime = data.end_time ?? "-";
-      document.getElementById("start-display").textContent = `${startDate} | ${startTime} - ${endTime}`;
+      const img = document.getElementById("employer-image");
+const placeholder = document.getElementById("employer-placeholder");
 
-      let wageText = "";
-      if (data.wage_type === "hour") wageText = `${data.wage_amount}฿/hr`;
-      else if (data.wage_type === "day") wageText = `${data.wage_amount}฿/day`;
-      else wageText = `${data.wage_amount}฿/hr`;
-      document.getElementById("wage-display").textContent = wageText;
+if (data.employers?.store_image_url) {
+  img.src = data.employers.store_image_url;
+  img.classList.remove("hidden");
+  placeholder.classList.add("hidden");
+}
+      document.getElementById("start-display").textContent = `${startDate}-${endDate} | ${startTime} - ${endTime}`;
+
+      document.getElementById("wage-display").textContent =
+      data.wage_amount ? `${data.wage_amount} ฿/ชม.` : "-";
+
+      const ageEl = document.getElementById("age-requirement");
+
+if (data.age_requirement?.from && data.age_requirement?.to) {
+  ageEl.textContent = `${data.age_requirement.from} – ${data.age_requirement.to} ปี`;
+} else if (data.age_requirement?.from) {
+  ageEl.textContent = `${data.age_requirement.from} ปีขึ้นไป`;
+} else if (data.age_requirement?.to) {
+  ageEl.textContent = `ไม่เกิน ${data.age_requirement.to} ปี`;
+} else {
+  ageEl.textContent = "ไม่ระบุ";
+}
     }
 
     loadJobDetail();
@@ -199,7 +246,11 @@
         .maybeSingle();
 
       if (!jobSeeker) return;
-
+      // นับจำนวนผู้สมัครงานนี้
+const { count, error: countError } = await supabaseClient
+  .from("job_applications")
+  .select("*", { count: "exact", head: true })
+  .eq("jobpost_id", jobpostId);
       // ตรวจสอบว่าผู้ใช้สมัครงานนี้แล้วหรือยัง
       const { data: existingApplication } = await supabaseClient
         .from("job_applications")
