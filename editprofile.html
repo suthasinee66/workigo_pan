@@ -66,14 +66,17 @@
 <!-- Profile Header -->
 <div class="flex w-full flex-col gap-4 items-center">
 <div class="relative">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 shadow-soft" data-alt="A portrait of Aliah Lane" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBI7fxXihAtnAO3wmHkWPEosceN0y3F2j5wizXugZmMd8Evv-YH0tlpcwDSDdrMhcEw074ky1Y7i56YrD5BFu_OaazZ10RCbY3q_uOJvxZb61_o5dImvs6iA29NzO-0WOUydqEtdqEJhsDzJuisg0rYBRDpqfw1lhGl8d-_A4eLCEa1X7un3zNhGHYW5RJVCslbRoqmDo3TdqqS_8q8hb522R0n88vnzfBNx9j4sHKvsw75bD-0OYcy02zGT8DHmGglwZlKyra78-3z");'></div>
+  <div id="avatar"
+  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 ring-4 ring-white dark:ring-background-dark shadow-soft">
 </div>
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-5 bg-transparent text-primary text-base font-bold">
-<span class="truncate">Change Photo</span>
+</div>
+
+<button id="changePhotoBtn" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-5 bg-transparent text-primary text-base font-bold">
+  <span class="truncate">Change Photo</span>
 </button>
+
+<input type="file" id="photoInput" accept="image/*" class="hidden"/>
 <div class="flex flex-col items-center justify-center -mt-2">
-<p class="text-text-light dark:text-text-dark text-2xl font-bold leading-tight tracking-tight">Aliah Lane</p>
-<p class="text-subtext-light dark:text-subtext-dark text-base font-normal leading-normal">Job Seeker</p>
 </div>
 </div>
 <!-- Personal Information Card -->
@@ -82,15 +85,34 @@
 <div class="space-y-4">
 <label class="flex flex-col w-full">
 <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Full name</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal" value="Aliah Lane"/>
+<input id="fullName" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal"/>
 </label>
 <label class="flex flex-col w-full">
 <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Phone number</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal" value="+1 234 567 890"/>
+<input id="phone" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal"/>
 </label>
 <label class="flex flex-col w-full">
 <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Email</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-subtext-light dark:text-subtext-dark bg-card dark:bg-card-dark border-0 h-12 px-4 text-base font-normal cursor-not-allowed" readonly="" value="aria.giovanni@email.com"/>
+<input id="email" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal"/>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Gender</p>
+<select 
+  id="gender"
+  class="form-select flex w-full h-12 px-4 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark"
+>
+  <option value="">Select Gender</option>
+  <option value="male">male</option>
+  <option value="female">female</option>
+</select>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Date of Birth</p>
+<input 
+  id="birthdate"
+  type="date"
+  class="form-input flex w-full min-w-0 flex-1 rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 px-4 text-base"
+/>
 </label>
 </div>
 </div>
@@ -100,26 +122,61 @@
 <div class="space-y-4">
 <label class="flex flex-col w-full">
 <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Skills</p>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 placeholder:text-subtext-light/70 px-4 text-base font-normal" placeholder="e.g., UI Design, Project Management"/>
+<div id="skillsContainer" class="flex flex-wrap gap-2 mb-6">
+  <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Customer Service Mindset">Customer
+          Service Mindset</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Problem Solving">Problem Solving
+        </span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Time Management">Time Management</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Machine Operation">Machine Operation</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer"
+          data-skill="Quality Control">Quality Control</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Safety Awareness">Safety Awareness</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Route Planning">Route Planning</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Vehicle Maintenance">Vehicle Maintenance</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Punctuality">Punctuality</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Document Management">Document Management</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Communication Skills">Communication Skills</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Basic Computer Skills">Basic Computer Skills</span>
+        
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer"
+          data-skill="Negotiation">Negotiation</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer"
+          data-skill="Persuasion">Persuasion</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Relationship Building">Relationship Building</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Programming Basics">Programming Basics</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="System Troubleshooting">System Troubleshooting</span>
+        <span class="skill selectable border rounded-full px-4 py-2 cursor-pointer" data-skill="Database Management">Database Management</span>
+</div>
+
 </label>
-<label class="flex flex-col w-full">
-<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Preferred job type</p>
-<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark h-12 px-4 text-base font-normal">
-<option>Full-time</option>
-<option>Part-time</option>
-<option>Contract</option>
-<option>Internship</option>
-</select>
-</label>
-<div class="flex flex-col w-full">
-<p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Upload CV/Resume</p>
-<div class="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark">
-<div class="text-center">
-<span class="material-symbols-outlined text-4xl text-subtext-light dark:text-subtext-dark">cloud_upload</span>
-<p class="mt-2 text-sm text-subtext-light dark:text-subtext-dark">Drag &amp; drop or <span class="font-semibold text-primary">browse files</span></p>
+<!-- Availability -->
+<div class="bg-card dark:bg-card-dark rounded-xl shadow-soft p-5 space-y-4">
+  <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium pb-2">Availability</p>
+
+  <div class="grid grid-cols-4 gap-2 text-center mt-4 text-sm">
+    <div></div>
+    <div>Morning</div>
+    <div>Afternoon</div>
+    <div>Evening</div>
+
+    <!-- DAYS -->
+    <script>
+      const days = ["mon","tue","wed","thu","fri","sat","sun"];
+      const dayNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+      const times = ["morning","afternoon","evening"];
+
+      document.write(days.map((d,i)=>`
+        <div class="font-semibold">${dayNames[i]}</div>
+        ${times.map(t=>`
+          <button class="availability border rounded-lg h-12"
+            data-day="${d}" data-time="${t}"></button>
+        `).join("")}
+      `).join(""));
+    </script>
+  </div>
 </div>
-</div>
-</div>
+
 </div>
 </div>
 <!-- Security Section Card -->
@@ -142,9 +199,6 @@
                        </style>
 </div>
 <div class="pt-2">
-<button onclick="window.location.href='signin.html'"class="flex items-center justify-center w-full p-3 rounded-lg text-red-500 font-bold hover:bg-red-500/10 transition-colors">
-                        Logout
-                    </button>
 </div>
 </div>
 </div>
@@ -153,10 +207,216 @@
 <button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-4 bg-primary text-white text-lg font-bold shadow-soft">
 <span class="truncate">Save Changes</span>
 </button>
-<button class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-4 bg-card dark:bg-card-dark text-text-light dark:text-text-dark text-lg font-bold shadow-soft">
+<button onclick="window.location.href='Myprofile_seeker.html'" class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-4 bg-card dark:bg-card-dark text-text-light dark:text-text-dark text-lg font-bold shadow-soft">
 <span class="truncate">Cancel</span>
 </button>
 </div>
 </div>
 </div>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+let selectedSkills = [];
+let availability = {}; // ✅ FIX เป็น object
+
+// ================= LOAD =================
+async function loadProfile() {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const { data } = await supabase
+    .from("profiles")
+    .select(`*, job_seekers(*)`)
+    .eq("id", user.id)
+    .single();
+
+  const job = data.job_seekers?.[0];
+ 
+  // 3. ใส่ข้อมูลลงหน้าเว็บ
+  const avatarDiv = document.getElementById("avatar");
+
+if (data.avatar_url) {
+  avatarDiv.style.backgroundImage = `url('${data.avatar_url}')`;
+} else {
+  avatarDiv.style.backgroundImage = `url('https://via.placeholder.com/150')`;
+}
+
+
+  // basic
+  document.getElementById("fullName").value =
+    (data.first_name || "") + " " + (data.last_name || "");
+  document.getElementById("phone").value = data.phone_number || "";
+  document.getElementById("email").value = data.email;
+
+  const gender = (job?.gender || "").toLowerCase();
+document.getElementById("gender").value = gender;
+  document.getElementById("birthdate").value = job?.birth_date || "";
+
+  // skills
+  selectedSkills = job?.skills || [];
+  document.querySelectorAll(".skill").forEach(el => {
+    if (selectedSkills.includes(el.dataset.skill)) {
+      el.classList.add("bg-primary", "text-white");
+    }
+  });
+
+  // availability
+  availability = job?.availability || {};
+
+  document.querySelectorAll(".availability").forEach(btn => {
+    const day = btn.dataset.day;
+    const time = btn.dataset.time;
+
+    if (availability[day]?.includes(time)) {
+      btn.classList.add("bg-primary");
+    }
+  });
+}
+
+// ================= SKILL =================
+document.querySelectorAll(".skill").forEach(el => {
+  el.addEventListener("click", () => {
+    const skill = el.dataset.skill;
+
+    if (selectedSkills.includes(skill)) {
+      selectedSkills = selectedSkills.filter(s => s !== skill);
+      el.classList.remove("bg-primary", "text-white");
+    } else {
+      selectedSkills.push(skill);
+      el.classList.add("bg-primary", "text-white");
+    }
+  });
+});
+
+// ================= AVAILABILITY =================
+document.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("availability")) return;
+
+  const btn = e.target;
+  const day = btn.dataset.day;
+  const time = btn.dataset.time;
+
+  if (!availability[day]) {
+    availability[day] = [];
+  }
+
+  if (availability[day].includes(time)) {
+    availability[day] = availability[day].filter(t => t !== time);
+    btn.classList.remove("bg-primary");
+  } else {
+    availability[day].push(time);
+    btn.classList.add("bg-primary");
+  }
+});
+
+// ================= SAVE =================
+window.saveProfile = async function () {
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const fullName = document.getElementById("fullName").value.split(" ");
+  const firstName = fullName[0];
+  const lastName = fullName.slice(1).join(" ");
+
+  // profiles
+  await supabase.from("profiles").update({
+    first_name: firstName,
+    last_name: lastName,
+    phone_number: document.getElementById("phone").value
+  }).eq("id", user.id);
+
+  // job_seekers (ใช้ upsert)
+  await supabase.from("job_seekers").upsert({
+    user_id: user.id,
+    gender: document.getElementById("gender").value,
+    birth_date: document.getElementById("birthdate").value,
+    skills: selectedSkills,
+    availability: availability,
+    updated_at: new Date()
+  }, { onConflict: "user_id" });
+
+  alert("Saved!");
+  window.location.href = "Myprofile_seeker.html";
+};
+const avatarDiv = document.getElementById("avatar");
+const photoInput = document.getElementById("photoInput");
+const changePhotoBtn = document.getElementById("changePhotoBtn");
+
+// เปิด file selector
+changePhotoBtn.addEventListener("click", () => {
+  photoInput.click();
+});
+photoInput.addEventListener("change", async () => {
+  const file = photoInput.files[0];
+  if (!file) return;
+
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) {
+    console.error("No logged-in user:", userError);
+    alert("You must be logged in to change photo.");
+    return;
+  }
+
+  const fileExtension = file.name.split('.').pop();
+  const filePath = `${user.id}/avatar.${fileExtension}`; // path ใหม่: userId/avatar.ext
+
+  try {
+    // 🔹 ดึงไฟล์เก่า
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("avatar_url")
+      .eq("id", user.id)
+      .single();
+    if (profileError) throw profileError;
+
+    // ลบไฟล์เก่า (ถ้ามี)
+    const oldPath = profile?.avatar_url;
+    if (oldPath) {
+      const { error: removeError } = await supabase
+        .storage.from("profile-avatars")
+        .remove([oldPath]);
+      if (removeError) console.warn("Old avatar not removed:", removeError.message);
+    }
+
+    // 🔹 Upload ใหม่ (ใช้ upsert: true)
+    const { error: uploadError } = await supabase
+      .storage
+      .from("profile-avatars")
+      .upload(filePath, file, { upsert: true });
+
+    if (uploadError) throw uploadError;
+
+    // 🔹 Get public URL
+    const { data: urlData } = supabase
+      .storage
+      .from("profile-avatars")
+      .getPublicUrl(filePath);
+
+    // 🔹 Update DB (เก็บเป็น path ไม่ใช่ full URL)
+    const { error: dbError } = await supabase
+      .from("profiles")
+      .update({ avatar_url: filePath })
+      .eq("id", user.id);
+    if (dbError) throw dbError;
+
+    // 🔹 Update preview
+    avatarDiv.style.backgroundImage = `url('${urlData.publicUrl}')`;
+
+    alert("Profile photo updated!");
+  } catch (err) {
+    console.error("Avatar upload failed:", err);
+    alert("Failed to update profile photo. Check console for details.");
+  }
+});
+
+// bind button
+document.querySelector("button.bg-primary").onclick = saveProfile;
+
+// init
+loadProfile();
+</script>
 </body></html>

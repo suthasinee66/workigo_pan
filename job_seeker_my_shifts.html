@@ -213,6 +213,94 @@
 </a>
 </nav>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // สร้าง client
+  const supabase = window.supabase.createClient(
+    "https://ispbevvwwggbktfczmui.supabase.co",
+    "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+  );
+
+  // สมมติว่าผู้ใช้ login แล้วมี user id
+  const userId = "your_user_id_here"; // ปรับเป็น auth user id ของผู้ใช้จริง
+
+  const today = new Date();
+  const todayStr = today.toISOString().split("T")[0]; // YYYY-MM-DD
+
+  const mainContainer = document.querySelector("main");
+
+  async function loadShifts() {
+    mainContainer.innerHTML = `<p class="text-center py-10 text-gray-500 dark:text-gray-400">Loading shifts...</p>`;
+
+    // ดึง shifts ของผู้ใช้
+    const { data: shifts, error } = await supabase
+      .from("shifts")
+      .select("*")
+      .eq("user_id", userId)
+      .order("shift_date", { ascending: true });
+
+    if (error) {
+      console.error(error);
+      mainContainer.innerHTML = `<p class="text-center py-10 text-red-500">Error loading shifts</p>`;
+      return;
+    }
+
+    // Clear container
+    mainContainer.innerHTML = "";
+
+    // Today's shift
+    const todaysShifts = shifts.filter(shift => shift.shift_date === todayStr);
+    if (todaysShifts.length > 0) {
+      const todaySection = document.createElement("section");
+      todaySection.innerHTML = `<h2 class="px-4 pt-3 pb-2 text-xl font-bold text-[#121416] dark:text-white">Today's Shift</h2>`;
+      todaysShifts.forEach(shift => {
+        todaySection.appendChild(createShiftCard(shift));
+      });
+      mainContainer.appendChild(todaySection);
+    }
+
+    // Upcoming shifts
+    const upcomingShifts = shifts.filter(shift => shift.shift_date > todayStr);
+    if (upcomingShifts.length > 0) {
+      const upcomingSection = document.createElement("section");
+      upcomingSection.innerHTML = `<h2 class="px-4 pt-3 pb-2 text-xl font-bold text-[#121416] dark:text-white">Upcoming</h2>`;
+      upcomingShifts.forEach(shift => {
+        upcomingSection.appendChild(createShiftCard(shift));
+      });
+      mainContainer.appendChild(upcomingSection);
+    }
+
+    if (todaysShifts.length === 0 && upcomingShifts.length === 0) {
+      mainContainer.innerHTML = `<p class="text-center py-10 text-gray-500 dark:text-gray-400">No shifts found.</p>`;
+    }
+  }
+
+  function createShiftCard(shift) {
+    const card = document.createElement("div");
+    card.className = "px-4 pb-3";
+    card.innerHTML = `
+      <div class="flex flex-col items-stretch justify-start rounded-xl shadow-md bg-white dark:bg-gray-800">
+        <div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
+          <div class="flex items-center gap-4">
+            <div class="flex flex-col items-center justify-center bg-primary/10 rounded-lg p-2 w-14 h-14">
+              <p class="text-primary text-sm font-bold leading-none">${new Date(shift.shift_date).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</p>
+              <p class="text-primary text-2xl font-extrabold leading-tight">${new Date(shift.shift_date).getDate()}</p>
+            </div>
+            <div class="flex-1">
+              <p class="text-[#121416] dark:text-white text-base font-bold leading-tight">${shift.job_title}</p>
+              <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">${shift.workplace_name}</p>
+              <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">${shift.shift_date} ${shift.start_time} - ${shift.end_time}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  // โหลด shifts ตอนโหลดหน้า
+  loadShifts();
+</script>
 </body>
 
 </html>

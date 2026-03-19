@@ -206,7 +206,7 @@ badge.textContent = status
 function statusBadge(status) {
   const map = {
     Pending:   "bg-yellow-100 text-yellow-800",
-    Accepted:  "bg-green-100 text-green-800",
+    Approved:  "bg-green-100 text-green-800",
     Rejected:  "bg-red-100 text-red-800",
     Reviewed:  "bg-blue-100 text-blue-800"
   }
@@ -228,7 +228,7 @@ switch (status) {
     reviewText.textContent = "Reviewed by employer"
     break
 
-  case "Accepted":
+  case "Approved":
     badge.className =
       "px-4 py-1 rounded-full text-sm font-semibold bg-success/20 text-success"
 

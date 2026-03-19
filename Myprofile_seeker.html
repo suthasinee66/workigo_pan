@@ -66,8 +66,9 @@
 <div class="flex p-6 @container">
 <div class="flex w-full flex-col gap-4 items-center">
 <div class="flex gap-4 flex-col items-center">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 ring-4 ring-white dark:ring-background-dark shadow-soft" data-alt="User's profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBI7fxXihAtnAO3wmHkWPEosceN0y3F2j5wizXugZmMd8Evv-YH0tlpcwDSDdrMhcEw074ky1Y7i56YrD5BFu_OaazZ10RCbY3q_uOJvxZb61_o5dImvs6iA29NzO-0WOUydqEtdqEJhsDzJuisg0rYBRDpqfw1lhGl8d-_A4eLCEa1X7un3zNhGHYW5RJVCslbRoqmDo3TdqqS_8q8hb522R0n88vnzfBNx9j4sHKvsw75bD-0OYcy02zGT8DHmGglwZlKyra78-3z");'></div>
-<div class="flex flex-col items-center justify-center mt-2">
+<div id="avatar"
+  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-32 w-32 ring-4 ring-white dark:ring-background-dark shadow-soft">
+</div><div class="flex flex-col items-center justify-center mt-2">
 <p class="text-text-light-primary dark:text-text-dark-primary text-[24px] font-bold leading-tight tracking-[-0.015em] text-center"></p>
 <div class="mt-2 px-3 py-1 bg-primary/10 dark:bg-primary/20 rounded-full">
 <p class="text-primary text-sm font-semibold leading-normal text-center">Job Seeker</p>
@@ -83,27 +84,24 @@
 <div class="grid grid-cols-[35%_1fr] gap-x-4">
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
 <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Full Name</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Aliah Lane</p>
+<p id="fullName" class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium"></p>
 </div>
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
 <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Phone</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">+123-456-7890</p>
+<p id="phone" class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium"></p>
 </div>
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
 <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Email</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">aliah.lane@email.com</p>
+<p id="email" class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium"></p>
 </div>
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
 <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Gender</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Female</p>
+<p id="gender" class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium"></p>
 </div>
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
 <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Date of Birth</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">October 21, 1995</p>
+<p id="birthdate" class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium"></p>
 </div>
-<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 pt-4">
-<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Address</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">123 Market St, San Francisco, CA 94103</p>
 </div>
 </div>
 </div>
@@ -113,22 +111,42 @@
 <div class="grid grid-cols-[35%_1fr] gap-x-4">
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
 <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Skills</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">UI/UX Design, Prototyping, Project Management</p>
+<div id="skills" class="flex flex-wrap gap-2"></div>
 </div>
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
-<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Work Experience</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">5 Years at Tech Solutions Inc.</p>
+  <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">
+    Availability
+  </p>
+
+  <div id="availabilityGrid" class="grid grid-cols-4 gap-2 text-center text-xs w-full">
+    <div></div>
+    <div>Morning</div>
+    <div>Afternoon</div>
+    <div>Evening</div>
+  </div>
 </div>
-<div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 py-4">
-<p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Job Types</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium">Full-time, Remote</p>
 </div>
 <div class="col-span-2 grid grid-cols-subgrid border-t border-gray-200 dark:border-gray-700 pt-4">
 <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">Documents</p>
 <div class="flex flex-col gap-2">
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium flex items-center"><span class="material-symbols-outlined text-base mr-2 text-text-light-secondary dark:text-text-dark-secondary">description</span> Resume_Aliah_Lane.pdf</p>
-<p class="text-text-light-primary dark:text-text-dark-primary text-sm font-medium flex items-center"><span class="material-symbols-outlined text-base mr-2 text-text-light-secondary dark:text-text-dark-secondary">description</span> Portfolio_2024.pdf</p>
+<div id="resumeSection"></div>
+<div class="flex justify-end items-center gap-2 mt-4">
+  <input 
+    type="file" 
+    id="resumeInput" 
+    accept="application/pdf"
+    class="text-sm file:mr-3 file:px-4 file:py-2 file:rounded-full file:border-0 file:bg-primary/10 file:text-primary hover:file:bg-primary hover:file:text-white transition"
+  />
+  
+  <button 
+    onclick="uploadResume()"
+    class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-orange-600 transition"
+  >
+    Upload
+  </button>
 </div>
+</div>
+
 </div>
 </div>
 </div>
@@ -139,9 +157,277 @@
 
 </div>
 
-<button onclick="window.location.href='Start.html'" class="w-full text-center bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 py-3 rounded-lg font-bold text-base">Logout</button>
+<button id="logoutBtn" class="w-full text-center bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 py-3 rounded-lg font-bold text-base">Logout</button>
 </div>
 </div>
 </div>
 </div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7" // ใช้ key เดิมของคุณ
+);
+
+// โหลดข้อมูล
+async function loadProfile() {
+
+  // 1. เอา user ที่ login อยู่
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    console.log("ยังไม่ได้ login");
+    return;
+  }
+
+  // 2. ดึงข้อมูล profiles + job_seekers
+  const { data, error } = await supabase
+    .from("profiles")
+    .select(`
+      id,
+      email,
+      first_name,
+      last_name,
+      phone_number,
+      avatar_url,
+      birth_date,
+      job_seekers (
+        gender,
+        birth_date,
+        skills,
+        resume_url,
+        availability
+        
+      )
+    `)
+    .eq("id", user.id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  // 3. ใส่ข้อมูลลงหน้าเว็บ
+  const avatarDiv = document.getElementById("avatar");
+
+if (data.avatar_url) {
+  avatarDiv.style.backgroundImage = `url('${data.avatar_url}')`;
+} else {
+  avatarDiv.style.backgroundImage = `url('https://via.placeholder.com/150')`;
+}
+
+  document.getElementById("fullName").innerText =
+    (data.first_name || "") + " " + (data.last_name || "");
+
+  document.getElementById("email").innerText =
+    data.email || user.email;
+
+  document.getElementById("phone").innerText =
+    data.phone_number || "-";
+
+  document.getElementById("gender").innerText =
+  data.job_seekers?.[0]?.gender || "-";
+
+  document.getElementById("birthdate").innerText =
+    data.birth_date || data.job_seekers?.birth_date || "-";
+    
+    const jobSeeker = data.job_seekers?.[0];
+
+const skillsContainer = document.getElementById("skills");
+renderAvailability(jobSeeker?.availability || {});
+
+if (jobSeeker?.skills && jobSeeker.skills.length > 0) {
+  skillsContainer.innerHTML = jobSeeker.skills
+    .map(skill => `
+      <span class="px-3 py-1 text-sm font-medium rounded-full border border-primary text-primary bg-primary/10">
+        ${skill}
+      </span>
+    `)
+    .join("");
+} else {
+  skillsContainer.innerHTML = `<span class="text-gray-400">-</span>`;
+}
+const resumeSection = document.getElementById("resumeSection");
+
+if (jobSeeker?.resume_url) {
+  const fileName = jobSeeker.resume_url.split("/").pop();
+
+  resumeSection.innerHTML = `
+    <div class="flex items-center justify-between gap-3 p-3 border border-primary/20 rounded-lg bg-primary/5">
+
+      <a href="${jobSeeker.resume_url}" target="_blank"
+        class="flex items-center gap-2 text-primary truncate">
+        <span class="material-symbols-outlined">description</span>
+        <span class="text-sm font-medium truncate">${fileName}</span>
+      </a>
+
+      <button onclick="deleteResume()"
+        class="px-3 py-1 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+        Delete
+      </button>
+
+    </div>
+  `;
+} else {
+  resumeSection.innerHTML = `
+    <span class="text-gray-400">No resume uploaded</span>
+  `;
+}
+}
+window.uploadResume = async function () {
+  const fileInput = document.getElementById("resumeInput");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("กรุณาเลือกไฟล์");
+    return;
+  }
+
+  if (file.type !== "application/pdf") {
+    alert("อัปโหลดได้เฉพาะ PDF");
+    return;
+  }
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    alert("ยังไม่ได้ login");
+    return;
+  }
+
+  const filePath = `user-${user.id}/resume.pdf`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("resumes")
+    .upload(filePath, file, { upsert: true });
+
+  if (uploadError) {
+    console.error(uploadError);
+    alert("upload ไม่สำเร็จ");
+    return;
+  }
+
+  const { data: urlData } = supabase.storage
+    .from("resumes")
+    .getPublicUrl(filePath);
+
+  const fileUrl = urlData.publicUrl;
+
+  await supabase
+    .from("job_seekers")
+    .update({ resume_url: fileUrl })
+    .eq("user_id", user.id);
+
+  alert("อัปโหลดสำเร็จ!");
+  await loadProfile();
+  fileInput.value = "";
+};
+window.deleteResume = async function () {
+
+  const confirmDelete = confirm("ต้องการลบ resume ใช่ไหม?");
+  if (!confirmDelete) return;
+
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    alert("ยังไม่ได้ login");
+    return;
+  }
+
+  // 🔹 ดึง resume_url มาก่อน
+  const { data, error } = await supabase
+    .from("job_seekers")
+    .select("resume_url")
+    .eq("user_id", user.id)
+    .single();
+
+  if (error || !data?.resume_url) {
+    alert("ไม่พบไฟล์");
+    return;
+  }
+
+  // 🔹 แปลง URL → path
+  const filePath = data.resume_url.split("/resumes/")[1];
+
+  // 🔥 ลบจาก storage
+  const { error: deleteError } = await supabase.storage
+    .from("resumes")
+    .remove([filePath]);
+
+  if (deleteError) {
+    console.error(deleteError);
+    alert("ลบไฟล์ไม่สำเร็จ");
+    return;
+  }
+
+  // 🔥 ลบใน DB
+  const { error: dbError } = await supabase
+    .from("job_seekers")
+    .update({ resume_url: null })
+    .eq("user_id", user.id);
+
+  if (dbError) {
+    console.error(dbError);
+    alert("ลบข้อมูลไม่สำเร็จ");
+    return;
+  }
+
+  alert("ลบสำเร็จ!");
+
+  // refresh UI
+  await loadProfile();
+};
+function renderAvailability(availData = {}) {
+  const grid = document.getElementById("availabilityGrid");
+
+  const days = ["mon","tue","wed","thu","fri","sat","sun"];
+  const dayNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const times = ["morning","afternoon","evening"];
+
+  let html = `
+    <div></div>
+    <div>Morning</div>
+    <div>Afternoon</div>
+    <div>Evening</div>
+  `;
+
+  days.forEach((day, i) => {
+    html += `<div class="font-semibold">${dayNames[i]}</div>`;
+
+    times.forEach(time => {
+      // 🔹 ตรวจสอบว่าช่วงเวลานี้อยู่ใน array ของวันนั้น
+      const active = Array.isArray(availData[day]) && availData[day].includes(time);
+
+      html += `
+        <div class="h-8 rounded-lg border 
+          ${active ? "bg-primary" : "bg-transparent"}">
+        </div>
+      `;
+    });
+  });
+
+  grid.innerHTML = html;
+}
+const logoutBtn = document.getElementById("logoutBtn");
+
+  logoutBtn.addEventListener("click", async () => {
+    try {
+      // ลบ session ของผู้ใช้
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+
+      // เปลี่ยนหน้าไป signin.html
+      window.location.href = "signin.html";
+    } catch (err) {
+      console.error("Logout failed:", err);
+      alert("Logout ไม่สำเร็จ ลองใหม่");
+    }
+  });
+// เรียกใช้งาน
+await loadProfile();
+
+</script>
 </body></html>

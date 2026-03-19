@@ -1,263 +1,211 @@
-
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Employer - Manage Post / Applicants</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Employer - Manage Applicants</title>
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: "#345395",
-            accent: "#f95e07",
-            success: "#208672",
-            "background-light": "#f6f7f8",
-          },
-          fontFamily: {
-            display: ["Plus Jakarta Sans", "sans-serif"]
-          }
-        }
-      }
-    }
-  </script>
+<style>
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8f9ff; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  /* กำหนดสี primary ให้ชัดเจน */
+  :root {
+    --primary: #345395;
+    --success: #208672;
+  }
+  .bg-primary { background-color: var(--primary); }
+  .bg-success { background-color: var(--success); }
+</style>
 </head>
+<body class="min-h-screen">
 
-<body class="font-display bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
-  <div class="min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm p-4 flex justify-between items-center">
+  <button onclick="history.back()">
+    <span class="material-symbols-outlined">arrow_back_ios_new</span>
+  </button>
+  <h2 id="job-title" class="font-bold text-lg">Manage</h2>
+  <span class="material-symbols-outlined">more_horiz</span>
+</header>
 
-    <div class="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm p-4 flex justify-between items-center z-10">
-      <button onclick="history.back()">
-        <span class="material-symbols-outlined">arrow_back_ios_new</span>
-      </button>
-      <h2 id="job-title" class="font-bold">Manage</h2>
-      <span class="material-symbols-outlined">more_horiz</span>
-    </div>
+<main class="px-5 pt-4">
 
-    <main class="flex-grow pb-24">
-
-      <h2 class="text-2xl font-extrabold px-4 pb-3 pt-6 text-primary">
-        Applicants (<span id="count">0</span>)
-      </h2>
-
-      <div class="px-4 space-y-10">
-
-<div class="bg-white rounded-2xl shadow-md p-5">
-    <h3 class="font-bold text-yellow-600 mb-3">
-      Pending (<span id="pending-count">0</span>)
-    </h3>
-    <div id="pending-container" class="space-y-6"></div>
-  </div>
-
-  <div class="bg-white rounded-2xl shadow-md p-5">
-    <h3 class="font-bold text-green-600 mb-3">
-      Accepted (<span id="approved-count">0</span>)
-    </h3>
-    <div id="approved-container" class="space-y-6"></div>
-  </div>
-
-  <div class="bg-white rounded-2xl shadow-md p-5">
-    <h3 class="font-bold text-red-600 mb-3">
-      Declined (<span id="rejected-count">0</span>)
-    </h3>
-    <div id="rejected-container" class="space-y-6"></div>
-  </div>
-
+<!-- Filter Pills -->
+<div id="filterPills" class="flex gap-2 mb-4 overflow-x-auto pb-2 no-scrollbar">
+  <button onclick="showTab('Pending')" id="btnPending" class="px-6 py-2.5 rounded-full bg-primary text-white font-semibold text-sm shadow-lg">
+    Pending <span id="pending-count" class="ml-1">0</span>
+  </button>
+  <button onclick="showTab('Approved')" id="btnApproved" class="px-6 py-2.5 rounded-full bg-gray-200 text-gray-700 font-medium text-sm hover:bg-gray-300">
+    Accepted <span id="approved-count" class="ml-1">0</span>
+  </button>
+  <button onclick="showTab('Rejected')" id="btnRejected" class="px-6 py-2.5 rounded-full bg-gray-200 text-gray-700 font-medium text-sm hover:bg-gray-300">
+    Declined <span id="rejected-count" class="ml-1">0</span>
+  </button>
 </div>
-    </main>
+
+<!-- Applicants Containers -->
+<div id="pending-container"></div>
+<div id="approved-container" class="hidden"></div>
+<div id="rejected-container" class="hidden"></div>
+
+<!-- Empty State -->
+<div id="emptyState" class="hidden flex flex-col items-center justify-center py-20 px-10 text-center">
+  <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mb-6">
+    <span class="material-symbols-outlined text-4xl text-gray-400">inbox</span>
   </div>
-  
+  <h3 class="font-bold text-gray-800 text-lg">No candidates yet</h3>
+  <p class="text-gray-500 text-sm mt-2 leading-relaxed">This category is empty.</p>
+</div>
+
+</main>
 
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
 const SUPABASE_URL = "https://ispbevvwwggbktfczmui.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7";
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const jobpostId = new URLSearchParams(location.search).get("jobpost_id");
 
-/* ---------- helpers ---------- */
+// render availability
 function renderAvailability(avail = {}) {
   const days = ["mon","tue","wed","thu","fri","sat","sun"];
   const labels = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-
-  function row(label, key) {
-    return `
-      <div class="grid grid-cols-8 gap-2 text-center items-center">
-        <div class="text-left font-medium">${label}</div>
-        ${days.map(d => `
-          <div class="h-3 rounded-full ${
-            avail?.[d]?.includes(key)
-              ? "bg-success"
-              : "bg-gray-200"
-          }"></div>
-        `).join("")}
-      </div>
-    `;
-  }
-
-  return `
-    <div class="space-y-2 text-xs text-gray-500 bg-gray-50 p-3 rounded-xl">
-      <div class="grid grid-cols-8 gap-2 text-center font-bold">
-        <div></div>
-        ${labels.map(d => `<div>${d}</div>`).join("")}
-      </div>
-      ${row("Morning", "morning")}
-      ${row("Afternoon", "afternoon")}
-      ${row("Evening", "evening")}
-    </div>
-  `;
+  const row = (label,key) => `<div class="grid grid-cols-8 gap-2 text-center items-center">
+      <div class="text-left font-medium text-xs">${label}</div>
+      ${days.map(d=>`<div class="h-3 rounded-full ${avail?.[d]?.includes(key)?"bg-success":"bg-gray-200"}"></div>`).join("")}
+    </div>`;
+  return `<div class="space-y-2 text-xs text-gray-500 bg-gray-50 p-3 rounded-xl">
+    <div class="grid grid-cols-8 gap-2 text-center font-bold text-gray-400"><div></div>${labels.map(d=>`<div>${d}</div>`).join("")}</div>
+    ${row("Morning","morning")}${row("Afternoon","afternoon")}${row("Evening","evening")}
+  </div>`;
 }
 
-/* ---------- load job title ---------- */
+// Load job title
 async function loadJobTitle() {
-  const { data, error } = await sb
-    .from("jobposts")
-    .select("job_title")
-    .eq("jobpost_id", jobpostId)
-    .single();
-
-  if (error) {
-    console.error("Job title error:", error);
-    return;
-  }
-
-  document.getElementById("job-title").innerText =
-    "Manage: " + (data.job_title || "");
+  const { data, error } = await sb.from("jobposts").select("job_title").eq("jobpost_id",jobpostId).single();
+  if(!error && data) document.getElementById("job-title").innerText = "Manage: "+data.job_title;
 }
 
-/* ---------- load applicants (ตัวหลัก) ---------- */
+// Load applicants
 async function loadApplicants() {
-  const { data, error } = await sb
-    .from("job_applications")
-    .select(`
-      job_application_id,
-      application_status,
-      job_seekers (
-        bio,
-        gender,
-        availability,
-        profiles (
-          first_name,
-          last_name,
-          avatar_url
-        )
-      )
-    `)
-    .eq("jobpost_id", jobpostId);
+  const { data, error } = await sb.from("job_applications")
+    .select(`job_application_id,application_status,job_seekers(job_seeker_id,bio,gender,birth_date,availability,profiles(first_name,last_name,avatar_url))`)
+    .eq("jobpost_id",jobpostId);
+  if(error) return;
+  
+// โหลดข้อมูล
 
-  if (error) return;
+  
 
-  const pending = document.getElementById("pending-container");
-  const approved = document.getElementById("approved-container");
-  const rejected = document.getElementById("rejected-container");
+  const pendingContainer=document.getElementById("pending-container");
+  const approvedContainer=document.getElementById("approved-container");
+  const rejectedContainer=document.getElementById("rejected-container");
+  pendingContainer.innerHTML=""; approvedContainer.innerHTML=""; rejectedContainer.innerHTML="";
 
-  pending.innerHTML = "";
-  approved.innerHTML = "";
-  rejected.innerHTML = "";
+  let pendingCount=0, approvedCount=0, rejectedCount=0;
 
-  let pendingCount = 0;
-  let approvedCount = 0;
-  let rejectedCount = 0;
-
-  data.forEach(app => {
-    const s = app.job_seekers;
-    const p = s?.profiles;
-    if (!s || !p) return;
-
-    const fullName =
-      `${p.first_name ?? ""} ${p.last_name ?? ""}`.trim() || "Unknown";
-
-    const avatar =
-      p.avatar_url || "https://via.placeholder.com/150";
-
+  data.forEach(app=>{
+    const s=app.job_seekers; const p=s?.profiles;
+    if(!s||!p) return;
+    const fullName=`${p.first_name??""} ${p.last_name??""}`.trim()||"Unknown";
+    const avatar=p.avatar_url||"https://via.placeholder.com/150";
     const card = `
-      <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 space-y-4 border border-gray-100">
+<a href="ReviewProfilejobseeker.html?job_seeker_id=${s.job_seeker_id}" class="block hover:no-underline">
+  <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-4 border border-gray-100 mb-4">
 
-        <div class="flex items-center gap-4">
-          <img class="h-16 w-16 rounded-full object-cover ring-4 ring-primary/10" src="${avatar}" />
-          <div>
-            <p class="text-primary text-lg font-bold">${fullName}</p>
-            <p class="text-gray-500 text-sm">${s.gender ?? "-"}</p>
-          </div>
-        </div>
-
-        <p class="text-gray-600">${s.bio || "No bio provided"}</p>
-
-        <div>
-          <p class="font-semibold mb-2">Availability</p>
-          ${renderAvailability(s.availability || {})}
-        </div>
-
-        ${
-          app.application_status === "Pending"
-            ? `
-            <div class="grid grid-cols-2 gap-4 pt-2">
-              <button
-                onclick="updateStatus('${app.job_application_id}', 'Rejected')"
-                class="h-12 bg-red-500 hover:bg-red-600 text-white rounded-xl transition">
-                Decline
-              </button>
-
-              <button
-                onclick="updateStatus('${app.job_application_id}', 'Approved')"
-                class="h-12 bg-success hover:opacity-90 text-white rounded-xl transition">
-                Accept
-              </button>
-            </div>
-            `
-            : ""
-        }
+    <!-- Header: Avatar + Name + Gender/Age -->
+    <div class="flex items-center gap-4">
+      <img class="h-16 w-16 rounded-full object-cover ring-4 ring-primary/20" src="${avatar}" alt="Profile picture" />
+      <div class="flex flex-col">
+        <p class="text-primary text-lg font-bold">${fullName}</p>
+        <p class="text-gray-500 text-sm">${s.gender ?? "-"} • ${getAge(s.birth_date)} ปี</p>
       </div>
-    `;
+    </div>
 
-    if (app.application_status === "Approved") {
-      approved.innerHTML += card;
-      approvedCount++;
-    } else if (app.application_status === "Rejected") {
-      rejected.innerHTML += card;
-      rejectedCount++;
-    } else {
-      pending.innerHTML += card;
-      pendingCount++;
+    <!-- Bio -->
+    <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">${s.bio || "No bio provided"}</p>
+
+    <!-- Availability -->
+    <div>
+      <p class="font-semibold mb-2 text-sm text-gray-700">Availability</p>
+      ${renderAvailability(s.availability || {})}
+    </div>
+
+    <!-- Action Buttons -->
+    ${app.application_status === "Pending" ? `
+      <div class="grid grid-cols-2 gap-4 pt-2">
+        <button onclick="updateStatus('${app.job_application_id}','Rejected'); event.stopPropagation();" 
+                class="h-12 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold transition-all duration-200">
+          Decline
+        </button>
+        <button onclick="updateStatus('${app.job_application_id}','Approved'); event.stopPropagation();" 
+                class="h-12 bg-success hover:opacity-90 text-white rounded-xl font-semibold transition-all duration-200">
+          Accept
+        </button>
+      </div>
+    ` : ""}
+
+  </div>
+</a>
+`;
+    if(app.application_status==="Approved"){ approvedContainer.innerHTML+=card; approvedCount++; }
+    else if(app.application_status==="Rejected"){ rejectedContainer.innerHTML+=card; rejectedCount++; }
+    else { pendingContainer.innerHTML+=card; pendingCount++; }
+  });
+
+  document.getElementById("pending-count").innerText=pendingCount;
+  document.getElementById("approved-count").innerText=approvedCount;
+  document.getElementById("rejected-count").innerText=rejectedCount;
+
+  showTab("Pending");
+}
+
+// Update status
+window.updateStatus=async function(id,status){ await sb.from("job_applications").update({application_status:status}).eq("job_application_id",id); loadApplicants(); }
+// คำนวณอายุ
+function getAge(birthDateStr) {
+  if(!birthDateStr) return "-";
+  const today = new Date();
+  const birthDate = new Date(birthDateStr);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+}
+// Tab switch
+function showTab(status){
+  const containers={"Pending":document.getElementById("pending-container"),
+                    "Approved":document.getElementById("approved-container"),
+                    "Rejected":document.getElementById("rejected-container")};
+  Object.keys(containers).forEach(key=>containers[key].style.display="none");
+  containers[status].style.display="block";
+
+  ["Pending","Approved","Rejected"].forEach(s=>{
+    const btn=document.getElementById("btn"+s);
+    if(s===status){ 
+      btn.classList.add("bg-primary","text-white","shadow-lg");
+      btn.classList.remove("bg-gray-200","text-gray-700");
+    } else { 
+      btn.classList.remove("bg-primary","text-white","shadow-lg");
+      btn.classList.add("bg-gray-200","text-gray-700");
     }
   });
 
-  document.getElementById("pending-count").innerText = pendingCount;
-  document.getElementById("approved-count").innerText = approvedCount;
-  document.getElementById("rejected-count").innerText = rejectedCount;
-
-  document.getElementById("count").innerText = data.length;
+  const emptyState=document.getElementById("emptyState");
+  emptyState.classList.toggle("hidden",containers[status].children.length>0);
 }
-/* ---------- update status ---------- */
-window.updateStatus = async function (id, status) {
-  console.log("Updating:", id, status)
+window.showTab=showTab;
 
-  const { data, error } = await sb
-    .from("job_applications")
-    .update({ application_status: status })
-    .eq("job_application_id", id)
-    .select()
-
-  console.log("UPDATE RESULT:", data, error)
-
-  if (error) {
-    alert("Update failed")
-    return
-  }
-
-  loadApplicants()
-}
-
-/* ---------- init ---------- */
+// Init
 loadJobTitle();
 loadApplicants();
 </script>
