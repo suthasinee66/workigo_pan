@@ -1,121 +1,222 @@
 <!DOCTYPE html>
-
-<html lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Employer - QR Scanner</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#ff6a00",
-              "background-light": "#ffffff",
-              "background-dark": "#1a1a1a", /* A hypothetical dark mode background */
-              "card-light": "#f5f7fa",
-              "card-dark": "#2a2a2a", /* A hypothetical dark mode card */
-              "text-primary-light": "#1F3A5F",
-              "text-primary-dark": "#e0e0e0",
-              "text-secondary-light": "#8d715e",
-              "text-secondary-dark": "#a0a0a0",
-            },
-            fontFamily: {
-              "display": ["Manrope", "sans-serif"]
-            },
-            borderRadius: {
-                "DEFAULT": "1rem",
-                "lg": "1.5rem",
-                "xl": "2rem",
-                "full": "9999px"
-            },
-            boxShadow: {
-              'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.07)',
-            }
-          },
-        },
-      }
-    </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QR Scanner</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
 <style>
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-      .material-symbols-outlined.fill {
-        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="font-display">
-<div class="relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden">
-<!-- Camera View Background -->
-<div class="absolute inset-0 bg-center bg-no-repeat bg-cover" data-alt="Abstract blurry office corridor background representing the camera feed." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDmSw5CZU6s5m-xDv7POX2HP_aoPppxrsXirIUVDJ3la-Y8aLC7q9YCLIdMXgRC__O6_aq0VvLN4SvrjX-r2RKARJc3k6o5VemJVu-azQqH_P2djqG_1k_6yI4AEEduOzMQcC1d2pEEsoT4i2pZDeBnAbv3ueYv7n597e6_KIbl7Ib2QmBMOLybdh9zi5eU0EQH5D3wM0I2F-PzSwrCsXFeoLDsEnYkxdHHKSfk8IuITqC8e5qK-lVXGKew1N10ru_Dt5XfB65OH7nC');"></div>
-<div class="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
-<!-- Top App Bar -->
-<div class="relative z-10">
-<div class="flex items-center p-4">
-<button class="text-white flex size-10 shrink-0 items-center justify-center rounded-full bg-black/20 backdrop-blur-sm">
-<span class="material-symbols-outlined text-2xl">arrow_back</span>
-</button>
-<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">QR Scanner</h2>
+  body {
+    font-family: "Manrope", sans-serif;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400;
+  }
+
+  /* เส้น scan animation */
+  .scan-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #ff6a00;
+    animation: scan 2s linear infinite;
+  }
+
+  @keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="relative w-full h-screen overflow-hidden">
+
+  <!-- 🎥 กล้องจริง -->
+  <div id="reader" class="absolute inset-0 z-0"></div>
+
+  <!-- overlay ดำ -->
+  <div class="absolute inset-0 bg-black/50 z-10"></div>
+
+  <!-- UI -->
+  <div class="relative z-20 h-full flex flex-col">
+
+    <!-- TOP BAR -->
+    <div class="flex items-center p-4">
+      <button onclick="history.back()" class="text-white">
+        <span class="material-symbols-outlined text-2xl">arrow_back</span>
+      </button>
+      <h2 class="text-white text-lg font-bold flex-1 text-center">
+        QR Scanner
+      </h2>
+    </div>
+
+    <!-- CENTER SCAN AREA -->
+    <div class="flex-1 flex flex-col items-center justify-center px-6">
+
+      <p class="text-white mb-6">Scan QR Code</p>
+
+      <div class="relative w-72 h-72">
+
+        <!-- frame -->
+        <div class="absolute inset-0 border-2 border-white/30 rounded-xl"></div>
+
+        <!-- corner -->
+        <div class="absolute top-0 left-0 w-10 h-10 border-t-4 border-l-4 border-orange-500"></div>
+        <div class="absolute top-0 right-0 w-10 h-10 border-t-4 border-r-4 border-orange-500"></div>
+        <div class="absolute bottom-0 left-0 w-10 h-10 border-b-4 border-l-4 border-orange-500"></div>
+        <div class="absolute bottom-0 right-0 w-10 h-10 border-b-4 border-r-4 border-orange-500"></div>
+
+        <!-- scan line -->
+        <div class="scan-line"></div>
+
+      </div>
+
+    </div>
+
+    <!-- RESULT PANEL -->
+    <div id="result-panel" class="hidden bg-white rounded-t-2xl p-6">
+
+      <div class="flex flex-col items-center gap-3">
+
+        <img id="avatar"
+          class="w-20 h-20 rounded-full object-cover"
+          src="https://via.placeholder.com/150"/>
+
+        <p id="name" class="text-lg font-bold">-</p>
+
+        <div class="flex gap-3 mt-4 w-full">
+          <button onclick="restartScanner()"
+            class="flex-1 bg-gray-200 py-3 rounded-xl">
+            Scan Again
+          </button>
+
+          <button onclick="confirmCheckin()"
+            class="flex-1 bg-orange-500 text-white py-3 rounded-xl font-bold">
+            Confirm
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </div>
-</div>
-<!-- Scanning UI -->
-<div class="relative z-10 flex flex-1 flex-col items-center justify-center p-6 text-center">
-<p class="text-white text-base font-medium leading-normal mb-6">Please scan worker QR code</p>
-<div class="relative w-full max-w-xs aspect-square">
-<!-- Corner brackets -->
-<div class="absolute top-0 left-0 h-12 w-12 border-t-4 border-l-4 border-primary rounded-tl-lg"></div>
-<div class="absolute top-0 right-0 h-12 w-12 border-t-4 border-r-4 border-primary rounded-tr-lg"></div>
-<div class="absolute bottom-0 left-0 h-12 w-12 border-b-4 border-l-4 border-primary rounded-bl-lg"></div>
-<div class="absolute bottom-0 right-0 h-12 w-12 border-b-4 border-r-4 border-primary rounded-br-lg"></div>
-</div>
-</div>
-<!-- Camera Controls -->
-<div class="relative z-10 flex items-center justify-center gap-6 p-4 pb-6">
-<button class="flex shrink-0 items-center justify-center rounded-full size-12 bg-black/20 backdrop-blur-sm text-white shadow-soft">
-<span class="material-symbols-outlined text-2xl">photo_library</span>
-</button>
-<button class="flex shrink-0 items-center justify-center rounded-full size-12 bg-black/20 backdrop-blur-sm text-white shadow-soft">
-<span class="material-symbols-outlined text-2xl">flashlight_on</span>
-</button>
-</div>
-<!-- Bottom Sheet with Profile -->
-<div class="absolute inset-0 z-20 flex flex-col justify-end items-stretch bg-black/40">
-<div class="flex flex-col items-stretch bg-background-light dark:bg-card-dark rounded-t-lg shadow-soft">
-<!-- Handle -->
-<div class="flex h-6 w-full items-center justify-center pt-3">
-<div class="h-1.5 w-10 rounded-full bg-gray-200 dark:bg-gray-600"></div>
-</div>
-<!-- Profile Header -->
-<div class="flex p-6 @container">
-<div class="flex w-full flex-col gap-6 items-center">
-<div class="flex gap-4 flex-col items-center">
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-28 w-28 shadow-soft" data-alt="Profile picture of Cameron Williamson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAbKoj4DpbGZ6bqgQYZrqPifhVss0pGJku53srzJC7XRHS9dH2yhM7t2mfZ5PFTU41fudlIvBL4Q-a4WwZIxUdJMDnP5b_Gyz_Oyu1BmeelBaJij2Q315C9oBjY73hBNBNUXuLv6kxvNdSeQ7XOvwptI0LEPkkk8pagCFvUqxPqvHUkuRhSP7qm6lG1MfayqVoADhnRwHHvYC1KlZEMz7JzXfOyxXNrRtrfXU5bMzdh3mybA5EmhSuy7wlAfLDBWph5Uu4qNRO7n9mu");'></div>
-<div class="flex flex-col items-center justify-center">
-<p class="text-text-primary-light dark:text-text-primary-dark text-2xl font-bold leading-tight tracking-[-0.015em] text-center">Cameron Williamson</p>
-<p class="text-text-secondary-light dark:text-text-secondary-dark text-lg font-medium leading-normal text-center mt-1">Checking In</p>
-</div>
-</div>
-<div class="flex w-full max-w-sm gap-4">
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-6 bg-card-light dark:bg-gray-600/50 text-text-primary-light dark:text-text-primary-dark text-base font-bold leading-normal tracking-[0.015em] flex-1 shadow-soft">
-<span class="truncate">Cancel</span>
-</button>
-<button onclick="window.location.href='ConfirmCheck-in_employer.html'"class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-6 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] flex-1 shadow-soft">
-<span class="truncate">Confirm</span>
-</button>
-</div>
-</div>
-</div>
-<div class="h-4"></div>
-</div>
-</div>
-</div>
-</body></html>
+
+<!-- LIB -->
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<!-- SUPABASE -->
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+let scanner;
+let scannedEmploymentId = null;
+
+/* ================= START CAMERA ================= */
+async function startScanner() {
+  scanner = new Html5Qrcode("reader");
+
+  const devices = await Html5Qrcode.getCameras();
+
+  const backCam = devices.find(d =>
+    d.label.toLowerCase().includes("back")
+  ) || devices[0];
+
+  scanner.start(
+    backCam.id,
+    {
+      fps: 10,
+      qrbox: 250
+    },
+    onScanSuccess
+  );
+}
+
+/* ================= ON SCAN ================= */
+async function onScanSuccess(decodedText) {
+
+  await scanner.stop();
+
+  scannedEmploymentId = decodedText;
+
+  // STEP 1: หา job_application_id
+  const { data: emp } = await supabase
+    .from("employments")
+    .select("job_application_id")
+    .eq("employment_id", scannedEmploymentId)
+    .single();
+
+  if (!emp) {
+    alert("Invalid QR");
+    return;
+  }
+
+  // STEP 2: โหลด worker
+  const { data } = await supabase
+    .from("job_applications")
+    .select(`
+      job_seekers:worker_id (
+        avatar_url,
+        profiles:user_id (
+          first_name,
+          last_name
+        )
+      )
+    `)
+    .eq("job_application_id", emp.job_application_id)
+    .single();
+
+  const worker = data?.job_seekers;
+  const profile = worker?.profiles;
+
+  const fullName = [profile?.first_name, profile?.last_name]
+    .filter(Boolean)
+    .join(" ");
+
+  document.getElementById("name").textContent = fullName;
+  document.getElementById("avatar").src =
+    worker?.avatar_url || "https://via.placeholder.com/150";
+
+  document.getElementById("result-panel").classList.remove("hidden");
+}
+
+/* ================= CONFIRM ================= */
+window.confirmCheckin = async function () {
+
+  await supabase
+    .from("attendance")
+    .insert({
+      employment_id: scannedEmploymentId,
+      check_in_time: new Date()
+    });
+
+  alert("Check-in success");
+
+  restartScanner();
+};
+
+/* ================= RESTART ================= */
+window.restartScanner = function () {
+  document.getElementById("result-panel").classList.add("hidden");
+  startScanner();
+};
+
+/* ================= START ================= */
+startScanner();
+
+</script>
+
+</body>
+</html>

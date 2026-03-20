@@ -117,43 +117,46 @@ async function loadApplicants() {
     const fullName=`${p.first_name??""} ${p.last_name??""}`.trim()||"Unknown";
     const avatar=p.avatar_url||"https://via.placeholder.com/150";
     const card = `
-<a href="ReviewProfilejobseeker.html?job_seeker_id=${s.job_seeker_id}" class="block hover:no-underline">
-  <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-4 border border-gray-100 mb-4">
+<div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-4 border border-gray-100 mb-4">
 
-    <!-- Header: Avatar + Name + Gender/Age -->
-    <div class="flex items-center gap-4">
+  <!-- Header: Avatar + Name + Gender/Age -->
+  <div class="flex items-center gap-4">
+    <a href="ReviewProfilejobseeker.html?job_seeker_id=${s.job_seeker_id}" class="flex items-center gap-4 hover:no-underline">
       <img class="h-16 w-16 rounded-full object-cover ring-4 ring-primary/20" src="${avatar}" alt="Profile picture" />
       <div class="flex flex-col">
         <p class="text-primary text-lg font-bold">${fullName}</p>
         <p class="text-gray-500 text-sm">${s.gender ?? "-"} • ${getAge(s.birth_date)} ปี</p>
       </div>
-    </div>
-
-    <!-- Bio -->
-    <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">${s.bio || "No bio provided"}</p>
-
-    <!-- Availability -->
-    <div>
-      <p class="font-semibold mb-2 text-sm text-gray-700">Availability</p>
-      ${renderAvailability(s.availability || {})}
-    </div>
-
-    <!-- Action Buttons -->
-    ${app.application_status === "Pending" ? `
-      <div class="grid grid-cols-2 gap-4 pt-2">
-        <button onclick="updateStatus('${app.job_application_id}','Rejected'); event.stopPropagation();" 
-                class="h-12 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold transition-all duration-200">
-          Decline
-        </button>
-        <button onclick="updateStatus('${app.job_application_id}','Approved'); event.stopPropagation();" 
-                class="h-12 bg-success hover:opacity-90 text-white rounded-xl font-semibold transition-all duration-200">
-          Accept
-        </button>
-      </div>
-    ` : ""}
-
+    </a>
   </div>
-</a>
+
+  <!-- Bio -->
+  <p class="text-gray-600 text-sm leading-relaxed line-clamp-3">${s.bio || "No bio provided"}</p>
+
+  <!-- Availability -->
+  <div>
+    <p class="font-semibold mb-2 text-sm text-gray-700">Availability</p>
+    ${renderAvailability(s.availability || {})}
+  </div>
+
+  <!-- Action Buttons -->
+  ${app.application_status === "Pending" ? `
+    <div class="grid grid-cols-2 gap-4 pt-2">
+      <button 
+          onclick="event.stopPropagation(); updateStatus('${app.job_application_id}','Rejected');"
+          class="h-12 bg-red-500 hover:bg-red-600 text-white rounded-xl font-semibold transition-all duration-200">
+        Decline
+      </button>
+
+      <button 
+          onclick="event.stopPropagation(); updateStatus('${app.job_application_id}','Approved');"
+          class="h-12 bg-success hover:opacity-90 text-white rounded-xl font-semibold transition-all duration-200">
+        Accept
+      </button>
+    </div>
+  ` : ""}
+
+</div>
 `;
     if(app.application_status==="Approved"){ approvedContainer.innerHTML+=card; approvedCount++; }
     else if(app.application_status==="Rejected"){ rejectedContainer.innerHTML+=card; rejectedCount++; }
@@ -168,7 +171,65 @@ async function loadApplicants() {
 }
 
 // Update status
-window.updateStatus=async function(id,status){ await sb.from("job_applications").update({application_status:status}).eq("job_application_id",id); loadApplicants(); }
+// Update status + create employment if Approved
+// Tab switch
+window.showTab = function(status){
+  const containers={
+    "Pending":document.getElementById("pending-container"),
+    "Approved":document.getElementById("approved-container"),
+    "Rejected":document.getElementById("rejected-container")
+  };
+  Object.keys(containers).forEach(key=>containers[key].style.display="none");
+  containers[status].style.display="block";
+
+  ["Pending","Approved","Rejected"].forEach(s=>{
+    const btn=document.getElementById("btn"+s);
+    if(s===status){ 
+      btn.classList.add("bg-primary","text-white","shadow-lg");
+      btn.classList.remove("bg-gray-200","text-gray-700");
+    } else { 
+      btn.classList.remove("bg-primary","text-white","shadow-lg");
+      btn.classList.add("bg-gray-200","text-gray-700");
+    }
+  });
+
+  const emptyState=document.getElementById("emptyState");
+  emptyState.classList.toggle("hidden",containers[status].children.length>0);
+}
+
+// Update status
+window.updateStatus = async function(id, status) {
+  console.log("🟢 Job Application ID:", id);
+  console.log("🟢 Status to update:", status);
+
+  try {
+    const { error: updateError } = await sb
+      .from("job_applications")
+      .update({ application_status: status })
+      .eq("job_application_id", id);
+
+    if(updateError) return console.error("Error updating application:", updateError);
+
+    if(status === "Approved"){
+      const { error: empError, data: empData } = await sb
+        .from("employments")
+        .insert([{
+          job_application_id: id,
+          start_date: null,
+          end_date: null,
+          agreed_wage: null,
+          employment_status: "Inactive"
+        }]);
+
+      if(empError) return console.error("Error creating employment:", empError);
+      console.log("🟢 Inserted employment row:", empData);
+    }
+
+    loadApplicants();
+  } catch(err){
+    console.error(err);
+  }
+}
 // คำนวณอายุ
 function getAge(birthDateStr) {
   if(!birthDateStr) return "-";

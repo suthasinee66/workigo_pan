@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Employer - Shift Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ff6a00",
+              "background-light": "#FFFFFF",
+              "background-dark": "#23170f",
+              "card-light": "#F5F7FA",
+              "card-dark": "#2C2017",
+              "text-primary-light": "#1F3A5F",
+              "text-primary-dark": "#EAE0D9",
+              "text-secondary-light": "#6C757D",
+              "text-secondary-dark": "#A8998E",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+            boxShadow: {
+              'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.07)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light font-display flex justify-center">
+
+<div class="w-full max-w-md min-h-screen bg-white overflow-x-hidden pb-24">
+<!-- Top App Bar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="flex size-10 shrink-0 items-center justify-center">
+<button onclick="history.back()">
+    <span class="material-symbols-outlined">arrow_back_ios_new</span>
+  </button>
+</div>
+<h1 class="text-text-primary-light dark:text-text-primary-dark text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Shift Detail</h1>
+<div class="flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-text-primary-light dark:text-text-primary-dark">more_horiz</span>
+</div>
+</div>
+<main class="flex flex-col gap-6 p-4">
+<!-- Job Summary Card -->
+<p id="job-title"
+  class="text-text-primary-light dark:text-text-primary-dark text-lg font-bold">
+  Loading...
+</p>
+
+<div class="flex items-center gap-2 text-text-secondary-light dark:text-text-secondary-dark">
+  <span class="material-symbols-outlined text-lg">calendar_today</span>
+  <p id="job-date" class="text-base font-medium">-</p>
+</div>
+
+<div class="flex items-center gap-2 text-text-secondary-light dark:text-text-secondary-dark">
+  <span class="material-symbols-outlined text-lg">schedule</span>
+  <p id="job-time" class="text-base font-medium">-</p>
+</div>
+
+<div class="flex items-center justify-between pt-2">
+  <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-medium">
+    Status:
+  </p>
+
+  <div id="job-status"></div>
+</div>
+<!-- Primary Action Button -->
+<div class="flex px-0 py-2">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-5 flex-1 bg-primary text-white gap-3 text-base font-bold leading-normal tracking-[0.015em] shadow-soft">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+<span onclick="window.location.href='ScaneCheck-in_employer.html'"class="truncate">Open Camera to Scan QR</span>
+</button>
+</div>
+<!-- Assigned Workers Section -->
+<div>
+<h2 class="text-text-primary-light dark:text-text-primary-dark text-lg font-bold leading-tight tracking-[-0.015em] pb-3">Assigned Workers</h2>
+<div class="flex flex-col gap-3">
+<div id="assigned-workers" class="flex flex-col gap-3">
+  <!-- Worker cards จะถูก append ที่นี่ -->
+</div>
+</div>
+</div>
+</main>
+</div>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+/* ================= GET ID ================= */
+const params = new URLSearchParams(window.location.search);
+const jobpostId = params.get("id");
+
+/* ================= STATUS ================= */
+function getStatus(job) {
+  const today = new Date();
+  const jobDate = new Date(job.start_date);
+
+  if (job.approval_status !== "Approved") {
+    return { text: job.approval_status, color: "bg-yellow-100 text-yellow-700" };
+  }
+
+
+  return { text: "Active", color: "bg-green-100 text-green-600" };
+}
+
+/* ================= FORMAT ================= */
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+/* ================= LOAD DATA ================= */
+async function loadDetail() {
+  if (!jobpostId) return;
+
+  const { data, error } = await supabase
+    .from("jobposts")
+    .select(`
+      job_title,
+      workplace_name,
+      start_date,
+      start_time,
+      end_time,
+      approval_status
+    `)
+    .eq("jobpost_id", jobpostId)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const status = getStatus(data);
+
+  /* ===== SET UI ===== */
+  document.getElementById("job-title").textContent =
+    data.job_title || "-";
+
+  document.getElementById("job-date").textContent =
+    formatDate(data.start_date);
+
+  document.getElementById("job-time").textContent =
+    `${data.start_time || "-"} - ${data.end_time || "-"}`;
+
+  document.getElementById("job-status").innerHTML = `
+    <div class="flex items-center justify-center rounded-full px-3 py-1 ${status.color}">
+      <p class="text-sm font-bold">${status.text}</p>
+    </div>
+  `;
+}
+/* ================= LOAD ASSIGNED WORKERS ================= */
+async function loadAssignedWorkers() {
+  const { data, error } = await supabase
+  .from("employments")
+  .select(`
+    employment_id,
+    employment_status,
+    job_seekers:job_applications (
+      job_seekers:worker_id (
+        avatar_url,
+        profiles:user_id (
+          first_name,
+          last_name
+        )
+      )
+    )
+  `)
+  .eq("jobpost_id", jobpostId);
+
+  if (error) {
+    console.error("Error loading assigned workers:", error);
+    return;
+  }
+
+  const container = document.getElementById("assigned-workers");
+  container.innerHTML = "";
+
+  data.forEach(emp => {
+  const worker = emp.job_seekers?.job_seekers;
+  const profile = worker?.profiles;
+
+  const firstName = profile?.first_name ?? "";
+const lastName = profile?.last_name ?? "";
+
+  const avatar = worker?.avatar_url || "https://via.placeholder.com/150";
+
+  const statusText = emp.employment_status ?? "Inactive";
+  const statusColor = statusText === "Active"
+    ? "bg-green-500 text-green-600"
+    : "bg-slate-400 text-text-secondary-light";
+
+  const workerCard = `
+  <div 
+    onclick="goToEmployment(${emp.employment_id})"
+    class="flex items-center justify-between bg-white border border-gray-100 p-4 rounded-2xl shadow-soft hover:shadow-md active:scale-[0.98] transition cursor-pointer">
+
+    <!-- LEFT -->
+    <div class="flex items-center gap-4">
+      <img 
+        class="h-12 w-12 rounded-full object-cover border border-gray-200" 
+        src="${avatar}" 
+        alt="${firstName} ${lastName}"
+      />
+
+      <div class="flex items-center">
+        <span class="text-base font-semibold text-gray-900">
+          ${firstName}
+        </span>
+        <span class="ml-2 text-base font-semibold text-gray-900">
+          ${lastName}
+        </span>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full ${statusText === "Active" ? "bg-green-500" : "bg-gray-400"}"></span>
+      <span class="text-sm font-semibold ${
+        statusText === "Active" ? "text-green-600" : "text-gray-500"
+      }">
+        ${statusText}
+      </span>
+    </div>
+
+  </div>
+`;
+
+  container.innerHTML += workerCard;
+});
+  console.log("Assigned workers data:", data);
+  console.log("jobpostId type:", typeof jobpostId, "value:", jobpostId);
+}
+
+
+// เรียกใช้
+loadAssignedWorkers();
+
+loadDetail();
+window.goToEmployment = function (employmentId) {
+  window.location.href = `employer_create_shifts.html?id=${employmentId}`;
+};
+</script>
+</body></html>

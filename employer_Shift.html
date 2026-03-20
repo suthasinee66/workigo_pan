@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Employer - Shifts</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ff6a00",
+              "background-light": "#FFFFFF",
+              "background-dark": "#23170f",
+              "card-light": "#F5F7FA",
+              "card-dark": "#2C2017",
+              "text-primary-light": "#1F3A5F",
+              "text-primary-dark": "#EAE0D9",
+              "text-secondary-light": "#6C757D",
+              "text-secondary-dark": "#A8998E",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+            boxShadow: {
+              'soft': '0 4px 12px 0 rgba(0, 0, 0, 0.07)',
+            }
+          },
+        },
+      }
+    </script>
+
+<style>
+.material-symbols-outlined {
+  font-size: 24px;
+}
+body {
+  min-height: max(884px, 100dvh);
+}
+</style>
+</head>
+
+<body class="bg-background-light font-display flex justify-center">
+
+<div class="w-full max-w-md min-h-screen bg-white overflow-x-hidden pb-24">
+
+<!-- TOP -->
+<div class="flex items-center px-4 py-3 shadow-sm sticky top-0 bg-white z-10">
+  <span onclick="location.href='employer_home.html'" 
+    class="material-symbols-outlined text-gray-700 cursor-pointer">
+    arrow_back_ios_new
+  </span>
+  <h1 class="flex-1 text-center font-bold text-lg text-gray-800">
+    Shifts
+  </h1>
+</div>
+
+<!-- LIST -->
+<div id="shift-list" class="p-4 space-y-4"></div>
+
+
+<!-- Bottom Nav -->
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t">
+  <div class="flex h-20 justify-around items-center">
+    <button onclick="location.href='employer_home.html'" class="material-symbols-outlined">home</button>
+    <button onclick="location.href='employer_Dashboard.html'" class="material-symbols-outlined ">Dashboard</button>
+    <button onclick="location.href='employer_Shift.html'" class="material-symbols-outlined text-primary">calendar_month</button>
+    <button class="material-symbols-outlined">person</button>
+  </div>
+</div>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+/* LOAD */
+async function loadShifts() {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    location.href = "signin.html";
+    return;
+  }
+
+  const employer_id = "EM_" + user.id;
+
+  const { data, error } = await supabase
+    .from("jobposts")
+    .select(`
+      jobpost_id,
+      job_title,
+      workplace_name,
+      start_date,
+      start_time,
+      end_time,
+      approval_status
+    `)
+    .eq("employer_id", employer_id)
+    .order("start_date", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  renderShifts(data);
+}
+
+/* STATUS */
+function getStatus(job) {
+  if (job.approval_status !== "Approved") {
+    return { text: job.approval_status, color: "bg-yellow-100 text-yellow-700" };
+  }
+  return { text: "Active", color: "bg-green-100 text-green-600" };
+}
+
+/* FORMAT DATE */
+function formatDate(dateStr) {
+  if (!dateStr) return "-";
+  return new Date(dateStr).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+/* RENDER */
+function renderShifts(shifts) {
+  const container = document.getElementById("shift-list");
+  container.innerHTML = "";
+
+  if (shifts.length === 0) {
+    container.innerHTML = `
+      <div class="text-center text-gray-400 mt-10">
+        No shifts found
+      </div>
+    `;
+    return;
+  }
+
+  shifts.forEach(job => {
+    const status = getStatus(job);
+
+    container.innerHTML += `
+      <div onclick="goToDetail('${job.jobpost_id}')"
+        class="bg-white border border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-md transition cursor-pointer">
+
+        <!-- TITLE -->
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-lg font-bold text-gray-900 leading-tight">
+              ${job.job_title || "-"}
+            </p>
+            <p class="text-sm text-gray-500 mt-1">
+              ${job.workplace_name || ""}
+            </p>
+          </div>
+
+          <span class="px-3 py-1 text-xs font-semibold rounded-full ${status.color}">
+            ${status.text}
+          </span>
+        </div>
+
+        <!-- INFO -->
+        <div class="mt-4 space-y-2">
+
+          <div class="flex items-center gap-2 text-gray-600 text-sm">
+            <span class="material-symbols-outlined text-base">calendar_today</span>
+            <span>${formatDate(job.start_date)}</span>
+          </div>
+
+          <div class="flex items-center gap-2 text-gray-600 text-sm">
+            <span class="material-symbols-outlined text-base">schedule</span>
+            <span>${job.start_time || "-"} • ${job.end_time || "-"}</span>
+          </div>
+
+        </div>
+
+      </div>
+    `;
+  });
+}
+
+/* ROUTE */
+window.goToDetail = function(id) {
+  location.href = `employer_ShiftDetail.html?id=${id}`;
+};
+
+loadShifts();
+</script>
+
+</body>
+</html>
