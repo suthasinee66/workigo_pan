@@ -73,178 +73,22 @@
     </button>
   </div>
 </header>
-
-<main class="max-w-md mx-auto pb-20">
-
-<!-- ================= WELCOME ================= -->
-<section class="px-4 pt-6 pb-2">
-  <h2 class="text-2xl font-bold">User Verification</h2>
-</section>
-<div class="flex gap-2 px-4 pt-3">
-
-<button onclick="setFilter('all')" id="f-all"
-class="flex-1 bg-primary text-white rounded-lg py-2 text-sm">
-All
-</button>
-
-<button onclick="setFilter('jobseeker')" id="f-jobseeker"
-class="flex-1 border rounded-lg py-2 text-sm">
-Jobseeker
-</button>
-
-<button onclick="setFilter('employer')" id="f-employer"
-class="flex-1 border rounded-lg py-2 text-sm">
-Employer
-</button>
-
-</div>
-
-
 <main class="max-w-md mx-auto pb-20 px-4 pt-4">
+  <!-- WELCOME -->
+  <section class="pt-6 pb-2">
+    <h2 class="text-2xl font-bold">User Verification</h2>
+  </section>
 
-<div id="user-list" class="flex flex-col gap-4 px-4">
-
-<!-- MOCK USER -->
-<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
-
-<img src="https://i.pravatar.cc/80?img=12" class="w-12 h-12 rounded-full"/>
-
-<div class="flex-1">
-  <p class="font-bold">Sarah Johnson</p>
-  <p class="text-xs text-slate-500">sarah@gmail.com</p>
-
-  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-600">
-    Pending
-  </span>
-
-  <div class="flex gap-2 mt-3">
-    <button class="flex-1 bg-primary text-white rounded-lg py-1.5 text-sm font-semibold">
-      Verify
-    </button>
-
-    <button class="flex-1 border rounded-lg py-1.5 text-sm">
-      Reject
-    </button>
+  <!-- FILTER TABS -->
+  <div class="flex gap-2 overflow-x-auto hide-scrollbar" id="filter-tabs">
+    <button data-status="ALL" class="filter-btn px-5 py-2.5 rounded-full bg-primary text-white text-sm font-semibold">All</button>
+    <button data-status="Pending" class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-sm font-semibold border">Pending</button>
+    <button data-status="Approved" class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-sm font-semibold border">Approved</button>
+    <button data-status="Rejected" class="filter-btn px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-sm font-semibold border">Rejected</button>
   </div>
-</div>
 
-</div>
-
-<!-- MOCK USER -->
-<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
-
-<img src="https://i.pravatar.cc/80?img=32" class="w-12 h-12 rounded-full"/>
-
-<div class="flex-1">
-  <p class="font-bold">Michael Cafe</p>
-  <p class="text-xs text-slate-500">michael@mail.com</p>
-
-  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-600">
-    Verified
-  </span>
-
-</div>
-</div>
-
-<!-- MOCK USER -->
-<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
-
-<img src="https://i.pravatar.cc/80?img=5" class="w-12 h-12 rounded-full"/>
-
-<div class="flex-1">
-  <p class="font-bold">Anna Smith</p>
-  <p class="text-xs text-slate-500">anna@mail.com</p>
-
-  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-600">
-    Rejected
-  </span>
-
-</div>
-</div>
-
-</div>
-<div id="user-detail" class="hidden space-y-4">
-
-<button onclick="backToList()" class="flex items-center gap-1 text-sm">
-<span class="material-symbols-outlined">arrow_back</span>
-Back
-</button>
-
-<!-- profile -->
-<div class="bg-white rounded-xl border p-4 flex gap-3">
-
-<img id="detail-avatar"
-src="https://i.pravatar.cc/100"
-class="w-16 h-16 rounded-full">
-
-<div>
-<p id="detail-name" class="font-bold text-lg"></p>
-<p id="detail-email" class="text-sm text-slate-500"></p>
-
-<span id="detail-status"
-class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-600">
-Pending
-</span>
-</div>
-
-</div>
-<!-- personal info -->
-<div class="bg-white rounded-xl border p-4 space-y-2">
-
-<p class="font-bold mb-1">Personal Information</p>
-
-<div class="text-sm">
-<p><span class="text-slate-500">Citizen ID:</span> <span id="detail-citizen"></span></p>
-<p><span class="text-slate-500">Date of Birth:</span> <span id="detail-dob"></span></p>
-<p><span class="text-slate-500">Phone:</span> <span id="detail-phone"></span></p>
-<p><span class="text-slate-500">Address:</span> <span id="detail-address"></span></p>
-</div>
-
-</div>
-
-<!-- Face -->
-<div class="bg-white rounded-xl border p-4">
-
-<p class="font-bold mb-2">Face Photo</p>
-
-<img
-id="detail-face"
-class="rounded-lg border w-full object-cover">
-
-</div>
-
-<!-- ID Card -->
-<div class="bg-white rounded-xl border p-4">
-
-<p class="font-bold mb-2">National ID Card</p>
-
-<img
-id="detail-idcard"
-class="rounded-lg border w-full">
-
-</div>
-
-
-<!-- actions -->
-<div class="flex gap-3">
-
-<button onclick="approveUser()"
-class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-xl py-3 font-semibold transition">
-Verify
-</button>
-
-<button onclick="rejectUser()"
-class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-xl py-3 font-semibold transition">
-Reject
-</button>
-
-</div>
-
-
-</div>
-
-
-
+  <!-- USER LIST -->
+  <div id="user-list" class="flex flex-col gap-4 mt-4"></div>
 </main>
 
 <!-- ===== Bottom Nav ===== -->
@@ -268,7 +112,6 @@ Reject
 
 </div>
 </nav>
-
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
@@ -278,6 +121,7 @@ const supabase = createClient(
 );
 
 const list = document.getElementById("user-list");
+let allUsers = []; // เก็บข้อมูลทั้งหมดเพื่อ filter
 
 // Helper for status badge color
 function getStatusBadge(status) {
@@ -288,35 +132,16 @@ function getStatusBadge(status) {
   }
 }
 
-// Load employer verifications
-async function loadEmployerVerifications() {
-  list.innerHTML = `<p class="text-sm text-slate-500">Loading...</p>`;
-
-  const { data, error } = await supabase
-    .from("employer_verifications")
-    .select(`
-      *,
-      employers (
-        business_name,
-        store_image_url
-      )
-    `)
-    .order("submitted_at", { ascending: false });
-
-  if (error) {
-    console.error("Error loading employer verifications:", error);
-    list.innerHTML = `<p class="text-red-500 text-sm">Cannot load data</p>`;
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    list.innerHTML = `<p class="text-sm text-slate-500">No submissions yet</p>`;
-    return;
-  }
-
+// Render user list
+function renderUsers(users) {
   list.innerHTML = "";
 
-  data.forEach(u => {
+  if (!users || users.length === 0) {
+    list.innerHTML = `<p class="text-sm text-slate-500">No submissions</p>`;
+    return;
+  }
+
+  users.forEach(u => {
     const businessName = u.employers?.business_name ?? "No Name";
     const storeImage = u.employers?.store_image_url ?? "https://i.pravatar.cc/80";
     const statusColor = getStatusBadge(u.status);
@@ -335,7 +160,6 @@ async function loadEmployerVerifications() {
       </div>
     `;
 
-    // คลิกไปหน้า detail พร้อมส่ง employer_id
     div.onclick = () => {
       window.location.href = `Legal_verify_users_detail.html?employer_id=${encodeURIComponent(u.employer_id)}`;
     };
@@ -343,6 +167,56 @@ async function loadEmployerVerifications() {
     list.appendChild(div);
   });
 }
+
+// Load employer verifications
+async function loadEmployerVerifications() {
+  list.innerHTML = `<p class="text-sm text-slate-500">Loading...</p>`;
+
+  const { data, error } = await supabase
+    .from("employer_verifications")
+    .select(`*, employers (business_name, store_image_url)`)
+    .order("submitted_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    list.innerHTML = `<p class="text-red-500 text-sm">Cannot load data</p>`;
+    return;
+  }
+
+  allUsers = data || [];
+  renderUsers(allUsers);
+}
+
+// Filter function
+// Filter function
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    // Remove active class from all
+    document.querySelectorAll(".filter-btn").forEach(b => {
+      b.classList.remove("bg-primary", "text-white");
+      b.classList.add("bg-white", "dark:bg-slate-800", "border");
+    });
+
+    // Add active class to clicked button
+    btn.classList.add("bg-primary", "text-white");
+    btn.classList.remove("bg-white", "dark:bg-slate-800", "border");
+
+    const status = btn.dataset.status.toLowerCase();
+
+    let filtered = allUsers;
+
+    if (status === "pending") {
+      filtered = allUsers.filter(u => !u.status || u.status.toLowerCase() === "pending");
+    } else if (status === "approved" || status === "verified") {
+      filtered = allUsers.filter(u => u.status && u.status.toLowerCase() === "verified");
+    } else if (status === "rejected") {
+      filtered = allUsers.filter(u => u.status && u.status.toLowerCase() === "rejected");
+    } 
+    // else "all" => filtered = allUsers
+
+    renderUsers(filtered);
+  });
+});
 
 // Initial load
 loadEmployerVerifications();

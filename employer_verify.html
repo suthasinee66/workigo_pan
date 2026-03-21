@@ -188,17 +188,19 @@ if (uploadErr) {
   alert("อัปโหลดไฟล์ล้มเหลว");
   return;
 }
-
-// 2️⃣ Get public URL
-const publicUrl = supabase.storage
+// 2️⃣ สร้าง signed URL สำหรับ private bucket
+const { data: signedUrlData, error: signedErr } = await supabase
+  .storage
   .from("employer-docs")
-  .getPublicUrl(uploadData.path).publicUrl;
+  .createSignedUrl(`${employer_id}/documents.pdf`, 60*60); // 1 ชั่วโมง
 
-if (!publicUrl) {
+if (signedErr) {
+  console.error(signedErr);
   alert("ไม่สามารถสร้าง URL ของไฟล์ได้");
   return;
 }
 
+const publicUrl = signedUrlData.signedUrl;
 // 3️⃣ Insert ลง table
 const { data: verifyData, error: insertErr } = await supabase
   .from("employer_verifications")
