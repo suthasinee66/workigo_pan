@@ -1,74 +1,87 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Employer - Scan Result Popup</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#ff6a00",
-              "secondary": "#1F3A5F",
-              "background-light": "#f8f7f5",
-              "background-dark": "#23170f",
-              "card-light": "#F5F7FA",
-              "card-dark": "#2a1e15",
-              "text-light": "#1d130c",
-              "text-dark": "#f8f7f5",
-            },
-            fontFamily: {
-              "display": ["Manrope", "sans-serif"]
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
-            boxShadow: {
-                'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
-            }
-          },
-        },
-      }
-    </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Employer - Confirm Check-in</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <style>
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-      }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="font-display">
-<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
-<!-- Background content simulation -->
-<div class="absolute inset-0 h-full w-full bg-cover bg-center" data-alt="A blurred view of a modern office environment, representing the employer's dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDm7tlNnkTA_4zLVqpiEtalpxvKmYfmb1ZMI3BYVR5AgTkVxJzi0RGbTmi-fl-JC_NfAf1ezUjglVEuXXK3mRgstv_ZZB4C7FgqCpkv7aUp7uvH-HZ_ed1GYTlY-lOBtI25Fdz7s2HYqJt9ocgyn8meF7Ki2k843PWgMWpcFZ-QqAzkSxRHFNvoFkfeUq6wOWAW-xP_I96dcNXK82B5vm9KF5-PB6R8xBCNyIaSgXn3OXA8l5zPWIc-Ee0PFiimvzHQHrU6FcaEn_kL')"></div>
-<div class="absolute inset-0 h-full w-full bg-black/50 backdrop-blur-sm"></div>
-<!-- Popup Modal -->
-<div class="relative flex h-full min-h-screen w-full flex-col items-center justify-center p-4">
-<div class="relative m-auto flex w-full max-w-sm flex-col items-center overflow-hidden rounded-3xl bg-white dark:bg-card-dark shadow-soft">
-<!-- Success Icon -->
-<div class="flex items-center justify-center p-8 pb-4">
-<div class="flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10 dark:bg-green-500/20">
-<span class="material-symbols-outlined text-5xl text-green-600 dark:text-green-400">check_circle</span>
+  body { font-family: "Manrope", sans-serif; background-color: #f8f7f5; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400; }
+</style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+
+<div id="container" class="flex flex-col items-center justify-center p-6 bg-white rounded-3xl shadow-lg w-full max-w-sm">
+  <div id="statusIcon" class="flex items-center justify-center w-20 h-20 rounded-full bg-gray-200 mb-4">
+    <span class="material-symbols-outlined text-5xl text-gray-400">qr_code_scanner</span>
+  </div>
+  <h1 id="statusText" class="text-xl font-bold text-center mb-2">Scanning QR...</h1>
+  <p id="timestamp" class="text-gray-500 text-center mb-4">Please wait</p>
+  <button id="backBtn" class="hidden bg-orange-500 text-white py-3 px-6 rounded-xl font-bold">Back</button>
 </div>
-</div>
-<!-- HeadlineText -->
-<h1 class="text-secondary dark:text-text-dark font-display tracking-tight text-2xl font-bold leading-tight px-6 text-center pb-2 pt-2">Check-in Successful</h1>
-<!-- BodyText -->
-<p class="text-gray-600 dark:text-gray-400 font-display text-base font-normal leading-normal pb-8 pt-1 px-6 text-center">Timestamp: 14 Oct 2023, 09:01 AM</p>
-<!-- SingleButton -->
-<div class="flex w-full px-6 pb-6 pt-2">
-<button onclick="window.location.href='ScaneCheck-out_employer.html'"class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 flex-1 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em]">
-<span class="truncate">Confirm</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</body></html>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+const container = document.getElementById("container");
+const statusIcon = document.getElementById("statusIcon");
+const statusText = document.getElementById("statusText");
+const timestamp = document.getElementById("timestamp");
+const backBtn = document.getElementById("backBtn");
+
+// ดึง shift_id จาก URL
+const urlParams = new URLSearchParams(window.location.search);
+const shiftId = urlParams.get("shift_id");
+
+async function checkInShift(shiftId) {
+  if (!shiftId) {
+    statusText.textContent = "Invalid QR";
+    statusIcon.innerHTML = '<span class="material-symbols-outlined text-5xl text-red-600">error</span>';
+    backBtn.classList.remove("hidden");
+    return;
+  }
+
+  // อัปเดต status และ checkin_time ใน shifts
+  const { data, error } = await supabase
+    .from("shifts")
+    .update({
+      status: "login",
+      checkin_time: new Date()
+    })
+    .eq("shift_id", shiftId)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error);
+    statusText.textContent = "Check-in failed";
+    statusIcon.innerHTML = '<span class="material-symbols-outlined text-5xl text-red-600">error</span>';
+    backBtn.classList.remove("hidden");
+    return;
+  }
+
+  // แสดงผลสำเร็จ
+  statusText.textContent = "Check-in Successful";
+  timestamp.textContent = `Timestamp: ${new Date(data.checkin_time).toLocaleString()}`;
+  statusIcon.innerHTML = '<span class="material-symbols-outlined text-5xl text-green-600">check_circle</span>';
+  backBtn.classList.remove("hidden");
+}
+
+backBtn.addEventListener("click", () => {
+  window.location.href = "/"; // กลับหน้า home หรือ scanner page
+});
+
+// เรียกฟังก์ชัน
+checkInShift(shiftId);
+
+</script>
+</body>
+</html>

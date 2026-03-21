@@ -150,7 +150,7 @@
       const shift = shifts[0];
 
       // STEP 3: สร้าง QR code เป็น URL สำหรับ check-in
-      const qrData = `https://yourdomain.com/check_in.html?shift_id=${shift.shift_id}`;
+      const qrData = `https://workigo-pan.vercel.app/ConfirmCheck-in_employer.html?shift_id=${shift.shift_id}`;
 
       QRCode.toCanvas(qrCanvas, qrData, { width: qrCanvas.clientWidth }, function(err) {
         if (err) console.error(err);
