@@ -157,7 +157,7 @@ async function onScanSuccess(decodedText) {
     return;
   }
 
-  const scannedShiftId = shiftObj.shift_id; // ดึง shift_id จริง
+  scannedShiftId = shiftObj.shift_id; // <-- ใช้ global variable
 
   // โหลด shift
   const { data: shifts, error: shiftError } = await supabase
