@@ -26,4 +26,16 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: "employer-dashboard-dist",
+    lib: {
+      entry: path.resolve(__dirname, "src/pages/DashboardContent.tsx"),
+      name: "DashboardContent",
+      fileName: "dashboard-content",
+      formats: ["es"], // ใช้ ES module
+    },
+    rollupOptions: {
+      external: ["react", "react-dom"], // React ต้องโหลดจาก CDN
+    },
+  },
 }));

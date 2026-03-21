@@ -1435,7 +1435,7 @@ app.get("/api/neon/export-data", async (req, res) => {
   }
 });
 
-// Serve Employer dashboard build (after API routes)
+// Serve Employer dashboard
 const employerDist = path.join(__dirname, 'employer-dashboard', 'dist');
 app.use('/employer', express.static(employerDist));
 app.get('/employer', (req, res) => {
@@ -1445,17 +1445,16 @@ app.get(/^\/employer(?:\/.*)?$/, (req, res) => {
   res.sendFile(path.join(employerDist, 'index.html'));
 });
 
-// Redirect root to employer dashboard
-app.get('/', (req, res) => {
-  res.redirect('/employer');
+// Serve fontend-html at root
+app.use(express.static(path.join(__dirname, 'fontend-html')));
+app.get(/^\/(?!api\/|employer\/).*$/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'fontend-html', 'index.html'));
 });
-// Serve your HTML folder
-app.use('/fontend-html', express.static(path.join(__dirname, 'fontend-html')));
 
-// Serve React build
+// Serve React build (ถ้ายังต้องใช้)
 app.use('/', express.static(path.join(__dirname, 'Employer_Dashboard_orangeteme/employer-dashboard/build')));
 
-// สำหรับ React SPA: fallback route
+// 404 fallback
 app.use((req, res, next) => {
   res.status(404).send('Not Found');
 });
