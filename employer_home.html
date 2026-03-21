@@ -64,11 +64,6 @@ body {
             <!-- Spacer -->
             <div class="flex-1"></div>
 
-            <!-- Chat Icon -->
-            <span class="material-symbols-outlined text-gray-600">
-                chat_bubble
-
-            </span>
 
         </div>
 
@@ -116,7 +111,7 @@ body {
     <button onclick="location.href='employer_home.html'" class="material-symbols-outlined text-primary">home</button>
     <button onclick="location.href='employer_Dashboard.html'" class="material-symbols-outlined">dashboard</button>
     <button onclick="location.href='employer_Shift.html'" class="material-symbols-outlined">calendar_month</button>
-    <button class="material-symbols-outlined">person</button>
+    <button onclick="location.href='ShopProfile.html'"class="material-symbols-outlined">person</button>
   </div>
 </div>
 
@@ -161,16 +156,10 @@ window.goToJob = function (jobpostId, status) {
 
   // ตรวจสอบ verified
   const isVerified = employer?.verified;
-
-  // สร้าง span สำหรับติ้ก
-  const verifySpan = document.createElement("span");
-  verifySpan.className = `ml-1 inline-flex items-center justify-center w-5 h-5 rounded-full ${isVerified ? 'bg-blue-500' : 'bg-gray-300'} cursor-pointer`;
-
-  verifySpan.innerHTML = `
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.285 6.709a1 1 0 0 0-1.414-1.414l-9.192 9.192-4.192-4.192a1 1 0 0 0-1.414 1.414l4.9 4.9a1 1 0 0 0 1.414 0l9.918-9.9z"/>
-    </svg>
-  `;
+// สร้าง span สำหรับติ้ก verified แบบ Material Symbols
+const verifySpan = document.createElement("span");
+verifySpan.className = `ml-1 material-symbols-outlined filled text-2xl ${isVerified ? 'text-blue-500' : 'text-gray-300'} cursor-pointer`;
+verifySpan.textContent = "verified"; // ชื่อไอคอนตรงนี้
 
   // ถ้าไม่ verified ให้เพิ่ม event listener
   if (!isVerified) {
