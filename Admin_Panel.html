@@ -645,9 +645,13 @@ const supabase = createClient(
   "https://ispbevvwwggbktfczmui.supabase.co",
   "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
 )
+let currentPage = 0
+const limit = 20
 
-/* ================= LOAD PROFILES ================= */
 async function loadProfiles() {
+  const from = currentPage * limit
+  const to = from + limit - 1
+
   const { data, error } = await supabase
     .from("profiles")
     .select(`
@@ -660,11 +664,9 @@ async function loadProfiles() {
       created_at
     `)
     .order("created_at", { ascending: false })
+    .range(from, to)   // ✅ ใส่นี่
 
-  if (error) {
-    console.error(error)
-    return
-  }
+  if (error) return console.error(error)
 
   renderProfiles(data)
 }
