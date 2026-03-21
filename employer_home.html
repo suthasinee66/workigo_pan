@@ -109,12 +109,69 @@ body {
 <div class="fixed bottom-0 left-0 right-0 bg-white border-t">
   <div class="flex h-20 justify-around items-center">
     <button onclick="location.href='employer_home.html'" class="material-symbols-outlined text-primary">home</button>
-    <button onclick="location.href='employer_Dashboard.html'" class="material-symbols-outlined">dashboard</button>
+    <button id="dashboardBtn" class="material-symbols-outlined">dashboard</button>
     <button onclick="location.href='employer_Shift.html'" class="material-symbols-outlined">calendar_month</button>
-    <button onclick="location.href='ShopProfile.html'"class="material-symbols-outlined">person</button>
+    <button class="material-symbols-outlined">person</button>
   </div>
 </div>
 
+</div>
+
+
+<!-- Business Promotion Access Modal -->
+<div id="businessPromoModal" class="fixed inset-0 z-50 hidden items-end justify-center bg-black/40 px-4 pb-24 pt-10">
+  <div class="w-full max-w-md rounded-3xl bg-white p-5 shadow-2xl">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="text-xl font-extrabold text-[#345395]">Dashboard สำหรับ Business Promotion</h3>
+        <p class="mt-1 text-sm text-gray-500">หน้านี้มีไว้สำหรับนายจ้างที่สมัคร Promotion Business เท่านั้น</p>
+      </div>
+      <button id="closeBusinessPromoModal" class="rounded-full p-1 text-gray-500 hover:bg-gray-100">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <div id="promoPackageCard" class="mt-4 rounded-2xl border border-orange-100 bg-orange-50 p-4">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <p class="text-sm text-gray-500">แพ็กเกจที่ต้องสมัคร</p>
+          <h4 id="promoPackageName" class="text-lg font-bold text-primary">Business Package</h4>
+        </div>
+        <div class="rounded-xl bg-white px-3 py-2 text-right shadow-sm">
+          <p class="text-xs text-gray-400">ราคา</p>
+          <p id="promoPackagePrice" class="text-lg font-extrabold text-primary">59 บาท/เดือน</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 space-y-3">
+      <div class="rounded-2xl border p-4">
+        <p class="font-semibold text-gray-900">สิทธิพิเศษหลัก</p>
+        <ul id="promoBenefitsList" class="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-600">
+          <li>ลงประกาศงานได้ไม่จำกัด</li>
+          <li>ดันโพสต์ได้ 10 ครั้ง/เดือน นาน 14 วัน</li>
+          <li>โพสต์แสดงเด่นในหน้าแรกและหลายตำแหน่งของแพลตฟอร์ม</li>
+          <li>มี Smart Matching และ Business Employer Badge</li>
+          <li>ใช้งาน Data Insight และ Insight Dashboard ได้</li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border p-4">
+        <p class="font-semibold text-gray-900">ข้อมูลที่ดูได้ใน Dashboard</p>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-600">
+          <li>จำนวนผู้สมัครต่อโพสต์ และอัตราการตอบรับ</li>
+          <li>เวลาที่ใช้ในการหาพนักงาน</li>
+          <li>ค่าแรงเฉลี่ยของงานประเภทเดียวกัน</li>
+          <li>ช่วงเวลาที่โพสต์แล้วมีผู้สมัครมากที่สุด</li>
+          <li>ประสิทธิภาพของโพสต์งานแต่ละรายการ</li>
+        </ul>
+      </div>
+    </div>
+
+    <button id="upgradeBusinessBtn" class="mt-5 w-full rounded-xl bg-primary py-3 font-bold text-white">
+      ดูแพ็กเกจ / สมัคร Business Promotion
+    </button>
+  </div>
 </div>
 
 <!-- ================= SUPABASE ================= -->
@@ -249,6 +306,7 @@ async function canCreateNewPost(promotion_id) {
 
   return true;
 }
+
 /* ================= LOAD DASHBOARD ================= */
 async function loadDashboard() {
   const { data: { user }, error } = await supabase.auth.getUser();
@@ -413,6 +471,25 @@ document.getElementById("createJobBtn").addEventListener("click", async () => {
   // ถ้าอนุญาต => ไปหน้าโพสต์งาน
   localStorage.removeItem("jobPostDraft");
   location.href = "employer_post_a_job_form.html";
+});
+document.getElementById("dashboardBtn").addEventListener("click", async () => {
+  const promotion_id = await checkPromotionBeforePosting();
+
+  // กัน null / undefined
+  if (!promotion_id) return;
+
+  if (promotion_id === 3) {
+    // ✅ ไป Railway Dashboard
+    window.location.href = "https://workigoemployer-production.up.railway.app/employer";
+  } else {
+    // ❌ ไม่ใช่ Business → แสดง modal
+    const modal = document.getElementById("businessPromoModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  }
+});
+document.getElementById("upgradeBusinessBtn").addEventListener("click", () => {
+  location.href = "employer_business.html";
 });
 loadProfile();
 loadDashboard();

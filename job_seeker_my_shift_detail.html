@@ -71,10 +71,16 @@
       <h1 class="text-lg font-bold text-[#121416] dark:text-white">Shift Detail</h1>
       <div class="w-10"></div>
     </header>
+<main class="flex-1 pb-24 px-4">
+  <div id="content"></div>
 
-    <!-- Main Content -->
-    <main class="flex-1 pb-24 px-4"></main>
+  <button onclick="location.href='reviews&ratings.html'"
+    class="w-full bg-accent hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition mt-4">
+    End of employment
+  </button>
+</main>
 
+    
     <nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
       <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_seeker_home.html">
         <span class="material-symbols-outlined">home</span>
@@ -109,7 +115,7 @@
 
   const supabaseClient = window.supabaseClient; // ใช้ client เดิมตลอด
 
-  const mainContainer = document.querySelector("main");
+  const mainContainer = document.querySelector("#content");
   const params = new URLSearchParams(window.location.search);
   const employmentId = params.get("employment_id");
 

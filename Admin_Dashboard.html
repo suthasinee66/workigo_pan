@@ -569,21 +569,21 @@
     <nav
         class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 bg-white/80 backdrop-blur-sm">
 
-        <button onclick="showPage('dashboard',this)"
-            class="nav-btn flex flex-col items-center justify-center gap-1 w-full text-primary">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span class="text-xs">Dashboard</span>
-        </button>
-
+        
         <button onclick="showPage('management',this)" class="nav-btn flex flex-col items-center justify-center gap-1 w-full">
             <span class="material-symbols-outlined fill-1">man</span>
             <span class="text-xs">Management</span>
         </button>
+        
+        <button 
+  onclick="window.location.href='https://workigoadmin-production.up.railway.app/'"
+  class="nav-btn flex flex-col items-center justify-center gap-1 w-full text-primary">
+  
+  <span class="material-symbols-outlined">dashboard</span>
+  <span class="text-xs">Dashboard</span>
+</button>
 
-        <a onclick="showPage('analytics',this)" class="nav-btn flex flex-col items-center justify-center gap-1 w-full">
-            <span class="material-symbols-outlined">bar_chart</span>
-            <span class="text-xs">Analytics</span>
-        </a>
+
 
     </nav>
 
@@ -635,7 +635,9 @@
         }
 
         /* default active */
-        document.querySelector(".nav-btn")?.click()
+        window.addEventListener("DOMContentLoaded", () => {
+  showPage('management', document.querySelectorAll('.nav-btn')[0])
+})
     </script>
     <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
