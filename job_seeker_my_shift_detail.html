@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Work-i-Go - Shift Detail</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#345293",
+            "background-light": "#FFFFFF",
+            "background-dark": "#23170f",
+            "accent": "#f95e07",
+            "success": "#208672",
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+
+    .material-symbols-outlined.filled {
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+
+    body {
+      min-height: 100dvh;
+    }
+  </style>
+</head>
+
+<body class="bg-background-light font-display">
+  <div class="relative mx-auto min-h-screen w-full max-w-md bg-background-light">
+    <!-- Top App Bar -->
+    <header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200/80 bg-background-light/80 px-4 backdrop-blur-sm dark:border-gray-800/80 dark:bg-background-dark/80">
+      <button onclick="history.back()">
+        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+      </button>
+      <h1 class="text-lg font-bold text-[#121416] dark:text-white">Shift Detail</h1>
+      <div class="w-10"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 pb-24 px-4"></main>
+
+    <nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
+      <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_seeker_home.html">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-xs font-medium">Home</span>
+      </a>
+      <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_search.html">
+        <span class="material-symbols-outlined fill-1">search</span>
+        <span class="text-xs font-bold">Search</span>
+      </a>
+      <a class="flex flex-col items-center justify-center gap-1 w-full text-primary dark:text-accent" href="job_seeker_my_shifts.html">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span class="text-xs font-medium">Shifts</span>
+      </a>
+      <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="Myprofile_seeker.html">
+        <span class="material-symbols-outlined">person</span>
+        <span class="text-xs font-medium">Profile</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+  // ❌ อย่าประกาศซ้ำ const supabase
+  // ✅ ใช้ window.supabaseClient
+  if (!window.supabaseClient) {
+    window.supabaseClient = supabase.createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    );
+  }
+
+  const supabaseClient = window.supabaseClient; // ใช้ client เดิมตลอด
+
+  const mainContainer = document.querySelector("main");
+  const params = new URLSearchParams(window.location.search);
+  const employmentId = params.get("employment_id");
+
+  async function loadEmploymentShifts() {
+    mainContainer.innerHTML = `<p class="text-center py-10"></p>`;
+
+    if (!employmentId) {
+      mainContainer.innerHTML = `<p class="text-center py-10">No employment selected</p>`;
+      return;
+    }
+
+    const { data: employment, error } = await supabaseClient
+      .from("employments")
+      .select(`
+        employment_id,
+        start_date,
+        end_date,
+        agreed_wage,
+        employment_status,
+        jobposts (
+          job_title,
+          workplace_name
+        ),
+        shifts (
+          shift_id,
+          shift_date,
+          start_time,
+          end_time,
+          status
+        )
+      `)
+      .eq("employment_id", employmentId)
+      .single();
+
+    if (error) {
+      console.error(error);
+      mainContainer.innerHTML = `<p class="text-center py-10">Error loading employment</p>`;
+      return;
+    }
+
+    const job = employment.jobposts;
+    const shiftsToShow = (employment.shifts || [])
+      .filter(s => !s.status) // status = null
+      .sort((a, b) => new Date(`${a.shift_date}T${a.start_time}`) - new Date(`${b.shift_date}T${b.start_time}`));
+// Render Active Shift Card แบบ UI ตัวอย่าง
+const activeShift = shiftsToShow[0]; // เอา shift แรกเป็น active
+if (activeShift) {
+  const activeShiftCard = document.createElement("div");
+  activeShiftCard.className = "px-4 pb-4";
+
+  activeShiftCard.innerHTML = `
+  <div class="flex flex-col items-stretch justify-start rounded-xl shadow-md bg-white dark:bg-gray-800">
+    <div class="flex w-full grow flex-col items-stretch justify-center gap-2 p-4">
+      <div class="flex items-center justify-between">
+        <p class="text-accent text-sm font-bold leading-normal tracking-wide">${employment.employment_status || "IN PROGRESS"}</p>
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-base text-gray-400">payments</span>
+          <p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">
+            Est. Pay: <span class="font-bold text-[#121416] dark:text-white">$${employment.agreed_wage || "0.00"}</span>
+          </p>
+        </div>
+      </div>
+      <p class="text-[#121416] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">${job?.job_title || "-"}</p>
+      <div class="flex flex-col gap-1">
+        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">${job?.workplace_name || "-"}</p>
+        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
+          ${activeShift.shift_date} | ${activeShift.start_time} - ${activeShift.end_time}
+        </p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 border-t border-solid border-gray-200 dark:border-gray-700">
+      <div class="flex flex-col gap-1 py-3 pr-2 border-r border-gray-200 dark:border-gray-700 items-center">
+        <p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal">Checked In</p>
+        <p class="text-[#121416] dark:text-white text-sm font-semibold leading-normal">--</p>
+      </div>
+      <div class="flex flex-col gap-1 py-3 pl-2 items-center">
+        <p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal">Duration</p>
+        <p class="text-[#121416] dark:text-white text-sm font-semibold leading-normal">--</p>
+      </div>
+    </div>
+    <div class="p-4 grid grid-cols-2 gap-3">
+  <button onclick="goToCheckIn(${activeShift.shift_id})" 
+    class="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-500 dark:text-gray-400 font-bold leading-normal shadow-sm transition-colors hover:bg-green-600 hover:text-white">
+    <span class="material-symbols-outlined text-xl">login</span>Check In
+  </button>
+
+  <button onclick="goToCheckOut(${activeShift.shift_id})" 
+    class="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-500 dark:text-gray-400 font-bold leading-normal shadow-sm transition-colors hover:bg-green-600 hover:text-white cursor-pointer">
+    <span class="material-symbols-outlined text-xl">logout</span>Check Out
+  </button>
+</div>
+  </div>
+  `;
+
+  mainContainer.appendChild(activeShiftCard);
+}
+
+// Render shifts ที่เหลือ (ถ้ามี)
+shiftsToShow.slice(1).forEach(shift => mainContainer.appendChild(createShiftCard(shift, job)));
+  }
+function goToCheckIn(shift_id) {
+  location.href = `job_seeker_check-in_qr.html?shift_id=${shift_id}`;
+}
+
+function goToCheckOut(shift_id) {
+  location.href = `job_seeker_check-out_qr.html?shift_id=${shift_id}`;
+}
+  function createShiftCard(shift, job, employment) {
+    const card = document.createElement("div");
+    card.className = "px-4 pb-3 cursor-pointer";
+    card.addEventListener("click", () => {
+      window.location.href = `job_seeker_check_in_out.html?shift_id=${shift.shift_id}`;
+    });
+
+    card.innerHTML = `
+      <div class="flex flex-col rounded-xl shadow-md bg-white dark:bg-gray-800 p-4">
+        <div class="flex items-center gap-4">
+          <div class="flex flex-col items-center justify-center bg-primary/10 rounded-lg p-2 w-14 h-14">
+            <p class="text-primary text-sm font-bold leading-none">${new Date(shift.shift_date).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</p>
+            <p class="text-primary text-2xl font-extrabold leading-tight">${new Date(shift.shift_date).getDate()}</p>
+          </div>
+          <div class="flex-1">
+            <p class="text-base font-bold text-[#121416] dark:text-white">${job?.job_title || "-"}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">${job?.workplace_name || "-"}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">${shift.shift_date} | ${shift.start_time} - ${shift.end_time}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  loadEmploymentShifts();
+</script>
+</body>
+
+</html>

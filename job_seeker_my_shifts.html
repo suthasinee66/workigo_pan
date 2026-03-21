@@ -21,8 +21,8 @@
         extend: {
           colors: {
             "primary": "#345293",
-            "background-light": "#f6f7f8",
-            "background-dark": "#14171e",
+            "background-light": "#FFFFFF",
+              "background-dark": "#23170f",
             "accent": "#f95e07",
             "success": "#208672",
           },
@@ -63,137 +63,22 @@
   </style>
 </head>
 
-<body class="font-display">
-  <div
-    class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<body class="bg-background-light ">
+    <div class="relative mx-auto min-h-screen w-full max-w-md bg-background-light">
     <!-- Top App Bar -->
     <header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+      
       <div class="flex items-center p-4 pb-2 justify-between">
+      
+        
         <h1 class="text-[#121416] dark:text-white text-2xl font-bold leading-tight tracking-tight flex-1">My Shifts</h1>
-        <button onclick="window.location.href='employer_create_shifts.html'"
-          class="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-          <span class="material-symbols-outlined text-2xl">calendar_month</span>
-        </button>
+        
       </div>
     </header>
-    <!-- Segmented Buttons -->
-    <div class="px-4 py-3">
-      <div class="flex h-11 flex-1 items-center justify-center rounded-lg bg-gray-200 dark:bg-background-dark p-1">
-        <label
-          class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-[#121416] has-[:checked]:dark:text-white text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal transition-all duration-200">
-          <span class="truncate">Upcoming</span>
-          <input checked="" class="invisible w-0" name="shift-filter" type="radio" value="Upcoming" />
-        </label>
-        <label
-          class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 has-[:checked]:bg-white has-[:checked]:dark:bg-gray-700 has-[:checked]:shadow-sm has-[:checked]:text-[#121416] has-[:checked]:dark:text-white text-gray-500 dark:text-gray-400 text-sm font-medium leading-normal transition-all duration-200">
-          <span class="truncate">Past</span>
-          <input class="invisible w-0" name="shift-filter" type="radio" value="Past" />
-        </label>
-      </div>
-    </div>
     <!-- Main Content -->
-    <main class="flex-1 pb-24">
-      <!-- Today's Shift Headline -->
-      <h2
-        class="text-[#121416] dark:text-white tracking-tight text-xl font-bold leading-tight px-4 text-left pb-2 pt-3">
-        Today's Shift</h2>
-      <!-- Active Shift Card -->
-      <div class="px-4 pb-4">
-        <div class="flex flex-col items-stretch justify-start rounded-xl shadow-md bg-white dark:bg-gray-800">
-          <div class="flex w-full grow flex-col items-stretch justify-center gap-2 p-4">
-            <div class="flex items-center justify-between">
-              <p class="text-accent text-sm font-bold leading-normal tracking-wide">IN PROGRESS</p>
-              <div class="flex items-center gap-1">
-                <span class="material-symbols-outlined text-base text-gray-400">payments</span>
-                <p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">Est. Pay: <span
-                    class="font-bold text-[#121416] dark:text-white">$68.25</span></p>
-              </div>
-            </div>
-            <p class="text-[#121416] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Barista</p>
-            <div class="flex flex-col gap-1">
-              <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">The Coffee Bean</p>
-              <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">Today, 9:00 AM - 5:00 PM
-              </p>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 border-t border-solid border-gray-200 dark:border-gray-700">
-            <div class="flex flex-col gap-1 py-3 pr-2 border-r border-gray-200 dark:border-gray-700 items-center">
-              <p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal">Checked In</p>
-              <p class="text-[#121416] dark:text-white text-sm font-semibold leading-normal">09:02 AM</p>
-            </div>
-            <div class="flex flex-col gap-1 py-3 pl-2 items-center">
-              <p class="text-gray-500 dark:text-gray-400 text-xs font-normal leading-normal">Duration</p>
-              <p class="text-[#121416] dark:text-white text-sm font-semibold leading-normal">03h 15m</p>
-            </div>
-          </div>
-          <div class="p-4 grid grid-cols-2 gap-3">
-            <button onclick="window.location.href='job_seeker_check-in_qr.html'"
-              class="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-500 dark:text-gray-400 font-bold leading-normal shadow-sm transition-colors hover:bg-green-600 hover:text-white">
-              <span class="material-symbols-outlined text-xl">login</span>
-              Check In
-            </button>
-            <button onclick="window.location.href='job_seeker_check-out_qr.html'"
-              class="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-500 dark:text-gray-400 font-bold leading-normal shadow-sm transition-colors hover:bg-green-600 hover:text-white cursor-pointer">
-              <span class="material-symbols-outlined text-xl">logout</span>
-              Check Out
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- Upcoming Shifts Headline -->
-      <h2
-        class="text-[#121416] dark:text-white tracking-tight text-xl font-bold leading-tight px-4 text-left pb-2 pt-3">
-        Upcoming</h2>
-      <!-- Upcoming Shift Card 1 -->
-      <div class="px-4 pb-3">
-        <div class="flex flex-col items-stretch justify-start rounded-xl shadow-md bg-white dark:bg-gray-800">
-          <div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
-            <div class="flex items-center gap-4">
-              <div class="flex flex-col items-center justify-center bg-primary/10 rounded-lg p-2 w-14 h-14">
-                <p class="text-primary text-sm font-bold leading-none">OCT</p>
-                <p class="text-primary text-2xl font-extrabold leading-tight">28</p>
-              </div>
-              <div class="flex-1">
-                <p class="text-[#121416] dark:text-white text-base font-bold leading-tight">Sales Associate</p>
-                <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">Retail Pop-Up</p>
-                <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">Tomorrow, 10:00 AM - 4:00
-                  PM</p>
-              </div>
-              <button onclick="window.location.href='job_seeker_check-in_qr.html'"
-                class="flex size-8 items-center justify-center rounded-full bg-success text-white text-sm font-bold cursor-pointer">
-                1
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Upcoming Shift Card 2 -->
-      <div class="px-4 pb-3">
-        <div class="flex flex-col items-stretch justify-start rounded-xl shadow-md bg-white dark:bg-gray-800">
-          <div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
-            <div class="flex items-center gap-4">
-              <div class="flex flex-col items-center justify-center bg-primary/10 rounded-lg p-2 w-14 h-14">
-                <p class="text-primary text-sm font-bold leading-none">OCT</p>
-                <p class="text-primary text-2xl font-extrabold leading-tight">30</p>
-              </div>
-              <div class="flex-1">
-                <p class="text-[#121416] dark:text-white text-base font-bold leading-tight">Event Staff</p>
-                <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">City Music Festival</p>
-                <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">Wed, 5:00 PM - 11:00 PM
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <div class="fixed bottom-20 left-0 right-0 z-20 flex justify-center px-4">
-      <button onclick="window.location.href='reviews&ratings.html'"
-        class="flex h-16 w-full max-w-sm items-center justify-center gap-4 rounded-xl bg-accent text-white shadow-lg transition-transform hover:scale-105">
-        <span class="material-symbols-outlined text-4xl"></span>
-        <span class="text-xl font-bold">End of employment</span>
-      </button>
-    </div>
+    <main class="flex-1 pb-24" id="main-shifts">
+  <!-- Employment cards จะถูก append ที่นี่ -->
+</main>
     <nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm">
 <a class="flex flex-col items-center justify-center gap-1 w-full text-text-secondary-light dark:text-text-secondary-dark" href="job_seeker_home.html">
 <span class="material-symbols-outlined">home</span>
@@ -213,94 +98,158 @@
 </a>
 </nav>
   </div>
+<!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // สร้าง client
-  const supabase = window.supabase.createClient(
-    "https://ispbevvwwggbktfczmui.supabase.co",
-    "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
-  );
-
-  // สมมติว่าผู้ใช้ login แล้วมี user id
-  const userId = "your_user_id_here"; // ปรับเป็น auth user id ของผู้ใช้จริง
-
-  const today = new Date();
-  const todayStr = today.toISOString().split("T")[0]; // YYYY-MM-DD
-
-  const mainContainer = document.querySelector("main");
+  // ใช้ supabase client เพียงครั้งเดียว
+  if (!window.supabaseClient) {
+    window.supabaseClient = supabase.createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    );
+  }
+  const supabaseClient = window.supabaseClient;
+  const mainContainer = document.getElementById("main-shifts");
 
   async function loadShifts() {
-    mainContainer.innerHTML = `<p class="text-center py-10 text-gray-500 dark:text-gray-400">Loading shifts...</p>`;
+    mainContainer.innerHTML = `<p class="text-center py-10">Loading...</p>`;
 
-    // ดึง shifts ของผู้ใช้
-    const { data: shifts, error } = await supabase
-      .from("shifts")
-      .select("*")
-      .eq("user_id", userId)
-      .order("shift_date", { ascending: true });
-
-    if (error) {
-      console.error(error);
-      mainContainer.innerHTML = `<p class="text-center py-10 text-red-500">Error loading shifts</p>`;
+    // 1️⃣ ดึง user จริง
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    if (!user || userError) {
+      mainContainer.innerHTML = `<p class="text-center py-10">Please login</p>`;
       return;
     }
 
-    // Clear container
+    // 2️⃣ หา job_seeker_id ของ user
+    const { data: jobSeeker, error: jsError } = await supabaseClient
+      .from("job_seekers")
+      .select("job_seeker_id")
+      .eq("user_id", user.id)
+      .single();
+
+    if (jsError || !jobSeeker) {
+      mainContainer.innerHTML = `<p class="text-center py-10">Job seeker not found</p>`;
+      return;
+    }
+    const jobSeekerId = jobSeeker.job_seeker_id;
+
+    // 3️⃣ ดึง employments ผ่าน job_applications
+    const { data: applications, error } = await supabaseClient
+      .from("job_applications")
+      .select(`
+        job_application_id,
+        jobpost_id,
+        employments (
+          employment_id,
+          start_date,
+          end_date,
+          agreed_wage,
+          employment_status,
+          jobposts (
+            job_title,
+            workplace_name
+          ),
+          shifts (
+            shift_id,
+            shift_date,
+            start_time,
+            end_time,
+            status
+          )
+        )
+      `)
+      .eq("worker_id", jobSeekerId);
+
+    if (error) {
+      console.error(error);
+      mainContainer.innerHTML = `<p class="text-center py-10">Error loading data</p>`;
+      return;
+    }
+
+    // 4️⃣ Flatten employments
+    const employments = applications.map(app => app.employments).flat();
+
     mainContainer.innerHTML = "";
-
-    // Today's shift
-    const todaysShifts = shifts.filter(shift => shift.shift_date === todayStr);
-    if (todaysShifts.length > 0) {
-      const todaySection = document.createElement("section");
-      todaySection.innerHTML = `<h2 class="px-4 pt-3 pb-2 text-xl font-bold text-[#121416] dark:text-white">Today's Shift</h2>`;
-      todaysShifts.forEach(shift => {
-        todaySection.appendChild(createShiftCard(shift));
-      });
-      mainContainer.appendChild(todaySection);
+    if (!employments.length) {
+      mainContainer.innerHTML = `<p class="text-center py-10">No employments found</p>`;
+      return;
     }
 
-    // Upcoming shifts
-    const upcomingShifts = shifts.filter(shift => shift.shift_date > todayStr);
-    if (upcomingShifts.length > 0) {
-      const upcomingSection = document.createElement("section");
-      upcomingSection.innerHTML = `<h2 class="px-4 pt-3 pb-2 text-xl font-bold text-[#121416] dark:text-white">Upcoming</h2>`;
-      upcomingShifts.forEach(shift => {
-        upcomingSection.appendChild(createShiftCard(shift));
-      });
-      mainContainer.appendChild(upcomingSection);
-    }
+    // 5️⃣ สำหรับแต่ละ employment ให้ดึง shifts ที่ status = null และเรียงตาม shift_date, start_time
+    employments.forEach(emp => {
+  // หา shift ที่กำลังจะถึง
+  const upcomingShift = (emp.shifts || [])
+    .filter(s => !s.status) // status เป็น null
+    .sort((a, b) => {
+      const dateA = new Date(`${a.shift_date}T${a.start_time}`);
+      const dateB = new Date(`${b.shift_date}T${b.start_time}`);
+      return dateA - dateB;
+    })[0]; // เอาแค่ shift แรก (closest upcoming)
 
-    if (todaysShifts.length === 0 && upcomingShifts.length === 0) {
-      mainContainer.innerHTML = `<p class="text-center py-10 text-gray-500 dark:text-gray-400">No shifts found.</p>`;
-    }
+  // สร้าง card ของ employment พร้อม shift
+  mainContainer.appendChild(createEmploymentCard(emp, upcomingShift));
+});
   }
 
-  function createShiftCard(shift) {
-    const card = document.createElement("div");
-    card.className = "px-4 pb-3";
-    card.innerHTML = `
-      <div class="flex flex-col items-stretch justify-start rounded-xl shadow-md bg-white dark:bg-gray-800">
-        <div class="flex w-full grow flex-col items-stretch justify-center gap-1 p-4">
-          <div class="flex items-center gap-4">
-            <div class="flex flex-col items-center justify-center bg-primary/10 rounded-lg p-2 w-14 h-14">
-              <p class="text-primary text-sm font-bold leading-none">${new Date(shift.shift_date).toLocaleString('en-US', { month: 'short' }).toUpperCase()}</p>
-              <p class="text-primary text-2xl font-extrabold leading-tight">${new Date(shift.shift_date).getDate()}</p>
-            </div>
-            <div class="flex-1">
-              <p class="text-[#121416] dark:text-white text-base font-bold leading-tight">${shift.job_title}</p>
-              <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">${shift.workplace_name}</p>
-              <p class="text-gray-600 dark:text-gray-300 text-sm font-normal leading-normal">${shift.shift_date} ${shift.start_time} - ${shift.end_time}</p>
-            </div>
-          </div>
+  // สร้าง card แบบ shift
+  function createEmploymentCard(emp, shift) {
+  const job = emp.jobposts;
+
+  const statusColor = {
+    'In Progress': 'text-accent',
+    'Completed': 'text-success',
+    'Pending': 'text-gray-400'
+  }[emp.employment_status] || 'text-gray-400';
+
+  const card = document.createElement("div");
+  card.className = "px-4 pb-4 cursor-pointer";
+
+  card.addEventListener("click", () => {
+    let url = `job_seeker_my_shift_detail.html?employment_id=${emp.employment_id}`;
+if (shift) url += `&shift_id=${shift.shift_id}`;
+window.location.href = url;
+  });
+
+  card.innerHTML = `
+    <div class="flex flex-col rounded-xl shadow-md bg-white dark:bg-gray-800 p-4">
+      <div class="flex items-center justify-between">
+        <p class="${statusColor} text-sm font-bold leading-normal tracking-wide">
+          ${emp.employment_status || "Pending"}
+        </p>
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-base text-gray-400">payments</span>
+          <p class="text-gray-600 dark:text-gray-300 text-sm font-medium leading-normal">
+            <span class="font-bold text-[#121416] dark:text-white">
+            ${emp.agreed_wage || "0.00"} บาท </span>
+          </p>
         </div>
       </div>
-    `;
-    return card;
-  }
 
-  // โหลด shifts ตอนโหลดหน้า
+      <p class="text-[#121416] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+        ${job?.job_title || "-"}
+      </p>
+
+      <div class="flex flex-col gap-1 mt-1">
+        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
+          ${job?.workplace_name || "-"}
+        </p>
+        ${
+          shift
+            ? `<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
+                ${shift.shift_date ? new Date(shift.shift_date).toLocaleDateString() : ""} | 
+                ${shift.start_time || ""} - ${shift.end_time || ""}
+               </p>`
+            : `<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
+                No upcoming shifts
+               </p>`
+        }
+      </div>
+    </div>
+  `;
+  return card;
+}
   loadShifts();
 </script>
 </body>
-
 </html>

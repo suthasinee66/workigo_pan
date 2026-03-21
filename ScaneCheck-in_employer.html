@@ -143,66 +143,66 @@ async function startScanner() {
     onScanSuccess
   );
 }
+let scannedShiftId = null;
 
-/* ================= ON SCAN ================= */
 async function onScanSuccess(decodedText) {
-
   await scanner.stop();
 
-  scannedEmploymentId = decodedText;
+  scannedShiftId = decodedText; // QR code ต้องเป็น shift_id
 
-  // STEP 1: หา job_application_id
-  const { data: emp } = await supabase
-    .from("employments")
-    .select("job_application_id")
-    .eq("employment_id", scannedEmploymentId)
-    .single();
-
-  if (!emp) {
-    alert("Invalid QR");
-    return;
-  }
-
-  // STEP 2: โหลด worker
-  const { data } = await supabase
-    .from("job_applications")
+  // STEP 1: โหลด shift + worker
+  const { data: shifts, error: shiftError } = await supabase
+    .from("shifts")
     .select(`
-      job_seekers:worker_id (
-        avatar_url,
-        profiles:user_id (
-          first_name,
-          last_name
+      shift_id,
+      employments!inner(
+        job_application:job_application_id!inner(
+          worker_id
         )
       )
     `)
-    .eq("job_application_id", emp.job_application_id)
+    .eq("shift_id", scannedShiftId)
     .single();
 
-  const worker = data?.job_seekers;
-  const profile = worker?.profiles;
+  if (shiftError || !shifts) {
+    alert("Invalid QR");
+    startScanner();
+    return;
+  }
 
-  const fullName = [profile?.first_name, profile?.last_name]
-    .filter(Boolean)
-    .join(" ");
+  // STEP 2: โหลด job seeker info
+  const workerId = shifts.employments.job_application.worker_id;
+  const { data: workerData } = await supabase
+    .from("job_seekers")
+    .select("avatar_url, profiles:user_id(first_name,last_name)")
+    .eq("job_seeker_id", workerId)
+    .single();
 
+  const profile = workerData.profiles;
+  const fullName = [profile?.first_name, profile?.last_name].filter(Boolean).join(" ");
   document.getElementById("name").textContent = fullName;
-  document.getElementById("avatar").src =
-    worker?.avatar_url || "https://via.placeholder.com/150";
+  document.getElementById("avatar").src = workerData.avatar_url || "https://via.placeholder.com/150";
 
   document.getElementById("result-panel").classList.remove("hidden");
 }
 
-/* ================= CONFIRM ================= */
 window.confirmCheckin = async function () {
+  if (!scannedShiftId) return;
 
-  await supabase
-    .from("attendance")
-    .insert({
-      employment_id: scannedEmploymentId,
-      check_in_time: new Date()
-    });
+  const { data, error } = await supabase
+    .from("shifts")
+    .update({
+      status: "login",
+      checkin_time: new Date()
+    })
+    .eq("shift_id", scannedShiftId);
 
-  alert("Check-in success");
+  if (error) {
+    alert("Check-in failed");
+    console.error(error);
+  } else {
+    alert("Check-in success");
+  }
 
   restartScanner();
 };
