@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Seeker Home / Feed</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light ">
+    <div class="relative mx-auto min-h-screen w-full max-w-md bg-background-light">
+
+        <!-- ===== TOP BAR ===== -->
+        <div class="sticky top-0 z-10 flex items-center gap-3 bg-white px-4 py-3 shadow-sm">
+
+            <!-- Avatar -->
+            <div id="avatar"
+                class="h-11 w-11 rounded-full bg-gray-200 bg-cover bg-center flex items-center justify-center">
+            </div>
+
+            <!-- Greeting -->
+            <div class="flex flex-col leading-tight">
+                <span class="text-xs text-gray-400">Welcome 👋</span>
+                <h2 id="greeting" class="text-lg font-bold text-gray-900 tracking-tight">
+                    Loading...
+                </h2>
+            </div>
+
+            <!-- Spacer -->
+            <div class="flex-1"></div>
+
+            <!-- Chat Icon -->
+            <span class="material-symbols-outlined text-gray-600">
+                chat_bubble
+
+            </span>
+
+        </div>
+
+
+
+        <div class="px-4 pt-4">
+  <div
+    id="applicationsCard"
+    class="rounded-2xl bg-white p-5 shadow flex items-center justify-between cursor-pointer hover:bg-gray-50 transition">
+
+    <div>
+      <p class="text-sm text-gray-400">My Applications</p>
+      <p id="applicationsCount" class="text-3xl font-bold text-gray-900">lode</p>
+    </div>
+
+    <div class="h-12 w-12 rounded-xl bg-blue-100 flex items-center justify-center">
+      <span class="material-symbols-outlined text-blue-500 text-3xl">
+        work
+      </span>
+    </div>
+
+  </div>
+</div>
+
+
+    <!-- ===== SECTION HEADER ===== -->
+    <h3 class="px-4 pt-6 text-lg font-bold text-gray-900">
+      Recommended For You
+    </h3>
+
+        <!-- ===== JOB LIST ===== -->
+        <div id="recommended-list" class="flex flex-col gap-4 p-4"></div>
+
+        </main>
+
+        <!-- ===== BOTTOM NAV ===== -->
+        <nav class="fixed bottom-0 left-0 right-0 z-20 flex h-20 justify-around border-t border-gray-200 bg-white">
+
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-primary" href="job_seeker_home.html">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-xs font-medium">Home</span>
+            </a>
+
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400" href="job_search.html">
+                <span class="material-symbols-outlined">search</span>
+                <span class="text-xs font-medium">Search</span>
+            </a>
+
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400"
+                href="job_seeker_my_shifts.html">
+                <span class="material-symbols-outlined">calendar_month</span>
+                <span class="text-xs font-medium">Shifts</span>
+            </a>
+
+            <a class="flex flex-col items-center justify-center gap-1 w-full text-gray-400"
+                href="Myprofile_seeker.html">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-xs font-medium">Profile</span>
+            </a>
+
+        </nav>
+
+    </div>
+<!-- ===== SUPABASE ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseClient = window.supabase.createClient(
+      "https://ispbevvwwggbktfczmui.supabase.co",
+      "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+    );
+
+    /* ===============================
+       LOAD PROFILE
+    =============================== */
+    async function loadProfile() {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) {
+        window.location.href = "signin.html";
+        return;
+      }
+      
+
+      const { data: profile } = await supabaseClient
+        .from("profiles")
+        .select("first_name")
+        .eq("id", user.id)
+        .single();
+        
+
+      const { data: seeker } = await supabaseClient
+        .from("job_seekers")
+        .select("avatar_url")
+        .eq("user_id", user.id)
+        .single();
+
+      document.getElementById("greeting").textContent =
+        profile?.first_name || "User";
+
+      const avatar = document.getElementById("avatar");
+      if (seeker?.avatar_url) {
+        avatar.style.backgroundImage = `url('${seeker.avatar_url}')`;
+      } else {
+        avatar.innerHTML = `<span class="material-symbols-outlined text-gray-400">person</span>`;
+      }
+    }
+
+    /* ===============================
+       LOAD APPLICATION COUNT ✅
+    =============================== */
+    async function loadApplicationCount() {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) return;
+
+      // 🔑 หา job_seeker_id
+      const { data: seeker } = await supabaseClient
+        .from("job_seekers")
+        .select("job_seeker_id")
+        .eq("user_id", user.id)
+        .single();
+
+      if (!seeker) return;
+
+      // 🔢 นับจำนวนใบสมัคร
+      const { count } = await supabaseClient
+        .from("job_applications")
+        .select("*", { count: "exact", head: true })
+        .eq("worker_id", seeker.job_seeker_id);
+
+      document.getElementById("applicationsCount").textContent = count ?? 0;
+    }
+
+    document.getElementById("applicationsCard")
+      .addEventListener("click", () => {
+        window.location.href = "job_application_status_list.html";
+      });
+
+    /* ===============================
+       LOAD JOB LIST
+    =============================== */
+    async function loadRecommendedJobs() {
+  const container = document.getElementById("recommended-list");
+
+  const { data: jobs, error } = await supabaseClient
+  .from("jobposts")
+  .select(`
+    jobpost_id,
+    job_title,
+    employer_id,
+    workplace_name,
+    address,
+    wage_amount,
+    workers_needed,
+    approval_status,
+    employers!jobposts_employer_id_fkey (
+      store_image_url,
+      promotion_id,
+      promotion(promotion)
+    )
+  `)
+  .eq("approval_status", "Approved");
+
+if (error) {
+  console.error("Supabase query error:", error);
+  return;
+}
+
+  const { data: boosts } = await supabaseClient
+    .from("job_boosts")
+    .select("*");
+
+  const boostsArray = boosts || [];
+
+  // map boosts
+  const boostsMap = {};
+  boostsArray.forEach(b => {
+    boostsMap[String(b.jobpost_id)] = b.boosted_at;
+  });
+
+  // sort: Boosted ก่อน
+  jobs.sort((a, b) => {
+    const aBoost = boostsMap[String(a.jobpost_id)] !== undefined;
+    const bBoost = boostsMap[String(b.jobpost_id)] !== undefined;
+
+    if (aBoost && !bBoost) return -1;
+    if (!aBoost && bBoost) return 1;
+    return 0;
+  });
+
+  container.innerHTML = "";
+
+  jobs.forEach(job => {
+    const imageUrl = job.employers?.store_image_url || "https://placehold.co/64x64?text=Shop";
+
+    // เอา promotion จาก Supabase join
+    const promotion = job.employers?.promotion?.promotion;
+
+    const isBoosted = boostsMap[String(job.jobpost_id)] !== undefined;
+    const boostedAt = boostsMap[String(job.jobpost_id)] || null;
+
+    let highlightClass = "";
+    let badgeHTML = "";
+
+    if (isBoosted && (promotion === "pro" || promotion === "business")) {
+      highlightClass = "bg-yellow-50 border border-yellow-300";
+    }
+    if (promotion === "business") {
+      badgeHTML = `<span class="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded ml-1">Business Employer</span>`;
+    }
+
+    const card = document.createElement("div");
+    card.className = `rounded-xl bg-white shadow cursor-pointer ${highlightClass}`;
+    card.onclick = () => window.location.href = `job_details.html?id=${job.jobpost_id}`;
+
+    card.innerHTML = `
+      <div class="p-4 flex gap-3">
+        <img src="${imageUrl}" class="h-16 w-16 rounded-lg object-cover border bg-gray-100" alt="Store"/>
+        <div class="flex-1">
+          <p class="text-sm font-bold">${job.job_title} ${badgeHTML}</p>
+          <p class="text-xs text-gray-500">${job.workplace_name}</p>
+          <p class="text-xs text-gray-400 mt-1">📍 ${job.address ?? "ไม่ระบุที่อยู่"}</p>
+          <p class="mt-1 text-sm font-bold text-emerald-600">${job.wage_amount} / ชม.</p>
+          <p class="text-xs text-gray-400">ต้องการ ${job.workers_needed} คน</p>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+    loadProfile();
+    loadApplicationCount();
+    loadRecommendedJobs();
+  </script>
+
+
+  
+</body>
+
+</html>
+</html>
+
+
+
+</body>
+
+</html>

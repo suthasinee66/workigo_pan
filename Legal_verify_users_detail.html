@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Employer Verification Detail</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#135bec",
+        "background-light": "#f6f6f8",
+        "background-dark": "#101622",
+        "pending": "#FF6A00",
+        "approved": "#10b981",
+        "rejected": "#ef4444",
+      },
+      fontFamily: { "display": ["Inter", "sans-serif"] }
+    }
+  }
+}
+</script>
+
+<style>
+body { font-family: 'Inter', sans-serif; }
+</style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 p-4 flex justify-between items-center max-w-md mx-auto">
+  <h1 class="font-bold text-lg">Employer Verification Detail</h1>
+  <button onclick="window.history.back()" class="p-2 rounded bg-slate-100 dark:bg-slate-800">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+</header>
+
+<main class="max-w-md mx-auto p-4 pb-20" id="user-list">
+  <p class="text-sm text-slate-500">Loading...</p>
+</main>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+const container = document.getElementById("user-list");
+const urlParams = new URLSearchParams(window.location.search);
+const employer_id = urlParams.get("employer_id");
+
+let currentVerification = null;
+
+function getStatusBadge(status) {
+  switch(status?.toLowerCase()) {
+    case "verified": return "bg-green-100 text-green-600";
+    case "rejected": return "bg-red-100 text-red-600";
+    default: return "bg-orange-100 text-orange-600";
+  }
+}
+
+async function loadEmployerDetail() {
+  if (!employer_id) {
+    container.innerHTML = `<p class="text-sm text-red-500">Employer not found</p>`;
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("employer_verifications")
+    .select(`
+      *,
+      employers (
+        business_name,
+        store_image_url
+      )
+    `)
+    .eq("employer_id", employer_id)
+    .single();
+
+  if (error || !data) {
+    console.error(error);
+    container.innerHTML = `<p class="text-sm text-red-500">Cannot load employer detail</p>`;
+    return;
+  }
+
+  currentVerification = data;
+  const u = data;
+
+  const businessName = u.employers?.business_name ?? "No Name";
+  const storeImage = u.employers?.store_image_url ?? "https://i.pravatar.cc/80";
+  const statusColor = getStatusBadge(u.status);
+
+  container.innerHTML = `
+    <div class="bg-white dark:bg-slate-700 p-4 rounded-xl shadow">
+      <div class="flex gap-3 mb-3">
+        <img src="${storeImage}" class="w-16 h-16 rounded-full object-cover"/>
+        <div>
+          <p class="font-bold text-lg">${businessName}</p>
+          <p class="text-xs mt-1 text-slate-400">Submitted: ${new Date(u.submitted_at).toLocaleString()}</p>
+          <p class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full ${statusColor}">
+            Status: ${u.status ?? "pending"}
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <p class="font-semibold">Employer ID:</p>
+        <p class="text-sm text-slate-600">${u.employer_id}</p>
+      </div>
+
+      <div class="mb-2">
+        <p class="font-semibold">Business Registration:</p>
+        <p class="text-sm text-slate-600">${u.business_registration}</p>
+      </div>
+
+      <div class="mb-2">
+        <p class="font-semibold">Contact Info:</p>
+        <p class="text-sm text-slate-600">${u.contact_info}</p>
+      </div>
+
+      <div class="mb-2">
+        <p class="font-semibold">Documents:</p>
+        <pre class="text-xs text-slate-600 bg-gray-100 p-2 rounded">${JSON.stringify(u.documents, null, 2)}</pre>
+      </div>
+
+      <div class="flex gap-2 mt-4">
+        <button id="approveBtn" class="flex-1 bg-emerald-600 text-white p-2 rounded">Approve</button>
+        <button id="rejectBtn" class="flex-1 bg-red-500 text-white p-2 rounded">Reject</button>
+      </div>
+    </div>
+  `;
+
+  // ปุ่ม Approve
+  document.getElementById("approveBtn").onclick = async () => {
+    const { error } = await supabase
+      .from("employer_verifications")
+      .update({ status: "verified", verified_at: new Date().toISOString() })
+      .eq("employer_id", employer_id);
+    if(error) return console.error(error);
+    alert("Approved ✅");
+    loadEmployerDetail();
+  };
+
+  // ปุ่ม Reject
+  document.getElementById("rejectBtn").onclick = async () => {
+    const { error } = await supabase
+      .from("employer_verifications")
+      .update({ status: "rejected", verified_at: new Date().toISOString() })
+      .eq("employer_id", employer_id);
+    if(error) return console.error(error);
+    alert("Rejected ❌");
+    loadEmployerDetail();
+  };
+}
+
+loadEmployerDetail();
+</script>
+
+</body>
+</html>

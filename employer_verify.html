@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ยืนยันตัวตนผู้ประกอบการ - Work-i-Go</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<style>
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+.bg-custom-accent { background-color: #f95f06; }
+.text-custom-accent { color: #f95f06; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-32">
+
+<header class="bg-white sticky top-0 z-50 shadow-sm">
+  <div class="flex items-center w-full px-6 py-4 max-w-7xl mx-auto">
+    <button onclick="history.back()" class="text-[#183b7c] p-2 rounded-full hover:bg-gray-200 transition">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <h1 class="flex-1 text-center font-bold text-lg text-[#183b7c]">ยืนยันตัวตน</h1>
+  </div>
+</header>
+
+<main class="max-w-xl mx-auto px-6 pt-8">
+
+  <div class="mb-10 text-center">
+    <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-6">
+      <span class="material-symbols-outlined text-custom-accent text-3xl">verified_user</span>
+    </div>
+    <p class="text-gray-600 font-medium leading-relaxed">
+      เพื่อความปลอดภัยของผู้หางาน เราจำเป็นต้องให้ผู้ประกอบการยืนยันตัวตนธุรกิจโดยส่งเอกสารด้านล่าง
+    </p>
+  </div>
+
+  <div class="space-y-6">
+
+    <!-- ชื่อธุรกิจ -->
+    <div class="space-y-2">
+      <label class="text-sm font-bold text-gray-600 uppercase">ชื่อธุรกิจ</label>
+      <input type="text" id="businessName" placeholder="กรอกชื่อธุรกิจของคุณ"
+       class="w-full px-5 py-4 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-custom-accent/30 transition-all">
+    </div>
+
+    <!-- เลขทะเบียนธุรกิจ -->
+    <div class="space-y-2">
+      <label class="text-sm font-bold text-gray-600 uppercase">เลขทะเบียนธุรกิจ</label>
+      <input type="text" id="businessReg" placeholder="เช่น REG-12345678"
+        class="w-full px-5 py-4 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-custom-accent/30 transition-all">
+    </div>
+
+    <!-- อีเมลหรือเบอร์โทร -->
+    <div class="space-y-2">
+      <label class="text-sm font-bold text-gray-600 uppercase">อีเมลหรือเบอร์โทร</label>
+      <input type="text" id="contactInfo" placeholder="verify@techcorp.com"
+        class="w-full px-5 py-4 bg-gray-50 rounded-xl border border-gray-200 focus:ring-2 focus:ring-custom-accent/30 transition-all">
+    </div>
+
+    <!-- Upload Section -->
+    <div class="pt-4">
+      <label class="text-sm font-bold text-gray-600 uppercase mb-2 block">อัปโหลดเอกสาร</label>
+      <input type="file" id="fileInput" multiple class="w-full border border-gray-300 rounded-xl p-3 cursor-pointer">
+      <div id="fileList" class="grid grid-cols-1 gap-3 mt-2"></div>
+    </div>
+
+    <!-- Confirm -->
+    <div class="flex items-start gap-3 pt-4">
+      <input id="confirm" type="checkbox" class="w-5 h-5 rounded border-gray-300 text-custom-accent focus:ring-custom-accent/30 mt-1">
+      <label for="confirm" class="text-sm font-medium text-gray-600">
+        ฉันยืนยันว่าข้อมูลทั้งหมดถูกต้องและเอกสารที่ส่งเป็นของจริง
+      </label>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="pt-6 space-y-4">
+      <button id="submitVerify" class="w-full bg-custom-accent text-white font-extrabold text-lg py-5 rounded-2xl shadow-xl shadow-[#f95f06]/30 active:scale-[0.97] transition-all">
+        ยืนยันตัวตน 19 ฿
+      </button>
+      <p class="text-center text-xs font-semibold text-gray-400 flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">info</span>
+        การยืนยันใช้เวลา 1-3 วันทำการ
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+const fileInput = document.getElementById("fileInput");
+const fileList = document.getElementById("fileList");
+
+// แสดงไฟล์ที่เลือก
+fileInput.addEventListener("change", () => {
+  fileList.innerHTML = "";
+  Array.from(fileInput.files).forEach(file => {
+    const div = document.createElement("div");
+    div.className = "flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow-sm border-l-4 border-custom-accent";
+    div.innerHTML = `
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-custom-accent">description</span>
+        <div>
+          <p class="text-sm font-bold truncate max-w-[180px]">${file.name}</p>
+          <p class="text-[10px] text-gray-400 uppercase font-semibold">${(file.size/1024/1024).toFixed(2)} MB • ${file.type || 'file'}</p>
+        </div>
+      </div>
+      <button class="p-2 hover:bg-red-100 hover:text-red-600 rounded-lg transition-colors" type="button">✕</button>
+    `;
+    div.querySelector("button").addEventListener("click", () => {
+      const dt = new DataTransfer();
+      Array.from(fileInput.files).forEach(f => { if(f !== file) dt.items.add(f); });
+      fileInput.files = dt.files;
+      div.remove();
+    });
+    fileList.appendChild(div);
+  });
+});
+// Submit
+document.getElementById("submitVerify").addEventListener("click", async () => {
+  const confirmed = document.getElementById("confirm").checked;
+  if (!confirmed) { 
+    alert("กรุณายืนยันข้อมูลก่อนส่ง"); 
+    return; 
+  }
+
+  const businessName = document.getElementById("businessName").value.trim();
+  const businessReg = document.getElementById("businessReg").value.trim();
+  const contactInfo = document.getElementById("contactInfo").value.trim();
+
+  if (!businessName || !businessReg || !contactInfo) { 
+    alert("กรุณากรอกข้อมูลให้ครบ"); 
+    return; 
+  }
+  if (fileInput.files.length === 0) { 
+    alert("กรุณาอัปโหลดเอกสาร"); 
+    return; 
+  }
+
+  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+  if (!user || userErr) { 
+    alert("กรุณาเข้าสู่ระบบก่อน"); 
+    return; 
+  }
+  const employer_id = "EM_" + user.id;
+
+  // ตรวจสอบว่ามี verify แล้วหรือยัง
+  const { data: existingVerify, error: checkErr } = await supabase
+    .from("employer_verifications")
+    .select("*")
+    .eq("employer_id", employer_id)
+    .single();
+
+  if (checkErr && checkErr.code !== "PGRST116") { // PGRST116 = ไม่พบ row (ok)
+    console.error(checkErr);
+    alert("เกิดข้อผิดพลาดในการตรวจสอบข้อมูล");
+    return;
+  }
+
+  if (existingVerify) {
+    alert("คุณได้ส่งการยืนยันตัวตนแล้ว กรุณารอการตรวจสอบ");
+    return;
+  }
+
+  const file = fileInput.files[0];
+if (!file) { alert("กรุณาเลือกไฟล์ PDF"); return; }
+
+// 1️⃣ Upload file
+const { data: uploadData, error: uploadErr } = await supabase.storage
+  .from("employer-docs")
+  .upload(`${employer_id}/documents.pdf`, file, { upsert: true });
+
+if (uploadErr) {
+  console.error(uploadErr);
+  alert("อัปโหลดไฟล์ล้มเหลว");
+  return;
+}
+
+// 2️⃣ Get public URL
+const publicUrl = supabase.storage
+  .from("employer-docs")
+  .getPublicUrl(uploadData.path).publicUrl;
+
+if (!publicUrl) {
+  alert("ไม่สามารถสร้าง URL ของไฟล์ได้");
+  return;
+}
+
+// 3️⃣ Insert ลง table
+const { data: verifyData, error: insertErr } = await supabase
+  .from("employer_verifications")
+  .insert([{
+    employer_id,
+    business_registration: businessReg,
+    contact_info: contactInfo,
+    documents_url: publicUrl
+  }]);
+
+if (insertErr) {
+  console.error(insertErr);
+  alert("ส่งข้อมูลล้มเหลว");
+} else {
+  alert("ส่งการยืนยันเรียบร้อย! รอ 1-3 วันทำการ");
+  location.href = "employer_home.html";
+}
+});
+</script>
+</body>
+</html>

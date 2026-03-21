@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>User Verification</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "pending": "#FF6A00",
+                        "approved": "#10b981",
+                        "rejected": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100">
+<!-- ================= HEADER ================= -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+  <div class="flex items-center justify-between p-4 max-w-md mx-auto">
+    <div class="flex items-center gap-3">
+      <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+      <div>
+        <h1 class="text-sm font-bold">Legal Officer</h1>
+        <p class="text-[11px] text-slate-500">Job Post Review</p>
+      </div>
+    </div>
+    <button class="size-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
+      <span class="material-symbols-outlined">logout</span>
+    </button>
+  </div>
+</header>
+
+<main class="max-w-md mx-auto pb-20">
+
+<!-- ================= WELCOME ================= -->
+<section class="px-4 pt-6 pb-2">
+  <h2 class="text-2xl font-bold">User Verification</h2>
+</section>
+<div class="flex gap-2 px-4 pt-3">
+
+<button onclick="setFilter('all')" id="f-all"
+class="flex-1 bg-primary text-white rounded-lg py-2 text-sm">
+All
+</button>
+
+<button onclick="setFilter('jobseeker')" id="f-jobseeker"
+class="flex-1 border rounded-lg py-2 text-sm">
+Jobseeker
+</button>
+
+<button onclick="setFilter('employer')" id="f-employer"
+class="flex-1 border rounded-lg py-2 text-sm">
+Employer
+</button>
+
+</div>
+
+
+<main class="max-w-md mx-auto pb-20 px-4 pt-4">
+
+<div id="user-list" class="flex flex-col gap-4 px-4">
+
+<!-- MOCK USER -->
+<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
+
+<img src="https://i.pravatar.cc/80?img=12" class="w-12 h-12 rounded-full"/>
+
+<div class="flex-1">
+  <p class="font-bold">Sarah Johnson</p>
+  <p class="text-xs text-slate-500">sarah@gmail.com</p>
+
+  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-600">
+    Pending
+  </span>
+
+  <div class="flex gap-2 mt-3">
+    <button class="flex-1 bg-primary text-white rounded-lg py-1.5 text-sm font-semibold">
+      Verify
+    </button>
+
+    <button class="flex-1 border rounded-lg py-1.5 text-sm">
+      Reject
+    </button>
+  </div>
+</div>
+
+</div>
+
+<!-- MOCK USER -->
+<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
+
+<img src="https://i.pravatar.cc/80?img=32" class="w-12 h-12 rounded-full"/>
+
+<div class="flex-1">
+  <p class="font-bold">Michael Cafe</p>
+  <p class="text-xs text-slate-500">michael@mail.com</p>
+
+  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-600">
+    Verified
+  </span>
+
+</div>
+</div>
+
+<!-- MOCK USER -->
+<div class="bg-white rounded-xl border p-4 flex gap-3 items-start">
+
+<img src="https://i.pravatar.cc/80?img=5" class="w-12 h-12 rounded-full"/>
+
+<div class="flex-1">
+  <p class="font-bold">Anna Smith</p>
+  <p class="text-xs text-slate-500">anna@mail.com</p>
+
+  <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-600">
+    Rejected
+  </span>
+
+</div>
+</div>
+
+</div>
+<div id="user-detail" class="hidden space-y-4">
+
+<button onclick="backToList()" class="flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined">arrow_back</span>
+Back
+</button>
+
+<!-- profile -->
+<div class="bg-white rounded-xl border p-4 flex gap-3">
+
+<img id="detail-avatar"
+src="https://i.pravatar.cc/100"
+class="w-16 h-16 rounded-full">
+
+<div>
+<p id="detail-name" class="font-bold text-lg"></p>
+<p id="detail-email" class="text-sm text-slate-500"></p>
+
+<span id="detail-status"
+class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-600">
+Pending
+</span>
+</div>
+
+</div>
+<!-- personal info -->
+<div class="bg-white rounded-xl border p-4 space-y-2">
+
+<p class="font-bold mb-1">Personal Information</p>
+
+<div class="text-sm">
+<p><span class="text-slate-500">Citizen ID:</span> <span id="detail-citizen"></span></p>
+<p><span class="text-slate-500">Date of Birth:</span> <span id="detail-dob"></span></p>
+<p><span class="text-slate-500">Phone:</span> <span id="detail-phone"></span></p>
+<p><span class="text-slate-500">Address:</span> <span id="detail-address"></span></p>
+</div>
+
+</div>
+
+<!-- Face -->
+<div class="bg-white rounded-xl border p-4">
+
+<p class="font-bold mb-2">Face Photo</p>
+
+<img
+id="detail-face"
+class="rounded-lg border w-full object-cover">
+
+</div>
+
+<!-- ID Card -->
+<div class="bg-white rounded-xl border p-4">
+
+<p class="font-bold mb-2">National ID Card</p>
+
+<img
+id="detail-idcard"
+class="rounded-lg border w-full">
+
+</div>
+
+
+<!-- actions -->
+<div class="flex gap-3">
+
+<button onclick="approveUser()"
+class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-xl py-3 font-semibold transition">
+Verify
+</button>
+
+<button onclick="rejectUser()"
+class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-xl py-3 font-semibold transition">
+Reject
+</button>
+
+</div>
+
+
+</div>
+
+
+
+</main>
+
+<!-- ===== Bottom Nav ===== -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t">
+<div class="max-w-md mx-auto flex">
+
+<button onclick="location.href='Legal_management_post.html'" class="flex-1 py-3 flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">work</span>
+<span class="text-xs">Job Approvals</span>
+</button>
+
+<button class="flex-1 py-3 flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="text-xs">User Verification</span>
+</button>
+
+<button onclick="location.href='Legal_user_add_report.html'" class="flex-1 py-3 flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">report</span>
+<span class="text-xs">Users & Reports</span>
+</button>
+
+</div>
+</nav>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+const list = document.getElementById("user-list");
+
+// Helper for status badge color
+function getStatusBadge(status) {
+  switch(status?.toLowerCase()) {
+    case "verified": return "bg-green-100 text-green-600";
+    case "rejected": return "bg-red-100 text-red-600";
+    default: return "bg-orange-100 text-orange-600";
+  }
+}
+
+// Load employer verifications
+async function loadEmployerVerifications() {
+  list.innerHTML = `<p class="text-sm text-slate-500">Loading...</p>`;
+
+  const { data, error } = await supabase
+    .from("employer_verifications")
+    .select(`
+      *,
+      employers (
+        business_name,
+        store_image_url
+      )
+    `)
+    .order("submitted_at", { ascending: false });
+
+  if (error) {
+    console.error("Error loading employer verifications:", error);
+    list.innerHTML = `<p class="text-red-500 text-sm">Cannot load data</p>`;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.innerHTML = `<p class="text-sm text-slate-500">No submissions yet</p>`;
+    return;
+  }
+
+  list.innerHTML = "";
+
+  data.forEach(u => {
+    const businessName = u.employers?.business_name ?? "No Name";
+    const storeImage = u.employers?.store_image_url ?? "https://i.pravatar.cc/80";
+    const statusColor = getStatusBadge(u.status);
+
+    const div = document.createElement("div");
+    div.className = "bg-white dark:bg-slate-700 rounded-xl border p-4 flex gap-3 cursor-pointer hover:shadow";
+    div.innerHTML = `
+      <img src="${storeImage}" class="w-12 h-12 rounded-full object-cover"/>
+      <div class="flex-1">
+        <p class="font-bold">${businessName}</p>
+        <p class="text-xs text-slate-500">${u.contact_info}</p>
+        <span class="inline-block mt-1 px-2 py-0.5 text-xs rounded-full ${statusColor}">
+          ${u.status ?? "pending"}
+        </span>
+        <p class="text-xs text-slate-400 mt-1">Business Reg: ${u.business_registration}</p>
+      </div>
+    `;
+
+    // คลิกไปหน้า detail พร้อมส่ง employer_id
+    div.onclick = () => {
+      window.location.href = `Legal_verify_users_detail.html?employer_id=${encodeURIComponent(u.employer_id)}`;
+    };
+
+    list.appendChild(div);
+  });
+}
+
+// Initial load
+loadEmployerVerifications();
+</script>
+
+</body>
+</html>

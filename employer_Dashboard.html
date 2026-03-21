@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Work-i-Go Employer Home</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#f95f06",
+        "background-light": "#FFFFFF",
+        "background-dark": "#23170f",
+      },
+      fontFamily: {
+        display: ["Plus Jakarta Sans", "sans-serif"]
+      }
+    }
+  }
+}
+</script>
+
+<style>
+.material-symbols-outlined { font-size: 24px; }
+body { min-height: max(884px, 100dvh); }
+</style>
+</head>
+
+<body class="bg-background-light font-display">
+
+<div class="relative mx-auto min-h-screen w-full max-w-md bg-white overflow-x-hidden pb-24">
+
+  <!-- Top Bar -->
+  <div class="sticky top-0 z-10 flex items-center gap-3 bg-white px-4 py-3 shadow-sm">
+
+      <!-- Store Image -->
+      <div id="store_image" class="h-11 w-11 rounded-full bg-gray-200 bg-cover bg-center flex items-center justify-center"></div>
+
+      <!-- Greeting -->
+      <div class="flex flex-col leading-tight">
+          <span class="text-xs text-gray-400">Welcome 👋</span>
+          <h2 id="greeting" class="text-lg font-bold text-gray-900 tracking-tight">Loading...</h2>
+      </div>
+
+      <div class="flex-1"></div>
+
+      <!-- Chat Icon -->
+      <span class="material-symbols-outlined text-gray-600">chat_bubble</span>
+  </div>
+
+  <!-- Dashboard Header -->
+  <div class="px-4 pt-6 pb-2 flex justify-between">
+    <h2 class="text-[22px] font-bold text-[#345395]">Dashboard</h2>
+  </div>
+  <div id="root"></div>
+
+  <!-- Bottom Nav -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white border-t">
+    <div class="flex h-20 justify-around items-center">
+      <button onclick="location.href='employer_home.html'" class="material-symbols-outlined">home</button>
+      <button onclick="location.href='employer_Dashboard.html'" class="material-symbols-outlined text-primary">Dashboard</button>
+      <button onclick="location.href='employer_Shift.html'" class="material-symbols-outlined">calendar_month</button>
+      <button class="material-symbols-outlined">person</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SUPABASE ================= -->
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+// Route function
+window.goToJob = function(jobpostId, status) {
+  if(status === "Approved"){
+    location.href = `AcceptDecline.html?jobpost_id=${jobpostId}`;
+  } else {
+    location.href = `employer_post_status.html?id=${jobpostId}`;
+  }
+};
+
+// Load profile
+async function loadProfile() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) { window.location.href = "signin.html"; return; }
+
+  const { data: employer } = await supabase
+    .from("employers")
+    .select("business_name, store_image_url")
+    .eq("user_id", user.id)
+    .single();
+
+  document.getElementById("greeting").textContent = employer?.business_name || "User";
+
+  const storeImage = document.getElementById("store_image");
+  if(employer?.store_image_url){
+    storeImage.style.backgroundImage = `url('${employer.store_image_url}')`;
+  } else {
+    storeImage.innerHTML = `<span class="material-symbols-outlined text-gray-400">business</span>`;
+  }
+}
+
+// Load dashboard data
+async function loadDashboard() {
+  const { data: { user }, error } = await supabase.auth.getUser();
+  if(!user || error){ location.href = "signin.html"; return; }
+
+  const employer_id = "EM_" + user.id;
+  const { data: jobposts, error: jobErr } = await supabase
+    .from("jobposts")
+    .select("jobpost_id, job_title, approval_status")
+    .eq("employer_id", employer_id)
+    .order("created_at", { ascending: false });
+
+  if(jobErr){ console.error(jobErr); return; }
+}
+
+loadProfile();
+loadDashboard();
+</script>
+
+</body>
+</html>
