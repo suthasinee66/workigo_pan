@@ -23,6 +23,8 @@
   <button id="backBtn" class="hidden bg-orange-500 text-white py-3 px-6 rounded-xl font-bold">Back</button>
 </div>
 
+<!-- HTML5 QR Scanner -->
+<script src="https://unpkg.com/html5-qrcode"></script>
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
@@ -31,36 +33,33 @@ const supabase = createClient(
   "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
 );
 
-const container = document.getElementById("container");
 const statusIcon = document.getElementById("statusIcon");
 const statusText = document.getElementById("statusText");
 const timestamp = document.getElementById("timestamp");
 const backBtn = document.getElementById("backBtn");
 
-// ดึง shift_id จาก URL
-const urlParams = new URLSearchParams(window.location.search);
-const shiftId = urlParams.get("shift_id");
+let shiftId = null;
 
-async function checkInShift(shiftId) {
-  if (!shiftId) {
+// ฟังก์ชันตรวจสอบ shift_id และบันทึก check-in
+async function checkInShift(shiftIdInt) {
+  if (!shiftIdInt) {
     statusText.textContent = "Invalid QR";
     statusIcon.innerHTML = '<span class="material-symbols-outlined text-5xl text-red-600">error</span>';
     backBtn.classList.remove("hidden");
     return;
   }
 
-  // อัปเดต status และ checkin_time ใน shifts
   const { data, error } = await supabase
     .from("shifts")
     .update({
       status: "login",
       checkin_time: new Date()
     })
-    .eq("shift_id", shiftId)
+    .eq("shift_id", shiftIdInt)
     .select()
     .single();
 
-  if (error) {
+  if (error || !data) {
     console.error(error);
     statusText.textContent = "Check-in failed";
     statusIcon.innerHTML = '<span class="material-symbols-outlined text-5xl text-red-600">error</span>';
@@ -75,13 +74,55 @@ async function checkInShift(shiftId) {
   backBtn.classList.remove("hidden");
 }
 
+// ฟังก์ชันเริ่ม scanner
+async function startScanner() {
+  const html5QrCode = new Html5Qrcode("container");
+
+  const devices = await Html5Qrcode.getCameras();
+  const cameraId = devices.length ? devices[0].id : null;
+
+  if (!cameraId) {
+    statusText.textContent = "No camera found";
+    return;
+  }
+
+  html5QrCode.start(
+    cameraId,
+    { fps: 10, qrbox: 250 },
+    async (decodedText) => {
+      // QR อาจเป็น URL หรือ JSON {"shift_id": ...}
+      let shiftInt = null;
+
+      try {
+        // ถ้า JSON
+        const obj = JSON.parse(decodedText);
+        shiftInt = parseInt(obj.shift_id, 10);
+      } catch (e) {
+        // ถ้าเป็น URL เช่น ?shift_id=2
+        try {
+          const url = new URL(decodedText);
+          shiftInt = parseInt(url.searchParams.get("shift_id"), 10);
+        } catch {}
+      }
+
+      shiftId = shiftInt;
+      html5QrCode.stop();
+      checkInShift(shiftId);
+    },
+    (errorMessage) => {
+      // optional: console.log("Scan error", errorMessage);
+    }
+  );
+}
+
+// ปุ่มกลับ
 backBtn.addEventListener("click", () => {
-  window.location.href = "/"; // กลับหน้า home หรือ scanner page
+  window.location.href = "/"; // กลับหน้า scanner หรือ home
 });
 
-// เรียกฟังก์ชัน
-checkInShift(shiftId);
-
+// เริ่ม scanner
+startScanner();
 </script>
+
 </body>
 </html>
