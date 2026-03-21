@@ -148,9 +148,18 @@ let scannedShiftId = null;
 async function onScanSuccess(decodedText) {
   await scanner.stop();
 
-  scannedShiftId = decodedText; // QR code ต้องเป็น shift_id
+  let shiftObj;
+  try {
+    shiftObj = JSON.parse(decodedText); // decode JSON
+  } catch (e) {
+    alert("Invalid QR format");
+    startScanner();
+    return;
+  }
 
-  // STEP 1: โหลด shift + worker
+  const scannedShiftId = shiftObj.shift_id; // ดึง shift_id จริง
+
+  // โหลด shift
   const { data: shifts, error: shiftError } = await supabase
     .from("shifts")
     .select(`
@@ -166,6 +175,7 @@ async function onScanSuccess(decodedText) {
 
   if (shiftError || !shifts) {
     alert("Invalid QR");
+    console.error(shiftError);
     startScanner();
     return;
   }
