@@ -82,6 +82,13 @@
 
       <h2 class="font-bold text-base">Create Schedule</h2>
 
+      <div class="col-span-2">
+  <label class="text-xs text-gray-500">ค่าจ้าง (บาท)</label>
+  <input id="agreed-wage" 
+         class="w-full border rounded-lg p-2 mt-1 focus:ring-2 focus:ring-primary outline-none" 
+         type="number" step="0.01" 
+         placeholder="เช่น 300">
+</div>
       <!-- DATE -->
       <div class="grid grid-cols-2 gap-3">
         <div>
@@ -340,22 +347,17 @@ window.addShifts = function () {
   const weekday = document.getElementById("weekday").value;
   const startTime = document.getElementById("start-time").value;
   const endTime = document.getElementById("end-time").value;
+  const wage = parseFloat(document.getElementById("agreed-wage").value);
 
-  if (!startDate || !endDate || !startTime || !endTime) {
-    alert("กรอกข้อมูลให้ครบ");
+  if (!startDate || !endDate || !startTime || !endTime || isNaN(wage)) {
+    alert("กรอกข้อมูลให้ครบและค่าจ้างต้องเป็นตัวเลข");
     return;
   }
 
-  const newShifts = generateShifts(
-    startDate,
-    endDate,
-    weekday,
-    startTime,
-    endTime
-  );
+  const newShifts = generateShifts(startDate, endDate, weekday, startTime, endTime)
+    .map(s => ({ ...s, wage }));
 
   allShifts = [...allShifts, ...newShifts];
-
   renderShifts();
 };
 function renderShifts() {
@@ -393,25 +395,88 @@ window.removeShift = function (index) {
   renderShifts();
 };
 window.saveAll = async function () {
+  if (!allShifts.length) {
+    alert("กรุณาเพิ่ม schedule ก่อน");
+    return;
+  }
 
+  // STEP 1: หาว่า employment มีอยู่แล้วหรือยัง
+  const { data: existingEmployment } = await supabase
+    .from("employments")
+    .select("*")
+    .eq("employment_id", jobApplicationId) // หรือใช้ job_application_id
+    .maybeSingle();
+
+  const start_date = allShifts[0].date; // สมมติวันแรก
+  const end_date = allShifts[allShifts.length - 1].date; // วันสุดท้าย
+  const wage = parseFloat(document.getElementById("agreed-wage").value);
+
+  let employmentId;
+
+  if (existingEmployment) {
+    // อัพเดต employment พร้อมค่าจ้าง
+    const { error, data } = await supabase
+      .from("employments")
+      .update({
+        start_date: start_date + " 00:00:00",
+        end_date: end_date + " 23:59:59",
+        agreed_wage: wage,
+        employment_status: "Active"
+      })
+      .eq("employment_id", existingEmployment.employment_id)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      console.error(error);
+      alert("เกิดข้อผิดพลาดในการบันทึก employment");
+      return;
+    }
+
+    employmentId = existingEmployment.employment_id;
+  } else {
+    // สร้าง employment ใหม่
+    const { error, data } = await supabase
+      .from("employments")
+      .insert([{
+        job_application_id: jobApplicationId,
+        jobpost_id: jobpostId,
+        start_date: start_date + " 00:00:00",
+        end_date: end_date + " 23:59:59",
+        agreed_wage: wage,
+        employment_status: "Active"
+      }])
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      console.error(error);
+      alert("เกิดข้อผิดพลาดในการบันทึก employment");
+      return;
+    }
+
+    employmentId = data.employment_id;
+  }
+
+  // STEP 2: บันทึก shifts
   const rows = allShifts.map(s => ({
-    employment_id: jobApplicationId, // จริง ๆ คือ employmentId
+    employment_id: employmentId,
     shift_date: s.date,
     start_time: s.start.split(" ")[1],
     end_time: s.end.split(" ")[1]
   }));
 
-  const { error } = await supabase
+  const { error: shiftError } = await supabase
     .from("shifts")
     .insert(rows);
 
-  if (error) {
-    console.error(error);
-    alert("error");
+  if (shiftError) {
+    console.error(shiftError);
+    alert("เกิดข้อผิดพลาดในการบันทึก shifts");
     return;
   }
 
-  alert("Saved all shifts!");
+  alert("Saved all shifts & employment!");
   loadShifts();
 };
 async function loadWorkerProfile() {

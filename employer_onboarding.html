@@ -205,7 +205,8 @@ submitBtn.addEventListener("click", async () => {
       address,
       contact_method: contactMethod, // ✅ สำคัญ
       contact_value,
-      store_image_url
+      store_image_url,
+      promotion_id: 1
     })
     const { error: profileError } = await supabase
         .from("profiles")
