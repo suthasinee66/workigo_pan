@@ -474,18 +474,85 @@ document.getElementById("createJobBtn").addEventListener("click", async () => {
 });
 document.getElementById("dashboardBtn").addEventListener("click", async () => {
   const promotion_id = await checkPromotionBeforePosting();
-
-  // กัน null / undefined
   if (!promotion_id) return;
 
-  if (promotion_id === 3) {
-    // ✅ ไป Railway Dashboard
-    window.location.href = "https://workigoemployer-production.up.railway.app/employer";
+  if (Number(promotion_id) === 3) {
+
+    // ✅ ดึง session
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      alert("Session expired");
+      location.href = "signin.html";
+      return;
+    }
+
+    const token = session.access_token;
+
+    window.location.href =
+      "https://workigoemployer-production.up.railway.app/employer?token=" + token;
+
   } else {
-    // ❌ ไม่ใช่ Business → แสดง modal
-    const modal = document.getElementById("businessPromoModal");
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
+    async function showPromotionModal(promotion_id) {
+  const promo = await getPromotionDetails(promotion_id);
+  if (!promo) return;
+
+  const modal = document.getElementById("businessPromoModal");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
+  // เปลี่ยนชื่อหัวข้อ modal
+  const modalTitle = modal.querySelector("h3");
+  modalTitle.innerText =
+    promo.promotion === "business"
+      ? "Dashboard สำหรับ Business Promotion"
+      : promo.promotion === "pro"
+      ? "Dashboard สำหรับ Pro Promotion"
+      : "Dashboard สำหรับ Basic Promotion";
+
+  // เปลี่ยนชื่อแพ็กเกจและราคา
+  document.getElementById("promoPackageName").innerText = promo.promotion;
+  document.getElementById("promoPackagePrice").innerText = promo.price;
+
+  // เปลี่ยน benefits ตาม package
+  const benefitsList = document.getElementById("promoBenefitsList");
+  benefitsList.innerHTML = ""; // เคลียร์ก่อน
+
+  if (promo.promotion === "business") {
+    benefitsList.innerHTML = `
+      <li>ลงประกาศงานได้ไม่จำกัด</li>
+      <li>ดันโพสต์ได้ 10 ครั้ง/เดือน นาน 14 วัน</li>
+      <li>โพสต์แสดงเด่นในหน้าแรกและหลายตำแหน่งของแพลตฟอร์ม</li>
+      <li>มี Smart Matching และ Business Employer Badge</li>
+      <li>ใช้งาน Data Insight และ Insight Dashboard ได้</li>
+    `;
+  } else if (promo.promotion === "pro") {
+    benefitsList.innerHTML = `
+      <li>โพสต์งานได้ 25 โพสต์/เดือน</li>
+      <li>ดันโพสต์ได้นาน 7 วัน</li>
+      <li>ไม่มี Data Insight</li>
+    `;
+  } else {
+    benefitsList.innerHTML = `
+      <li>โพสต์งานได้ 3 โพสต์/เดือน</li>
+    `;
+  }
+}
+
+// ปุ่ม Dashboard
+document.getElementById("dashboardBtn").addEventListener("click", async () => {
+  const promotion_id = await checkPromotionBeforePosting();
+  if (!promotion_id) return;
+
+  showPromotionModal(promotion_id);
+});
+
+// ปุ่มปิด modal
+document.getElementById("closeBusinessPromoModal").addEventListener("click", () => {
+  const modal = document.getElementById("businessPromoModal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+});
   }
 });
 document.getElementById("upgradeBusinessBtn").addEventListener("click", () => {

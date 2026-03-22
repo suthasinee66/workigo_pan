@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reviews & Ratings</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<style>
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 1, 'wght' 400;
+}
+</style>
+
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#345395",
+        accent: "#f95e07",
+        background: "#F2F2F7"
+      },
+      fontFamily: {
+        display: ["Plus Jakarta Sans"]
+      }
+    }
+  }
+}
+</script>
+</head>
+
+<body class="font-display bg-background">
+
+<div class="min-h-screen flex flex-col">
+
+<!-- HEADER -->
+<div class="flex items-center p-4 border-b">
+  <button onclick="history.back()">
+    <span class="material-symbols-outlined">arrow_back_ios_new</span>
+  </button>
+  <h1 class="flex-1 text-center font-bold text-lg">Reviews & Ratings</h1>
+</div>
+
+<!-- MAIN -->
+<main class="flex-1 p-4 space-y-6">
+
+<!-- REVIEW FORM -->
+<div class="bg-white p-4 rounded-xl shadow">
+  <h2 id="review-title" class="text-xl font-bold pb-4">
+    Loading...
+  </h2>
+
+  <!-- STARS -->
+  <div id="stars" class="flex justify-center gap-2 py-4">
+    <span class="material-symbols-outlined text-4xl cursor-pointer">star</span>
+    <span class="material-symbols-outlined text-4xl cursor-pointer">star</span>
+    <span class="material-symbols-outlined text-4xl cursor-pointer">star</span>
+    <span class="material-symbols-outlined text-4xl cursor-pointer">star</span>
+    <span class="material-symbols-outlined text-4xl cursor-pointer">star</span>
+  </div>
+
+  <!-- COMMENT -->
+  <textarea id="comment"
+    class="w-full border rounded-lg p-3"
+    placeholder="Describe your experience..."></textarea>
+
+  <!-- SUBMIT -->
+  <button onclick="submitReview()"
+    class="w-full mt-4 bg-primary text-white py-3 rounded-lg font-bold">
+    Submit Review
+  </button>
+</div>
+
+<!-- REVIEWS -->
+<div>
+  <div class="flex justify-between items-center py-4">
+    <h3 class="font-bold text-lg">What Others Say</h3>
+    <div class="flex items-center gap-1">
+      <span class="material-symbols-outlined text-accent">star</span>
+      <span id="avg-rating" class="font-bold">0</span>
+      <span id="total-reviews">(0)</span>
+    </div>
+  </div>
+
+  <div id="reviews-container" class="space-y-4"></div>
+</div>
+
+</main>
+
+</div>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://ispbevvwwggbktfczmui.supabase.co",
+  "sb_publishable_5pnSaiKllm-q7UNMe5r7pw_n4Qu-AJ7"
+);
+
+/* ================= GET PARAM ================= */
+const params = new URLSearchParams(window.location.search);
+const jobpostId = params.get("jobpost_id");
+const revieweeId = params.get("reviewee_id");
+
+/* ================= RATING ================= */
+let selectedRating = 0;
+const stars = document.querySelectorAll("#stars span");
+
+stars.forEach((star, index) => {
+  star.addEventListener("click", () => {
+    selectedRating = index + 1;
+
+    stars.forEach((s, i) => {
+      s.classList.toggle("text-accent", i < selectedRating);
+      s.classList.toggle("text-gray-300", i >= selectedRating);
+    });
+  });
+});
+
+/* ================= SUBMIT ================= */
+async function submitReview() {
+  const user = await supabase.auth.getUser();
+  const reviewerId = user.data.user?.id;
+
+  const comment = document.getElementById("comment").value;
+
+  if (!reviewerId) {
+    alert("Please login first");
+    return;
+  }
+
+  if (!selectedRating) {
+    alert("Please select rating");
+    return;
+  }
+
+  const { error } = await supabase.from("reviews").insert({
+    reviewer_id: reviewerId,
+    reviewee_id: revieweeId,
+    jobpost_id: jobpostId,
+    rating: selectedRating,
+    comment: comment
+  });
+
+  if (error) {
+    console.error(error);
+    alert("Submit failed");
+    return;
+  }
+
+  alert("Review submitted!");
+  loadReviews();
+}
+
+/* ================= LOAD REVIEWS ================= */
+async function loadReviews() {
+  const { data, error } = await supabase
+    .from("reviews")
+    .select(`
+      rating,
+      comment,
+      created_at,
+      reviewer:reviewer_id (
+        first_name,
+        last_name,
+        avatar_url
+      )
+    `)
+    .eq("reviewee_id", revieweeId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const container = document.getElementById("reviews-container");
+  container.innerHTML = "";
+
+  let total = 0;
+
+  data.forEach(r => {
+    total += r.rating;
+
+    const name = r.reviewer?.first_name || "User";
+    const avatar = r.reviewer?.avatar_url || "https://via.placeholder.com/50";
+
+    const starsHTML = Array.from({ length: 5 }, (_, i) => `
+      <span class="material-symbols-outlined text-sm ${
+        i < r.rating ? "text-accent" : "text-gray-300"
+      }">star</span>
+    `).join("");
+
+    container.innerHTML += `
+      <div class="bg-white p-4 rounded-xl shadow">
+        <div class="flex gap-3">
+          <img src="${avatar}" class="w-10 h-10 rounded-full"/>
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <p class="font-bold">${name}</p>
+              <p class="text-xs text-gray-400">
+                ${new Date(r.created_at).toLocaleDateString()}
+              </p>
+            </div>
+
+            <div>${starsHTML}</div>
+
+            <p class="text-sm mt-2">${r.comment || ""}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  /* AVG */
+  const avg = data.length ? (total / data.length).toFixed(1) : 0;
+
+  document.getElementById("avg-rating").textContent = avg;
+  document.getElementById("total-reviews").textContent = `(${data.length})`;
+}
+
+/* ================= INIT ================= */
+loadReviews();
+</script>
+
+</body>
+</html>

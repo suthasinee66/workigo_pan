@@ -269,17 +269,26 @@ async function checkPromotion() {
 
   return employer?.promotion_id;
 }
-
 document.getElementById("dashboardBtn").addEventListener("click", async () => {
-  const promotion_id = await checkPromotion();
-
+  const promotion_id = await checkPromotion(); // ✅ FIX ตรงนี้
   if (!promotion_id) return;
 
   if (Number(promotion_id) === 3) {
-    // ✅ Business → เข้า dashboard จริง
-    window.location.href = "https://workigoemployer-production.up.railway.app/employer";
+
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      alert("Session expired");
+      location.href = "signin.html";
+      return;
+    }
+
+    const token = session.access_token;
+
+    window.location.href =
+      "https://workigoemployer-production.up.railway.app/employer?token=" + token;
+
   } else {
-    // ❌ ไม่ใช่ → เปิด modal
     const modal = document.getElementById("businessPromoModal");
     modal.classList.remove("hidden");
     modal.classList.add("flex");

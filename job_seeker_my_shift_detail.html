@@ -74,10 +74,10 @@
 <main class="flex-1 pb-24 px-4">
   <div id="content"></div>
 
-  <button onclick="location.href='reviews&ratings.html'"
-    class="w-full bg-accent hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition mt-4">
-    End of employment
-  </button>
+  <button onclick="goToReview()"
+  class="w-full bg-accent hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition mt-4">
+  End of employment
+</button>
 </main>
 
     
@@ -118,6 +118,8 @@
   const mainContainer = document.querySelector("#content");
   const params = new URLSearchParams(window.location.search);
   const employmentId = params.get("employment_id");
+  let jobpostIdGlobal = null;
+let workerIdGlobal = null;
 
   async function loadEmploymentShifts() {
     mainContainer.innerHTML = `<p class="text-center py-10"></p>`;
@@ -135,10 +137,15 @@
         end_date,
         agreed_wage,
         employment_status,
-        jobposts (
-          job_title,
-          workplace_name
-        ),
+        jobpost_id,
+        job_applications (
+  worker_id
+),
+jobposts (
+  employer_id,
+  job_title,
+  workplace_name
+),
         shifts (
           shift_id,
           shift_date,
@@ -157,6 +164,8 @@
     }
 
     const job = employment.jobposts;
+    jobpostIdGlobal = employment.jobpost_id;
+workerIdGlobal = employment.job_applications?.worker_id;
     const shiftsToShow = (employment.shifts || [])
       .filter(s => !s.status) // status = null
       .sort((a, b) => new Date(`${a.shift_date}T${a.start_time}`) - new Date(`${b.shift_date}T${b.start_time}`));
@@ -247,7 +256,30 @@ function goToCheckOut(shift_id) {
     `;
     return card;
   }
+async function goToReview() {
 
+  if (!jobpostIdGlobal || !workerIdGlobal) {
+    alert("Missing data");
+    return;
+  }
+
+  const { data: { user } } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    alert("Please login first");
+    return;
+  }
+
+  // ✅ อัปเดตสถานะ
+  await supabaseClient
+    .from("employments")
+    .update({ employment_status: "completed" })
+    .eq("employment_id", employmentId);
+
+  // ✅ ไปหน้า review
+  window.location.href =
+    `reviews.html?jobpost_id=${jobpostIdGlobal}&reviewee_id=${workerIdGlobal}&reviewer_id=${user.id}`;
+}
   loadEmploymentShifts();
 </script>
 </body>
