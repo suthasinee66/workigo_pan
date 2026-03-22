@@ -117,59 +117,27 @@ body {
 
 </div>
 
-
 <!-- Business Promotion Access Modal -->
 <div id="businessPromoModal" class="fixed inset-0 z-50 hidden items-end justify-center bg-black/40 px-4 pb-24 pt-10">
   <div class="w-full max-w-md rounded-3xl bg-white p-5 shadow-2xl">
+
     <div class="flex items-start justify-between gap-3">
       <div>
         <h3 class="text-xl font-extrabold text-[#345395]">Dashboard สำหรับ Business Promotion</h3>
-        <p class="mt-1 text-sm text-gray-500">หน้านี้มีไว้สำหรับนายจ้างที่สมัคร Promotion Business เท่านั้น</p>
+        <p class="mt-1 text-sm text-gray-500">หน้านี้แสดงแพ็กเกจ Pro และ Business สำหรับนายจ้าง</p>
       </div>
       <button id="closeBusinessPromoModal" class="rounded-full p-1 text-gray-500 hover:bg-gray-100">
         <span class="material-symbols-outlined">close</span>
       </button>
     </div>
 
-    <div id="promoPackageCard" class="mt-4 rounded-2xl border border-orange-100 bg-orange-50 p-4">
-      <div class="flex items-center justify-between gap-3">
-        <div>
-          <p class="text-sm text-gray-500">แพ็กเกจที่ต้องสมัคร</p>
-          <h4 id="promoPackageName" class="text-lg font-bold text-primary">Business Package</h4>
-        </div>
-        <div class="rounded-xl bg-white px-3 py-2 text-right shadow-sm">
-          <p class="text-xs text-gray-400">ราคา</p>
-          <p id="promoPackagePrice" class="text-lg font-extrabold text-primary">59 บาท/เดือน</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-4 space-y-3">
-      <div class="rounded-2xl border p-4">
-        <p class="font-semibold text-gray-900">สิทธิพิเศษหลัก</p>
-        <ul id="promoBenefitsList" class="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-600">
-          <li>ลงประกาศงานได้ไม่จำกัด</li>
-          <li>ดันโพสต์ได้ 10 ครั้ง/เดือน นาน 14 วัน</li>
-          <li>โพสต์แสดงเด่นในหน้าแรกและหลายตำแหน่งของแพลตฟอร์ม</li>
-          <li>มี Smart Matching และ Business Employer Badge</li>
-          <li>ใช้งาน Data Insight และ Insight Dashboard ได้</li>
-        </ul>
-      </div>
-
-      <div class="rounded-2xl border p-4">
-        <p class="font-semibold text-gray-900">ข้อมูลที่ดูได้ใน Dashboard</p>
-        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-600">
-          <li>จำนวนผู้สมัครต่อโพสต์ และอัตราการตอบรับ</li>
-          <li>เวลาที่ใช้ในการหาพนักงาน</li>
-          <li>ค่าแรงเฉลี่ยของงานประเภทเดียวกัน</li>
-          <li>ช่วงเวลาที่โพสต์แล้วมีผู้สมัครมากที่สุด</li>
-          <li>ประสิทธิภาพของโพสต์งานแต่ละรายการ</li>
-        </ul>
-      </div>
+    <!-- Container สำหรับทุก Promotion Card -->
+    <div id="promoCardsContainer" class="mt-4 space-y-4">
+      <!-- Card แต่ละแพ็กเกจ จะถูกสร้างด้วย JS -->
     </div>
 
     <button id="upgradeBusinessBtn" class="mt-5 w-full rounded-xl bg-primary py-3 font-bold text-white">
-      ดูแพ็กเกจ / สมัคร Business Promotion
+      ดูแพ็กเกจ / สมัคร Promotion
     </button>
   </div>
 </div>
@@ -307,6 +275,85 @@ async function canCreateNewPost(promotion_id) {
   return true;
 }
 
+async function loadPromotionCards() {
+  const { data: promos, error } = await supabase
+    .from("promotion")
+    .select("*")
+    .in("promotion", ["pro", "business"]) // ดึงเฉพาะ Pro และ Business
+    .order("promotion", { ascending: true }); // Pro ขึ้นก่อน Business
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const container = document.getElementById("promoCardsContainer");
+  container.innerHTML = "";
+
+  promos.forEach(promo => {
+    // สีพื้นและธีมของแต่ละแพ็กเกจ
+    const bgClass = promo.promotion === "business" ? "bg-orange-50 border-orange-100" : "bg-blue-50 border-blue-100";
+    const textClass = promo.promotion === "business" ? "text-primary" : "text-blue-600";
+
+    const card = document.createElement("div");
+    card.className = `rounded-2xl border ${bgClass} p-4`;
+
+    card.innerHTML = `
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <p class="text-sm text-gray-500">แพ็กเกจที่ต้องสมัคร</p>
+          <h4 class="text-lg font-bold ${textClass}">${promo.promotion.toUpperCase()}</h4>
+        </div>
+        <div class="rounded-xl bg-white px-3 py-2 text-right shadow-sm">
+          <p class="text-xs text-gray-400">ราคา</p>
+          <p class="text-lg font-extrabold ${textClass}">${promo.price}</p>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <p class="font-semibold text-gray-900">สิทธิพิเศษหลัก</p>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-600" id="benefits-${promo.id}">
+          <!-- สิทธิพิเศษจะเติมจาก JS -->
+        </ul>
+      </div>
+    `;
+
+    container.appendChild(card);
+
+    // เติม benefits ของแต่ละแพ็กเกจ
+    const benefitsList = document.getElementById(`benefits-${promo.id}`);
+    if (promo.promotion === "business") {
+      benefitsList.innerHTML = `
+        <li>ลงประกาศงานได้ไม่จำกัด</li>
+        <li>ดันโพสต์ได้ 10 ครั้ง/เดือน นาน 14 วัน</li>
+        <li>โพสต์แสดงเด่นในหน้าแรกและหลายตำแหน่งของแพลตฟอร์ม</li>
+        <li>มี Smart Matching และ Business Employer Badge</li>
+        <li>ใช้งาน Data Insight และ Insight Dashboard ได้</li>
+      `;
+    } else if (promo.promotion === "pro") {
+      benefitsList.innerHTML = `
+        <li>โพสต์งานได้ 25 โพสต์/เดือน</li>
+        <li>ดันโพสต์ได้นาน 7 วัน</li>
+        <li>ไม่มี Data Insight</li>
+      `;
+    }
+  });
+}
+
+// กดปุ่ม Dashboard → เปิด Modal + โหลด Promotion Card
+document.getElementById("dashboardBtn").addEventListener("click", async () => {
+  await loadPromotionCards();
+  const modal = document.getElementById("businessPromoModal");
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+});
+
+// ปิด Modal
+document.getElementById("closeBusinessPromoModal").addEventListener("click", () => {
+  const modal = document.getElementById("businessPromoModal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+});
 /* ================= LOAD DASHBOARD ================= */
 async function loadDashboard() {
   const { data: { user }, error } = await supabase.auth.getUser();
@@ -493,66 +540,9 @@ document.getElementById("dashboardBtn").addEventListener("click", async () => {
       "https://workigoemployer-production.up.railway.app/employer?token=" + token;
 
   } else {
-    async function showPromotionModal(promotion_id) {
-  const promo = await getPromotionDetails(promotion_id);
-  if (!promo) return;
-
-  const modal = document.getElementById("businessPromoModal");
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-
-  // เปลี่ยนชื่อหัวข้อ modal
-  const modalTitle = modal.querySelector("h3");
-  modalTitle.innerText =
-    promo.promotion === "business"
-      ? "Dashboard สำหรับ Business Promotion"
-      : promo.promotion === "pro"
-      ? "Dashboard สำหรับ Pro Promotion"
-      : "Dashboard สำหรับ Basic Promotion";
-
-  // เปลี่ยนชื่อแพ็กเกจและราคา
-  document.getElementById("promoPackageName").innerText = promo.promotion;
-  document.getElementById("promoPackagePrice").innerText = promo.price;
-
-  // เปลี่ยน benefits ตาม package
-  const benefitsList = document.getElementById("promoBenefitsList");
-  benefitsList.innerHTML = ""; // เคลียร์ก่อน
-
-  if (promo.promotion === "business") {
-    benefitsList.innerHTML = `
-      <li>ลงประกาศงานได้ไม่จำกัด</li>
-      <li>ดันโพสต์ได้ 10 ครั้ง/เดือน นาน 14 วัน</li>
-      <li>โพสต์แสดงเด่นในหน้าแรกและหลายตำแหน่งของแพลตฟอร์ม</li>
-      <li>มี Smart Matching และ Business Employer Badge</li>
-      <li>ใช้งาน Data Insight และ Insight Dashboard ได้</li>
-    `;
-  } else if (promo.promotion === "pro") {
-    benefitsList.innerHTML = `
-      <li>โพสต์งานได้ 25 โพสต์/เดือน</li>
-      <li>ดันโพสต์ได้นาน 7 วัน</li>
-      <li>ไม่มี Data Insight</li>
-    `;
-  } else {
-    benefitsList.innerHTML = `
-      <li>โพสต์งานได้ 3 โพสต์/เดือน</li>
-    `;
-  }
-}
-
-// ปุ่ม Dashboard
-document.getElementById("dashboardBtn").addEventListener("click", async () => {
-  const promotion_id = await checkPromotionBeforePosting();
-  if (!promotion_id) return;
-
-  showPromotionModal(promotion_id);
-});
-
-// ปุ่มปิด modal
-document.getElementById("closeBusinessPromoModal").addEventListener("click", () => {
-  const modal = document.getElementById("businessPromoModal");
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-});
+    const modal = document.getElementById("businessPromoModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
   }
 });
 document.getElementById("upgradeBusinessBtn").addEventListener("click", () => {

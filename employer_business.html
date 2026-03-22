@@ -28,41 +28,37 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; }
 </header>
 
 <main class="max-w-xl mx-auto px-6 pt-8 space-y-6">
+<section class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 text-center">
+  <h2 class="text-2xl font-extrabold text-[#183b7c] mb-4">เลือกแพ็กเกจ Promotion</h2>
+  <div class="flex justify-center gap-4">
+    <button data-promo="pro" class="promo-btn flex-1 py-4 rounded-2xl border border-gray-200 font-bold text-[#183b7c] hover:bg-blue-50 transition-all">
+      Pro Package
+    </button>
+    <button data-promo="business" class="promo-btn flex-1 py-4 rounded-2xl border border-gray-200 font-bold text-[#183b7c] hover:bg-orange-50 transition-all">
+      Business Package
+    </button>
+  </div>
+</section>
 
-  <section class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 text-center">
-    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-50 rounded-full mb-5">
-      <span class="material-symbols-outlined text-custom-accent text-3xl">query_stats</span>
+<!-- รายละเอียดแพ็กเกจ -->
+<section id="promoDetails" class="mt-6 bg-custom-soft border border-orange-100 rounded-3xl p-6 shadow-sm hidden">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <p class="text-sm font-bold text-gray-500 uppercase tracking-wide">แพ็กเกจที่สมัคร</p>
+      <h3 id="selectedPromoName" class="text-3xl font-extrabold text-custom-accent mt-2">Business Package</h3>
+      <p id="selectedPromoDuration" class="text-gray-600 font-medium mt-2">ใช้งานได้ 30 วันต่อรอบการสมัคร</p>
     </div>
-    <h2 class="text-2xl font-extrabold text-[#183b7c]">สมัคร Business Promotion</h2>
-    <p class="text-gray-600 font-medium leading-relaxed mt-3">
-      ปลดล็อกหน้า Dashboard และเพิ่มโอกาสให้ประกาศงานของธุรกิจคุณมองเห็นมากขึ้น
-    </p>
-  </section>
-
-  <section class="bg-custom-soft border border-orange-100 rounded-3xl p-6 shadow-sm">
-    <div class="flex items-start justify-between gap-4">
-      <div>
-        <p class="text-sm font-bold text-gray-500 uppercase tracking-wide">แพ็กเกจที่สมัคร</p>
-        <h3 class="text-3xl font-extrabold text-custom-accent mt-2">Business Package</h3>
-        <p class="text-gray-600 font-medium mt-2">ใช้งานได้ 30 วันต่อรอบการสมัคร</p>
-      </div>
-      <div class="bg-white rounded-2xl px-5 py-4 shadow-sm border border-orange-100 text-right shrink-0">
-        <p class="text-sm font-bold text-gray-400">ราคา</p>
-        <p class="text-2xl font-extrabold text-custom-accent">59 บาท/เดือน</p>
-      </div>
+    <div id="selectedPromoPrice" class="bg-white rounded-2xl px-5 py-4 shadow-sm border border-orange-100 text-right shrink-0">
+      <p class="text-sm font-bold text-gray-400">ราคา</p>
+      <p class="text-2xl font-extrabold text-custom-accent">59 บาท/เดือน</p>
     </div>
-  </section>
+  </div>
 
-  <section class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6">
-    <h3 class="text-xl font-extrabold text-[#1b1f2a] mb-4">สิทธิพิเศษที่ได้รับ</h3>
-    <ul class="space-y-3 text-gray-700 font-medium">
-      <li class="flex gap-3"><span class="material-symbols-outlined text-custom-accent">check_circle</span><span>ลงประกาศงานได้ไม่จำกัด</span></li>
-      <li class="flex gap-3"><span class="material-symbols-outlined text-custom-accent">check_circle</span><span>ดันโพสต์ได้ 10 ครั้งต่อเดือน นาน 14 วัน</span></li>
-      <li class="flex gap-3"><span class="material-symbols-outlined text-custom-accent">check_circle</span><span>โพสต์แสดงเด่นในหน้าแรกและหลายตำแหน่งของแพลตฟอร์ม</span></li>
-      <li class="flex gap-3"><span class="material-symbols-outlined text-custom-accent">check_circle</span><span>มี Smart Matching และ Business Employer Badge</span></li>
-      <li class="flex gap-3"><span class="material-symbols-outlined text-custom-accent">check_circle</span><span>เข้าใช้งาน Data Insight และ Insight Dashboard ได้</span></li>
-    </ul>
-  </section>
+  <div id="selectedPromoBenefits" class="mt-4 text-left">
+    <h4 class="font-semibold text-gray-900 mb-2">สิทธิพิเศษที่ได้รับ</h4>
+    <ul class="space-y-2 text-gray-700 font-medium"></ul>
+  </div>
+</section>
 
   <section class="bg-white rounded-3xl shadow-sm border border-gray-200 p-6 space-y-5">
     <div>
@@ -204,7 +200,67 @@ async function prefillBusinessName() {
     console.error(error);
   }
 }
+const promoData = {
+  pro: {
+    name: "Pro Package",
+    price: "25 บาท/เดือน",
+    duration: "ใช้งานได้ 30 วันต่อรอบการสมัคร",
+    benefits: [
+      "โพสต์งานได้ 25 โพสต์/เดือน",
+      "ดันโพสต์ได้นาน 7 วัน",
+      "ไม่มี Data Insight"
+    ],
+    colorClass: "text-blue-600"
+  },
+  business: {
+    name: "Business Package",
+    price: "59 บาท/เดือน",
+    duration: "ใช้งานได้ 30 วันต่อรอบการสมัคร",
+    benefits: [
+      "ลงประกาศงานได้ไม่จำกัด",
+      "ดันโพสต์ได้ 10 ครั้งต่อเดือน นาน 14 วัน",
+      "โพสต์แสดงเด่นในหน้าแรกและหลายตำแหน่งของแพลตฟอร์ม",
+      "มี Smart Matching และ Business Employer Badge",
+      "เข้าใช้งาน Data Insight และ Insight Dashboard ได้"
+    ],
+    colorClass: "text-custom-accent"
+  }
+};
 
+const promoButtons = document.querySelectorAll(".promo-btn");
+const promoDetailsSection = document.getElementById("promoDetails");
+const promoNameEl = document.getElementById("selectedPromoName");
+const promoPriceEl = document.getElementById("selectedPromoPrice").querySelector("p:last-child");
+const promoDurationEl = document.getElementById("selectedPromoDuration");
+const promoBenefitsEl = document.querySelector("#selectedPromoBenefits ul");
+
+promoButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const promoKey = btn.dataset.promo;
+    const promo = promoData[promoKey];
+
+    promoDetailsSection.classList.remove("hidden");
+    promoNameEl.textContent = promo.name;
+    promoPriceEl.textContent = promo.price;
+    promoDurationEl.textContent = promo.duration;
+
+    promoBenefitsEl.innerHTML = "";
+    promo.benefits.forEach(b => {
+      promoBenefitsEl.innerHTML += `<li class="flex gap-3"><span class="material-symbols-outlined text-custom-accent">check_circle</span>${b}</li>`;
+    });
+
+    // highlight ปุ่มที่เลือก
+    promoButtons.forEach(b => b.classList.remove("border-custom-accent", "bg-blue-50", "bg-orange-50"));
+    if (promoKey === "pro") {
+      btn.classList.add("border-blue-600", "bg-blue-50");
+    } else {
+      btn.classList.add("border-orange-500", "bg-orange-50");
+    }
+
+    // เก็บ promotion_id สำหรับ submit
+    window.selectedPromotion = promoKey === "pro" ? 2 : 3; // สมมติ Pro=2, Business=3
+  });
+});
 prefillBusinessName();
 document.getElementById("submitBusiness").addEventListener("click", async () => {
   const confirmed = document.getElementById("confirm").checked;
@@ -222,17 +278,22 @@ document.getElementById("submitBusiness").addEventListener("click", async () => 
     return;
   }
 
+  if (!window.selectedPromotion) {
+    alert("กรุณาเลือกแพ็กเกจ Pro หรือ Business ก่อน");
+    return;
+  }
+
   const { data: { user }, error: userErr } = await supabase.auth.getUser();
   if (!user || userErr) {
     alert("กรุณาเข้าสู่ระบบก่อน");
     return;
   }
 
-  // ✅ UPDATE promotion_id = 4
+  // ✅ UPDATE promotion_id ตามที่เลือก
   const { error: updateError } = await supabase
     .from("employers")
     .update({
-      promotion_id: 3,
+      promotion_id: window.selectedPromotion, // 2=Pro, 3=Business
       business_name: businessName
     })
     .eq("user_id", user.id);
@@ -243,8 +304,7 @@ document.getElementById("submitBusiness").addEventListener("click", async () => 
     return;
   }
 
-  // ✅ สำเร็จ
-  alert("สมัคร Business Promotion สำเร็จ 🎉");
+  alert(`สมัคร ${window.selectedPromotion === 2 ? 'Pro' : 'Business'} Promotion สำเร็จ 🎉`);
   location.href = "employer_home.html";
 });
 </script>
